@@ -1,0 +1,5 @@
+{
+  "status":"success",
+  "data":[{"id":0,"text":"数据字典项目管理","menuLev":"1","iconCls":"icon-reload","url":"dic/project/project.html","children":[{"id":1,"text":"财务管理系统数据字典项目","children":[{"id":1,"text":"系统数据源","menuLev":"2","children":[{"id":"1","text":"财务系统数据源"},{"id":"2","text":"表空间"},{"id":"3","text":"数据库用户"}]},{"id":2,"text":"业务数据源","menuLev":"2","children":[{"id":1,"text":"财务项目业务数据","children":[{"id":"1","text":"按模块展示"},{"id":"2","text":"全量展示"}]}]}]},{"id":2,"text":"财务管理","state":"closed"}]}],
+  "check":true
+}

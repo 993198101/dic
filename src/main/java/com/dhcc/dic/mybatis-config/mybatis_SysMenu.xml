@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhcc.dic.dao.MenuTreeDao" >
+  <resultMap id="sysMenuMap" type="com.dhcc.dic.entity.MenuTree" >
+    <id column="M_ID" property="id" jdbcType="VARCHAR" />
+    <result column="M_TEXT" property="text" jdbcType="VARCHAR" />
+    <result column="M_PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+    <result column="M_DESC" property="desc" jdbcType="VARCHAR" />
+    <result column="M_DATE" property="date" jdbcType="VARCHAR" />
+    <result column="M_ENABLE" property="enable" jdbcType="VARCHAR" />
+    <result column="M_URL" property="url" jdbcType="VARCHAR" />
+    <result column="M_STATE" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getRoot" resultMap="sysMenuMap">
+  	SELECT M_ID,M_TEXT,M_PARENT_ID,M_DESC,M_DATE,M_ENABLE,M_URL,M_ICON,M_STATE FROM T_MENU_TREE WHERE M_ID='0'
+  </select>
+   <select id="getChildren" resultMap="sysMenuMap" parameterType="String">
+  	SELECT M_ID,M_TEXT,M_PARENT_ID,M_DESC,M_DATE,M_ENABLE,M_URL,M_ICON,M_STATE FROM T_MENU_TREE WHERE M_PARENT_ID=#{parentId}
+  </select>
+  
+</mapper>

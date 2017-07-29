@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhcc.dic.dao.TDatasourceDao" >
+  <resultMap id="BaseResultMap" type="com.dhcc.dic.entity.TDatasource" >
+    <id column="D_ID" property="dId" jdbcType="VARCHAR" />
+    <result column="D_NAME" property="dName" jdbcType="VARCHAR" />
+    <result column="D_DESC" property="dDesc" jdbcType="VARCHAR" />
+    <result column="D_TYPE" property="dType" jdbcType="VARCHAR" />
+    <result column="D_USERNAME" property="dUsername" jdbcType="VARCHAR" />
+    <result column="D_PASSWORD" property="dPassword" jdbcType="VARCHAR" />
+    <result column="D_IP" property="dIp" jdbcType="VARCHAR" />
+    <result column="D_PORT" property="dPort" jdbcType="VARCHAR" />
+    <result column="D_SERVICE" property="dService" jdbcType="VARCHAR" />
+    <result column="D_DATE" property="dDate" jdbcType="VARCHAR" />
+    <result column="D_OF_PROJECT" property="dOfProject" jdbcType="VARCHAR" />
+    <result column="D_DATABASE_TYPE" property="dDatabaseType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    D_ID, D_NAME, D_DESC, D_TYPE, D_USERNAME, D_PASSWORD, D_IP, D_PORT, D_SERVICE, D_DATE, 
+    D_OF_PROJECT, D_DATABASE_TYPE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dhcc.dic.entity.TDatasourceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_DATASOURCE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_DATASOURCE
+    where D_ID = #{dId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_DATASOURCE
+    where D_ID = #{dId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dhcc.dic.entity.TDatasourceExample" >
+    delete from T_DATASOURCE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dhcc.dic.entity.TDatasource" >
+  	<selectKey resultType="String" order="BEFORE" keyProperty="dId"> 
+		SELECT SEQ_DATASOURCE.NEXTVAL FROM dual 
+	</selectKey>
+    insert into T_DATASOURCE (D_ID, D_NAME, D_DESC, 
+      D_TYPE, D_USERNAME, D_PASSWORD, 
+      D_IP, D_PORT, D_SERVICE, 
+      D_DATE, D_OF_PROJECT, D_DATABASE_TYPE
+      )
+    values (#{dId,jdbcType=VARCHAR}, #{dName,jdbcType=VARCHAR}, #{dDesc,jdbcType=VARCHAR}, 
+      #{dType,jdbcType=VARCHAR}, #{dUsername,jdbcType=VARCHAR}, #{dPassword,jdbcType=VARCHAR}, 
+      #{dIp,jdbcType=VARCHAR}, #{dPort,jdbcType=VARCHAR}, #{dService,jdbcType=VARCHAR}, 
+      #{dDate,jdbcType=VARCHAR}, #{dOfProject,jdbcType=VARCHAR}, #{dDatabaseType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TDatasource" >
+    <selectKey resultType="String" order="BEFORE" keyProperty="dId"> 
+		SELECT SEQ_DATASOURCE.NEXTVAL FROM dual 
+	</selectKey>
+    insert into T_DATASOURCE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        D_ID,
+      </if>
+      <if test="dName != null" >
+        D_NAME,
+      </if>
+      <if test="dDesc != null" >
+        D_DESC,
+      </if>
+      <if test="dType != null" >
+        D_TYPE,
+      </if>
+      <if test="dUsername != null" >
+        D_USERNAME,
+      </if>
+      <if test="dPassword != null" >
+        D_PASSWORD,
+      </if>
+      <if test="dIp != null" >
+        D_IP,
+      </if>
+      <if test="dPort != null" >
+        D_PORT,
+      </if>
+      <if test="dService != null" >
+        D_SERVICE,
+      </if>
+      <if test="dDate != null" >
+        D_DATE,
+      </if>
+      <if test="dOfProject != null" >
+        D_OF_PROJECT,
+      </if>
+      <if test="dDatabaseType != null" >
+        D_DATABASE_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        #{dId,jdbcType=VARCHAR},
+      </if>
+      <if test="dName != null" >
+        #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dDesc != null" >
+        #{dDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="dType != null" >
+        #{dType,jdbcType=VARCHAR},
+      </if>
+      <if test="dUsername != null" >
+        #{dUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="dPassword != null" >
+        #{dPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="dIp != null" >
+        #{dIp,jdbcType=VARCHAR},
+      </if>
+      <if test="dPort != null" >
+        #{dPort,jdbcType=VARCHAR},
+      </if>
+      <if test="dService != null" >
+        #{dService,jdbcType=VARCHAR},
+      </if>
+      <if test="dDate != null" >
+        #{dDate,jdbcType=VARCHAR},
+      </if>
+      <if test="dOfProject != null" >
+        #{dOfProject,jdbcType=VARCHAR},
+      </if>
+      <if test="dDatabaseType != null" >
+        #{dDatabaseType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dhcc.dic.entity.TDatasourceExample" resultType="java.lang.Integer" >
+    select count(*) from T_DATASOURCE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_DATASOURCE
+    <set >
+      <if test="record.dId != null" >
+        D_ID = #{record.dId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dName != null" >
+        D_NAME = #{record.dName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dDesc != null" >
+        D_DESC = #{record.dDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dType != null" >
+        D_TYPE = #{record.dType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dUsername != null" >
+        D_USERNAME = #{record.dUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dPassword != null" >
+        D_PASSWORD = #{record.dPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dIp != null" >
+        D_IP = #{record.dIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dPort != null" >
+        D_PORT = #{record.dPort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dService != null" >
+        D_SERVICE = #{record.dService,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dDate != null" >
+        D_DATE = #{record.dDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dOfProject != null" >
+        D_OF_PROJECT = #{record.dOfProject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dDatabaseType != null" >
+        D_DATABASE_TYPE = #{record.dDatabaseType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_DATASOURCE
+    set D_ID = #{record.dId,jdbcType=VARCHAR},
+      D_NAME = #{record.dName,jdbcType=VARCHAR},
+      D_DESC = #{record.dDesc,jdbcType=VARCHAR},
+      D_TYPE = #{record.dType,jdbcType=VARCHAR},
+      D_USERNAME = #{record.dUsername,jdbcType=VARCHAR},
+      D_PASSWORD = #{record.dPassword,jdbcType=VARCHAR},
+      D_IP = #{record.dIp,jdbcType=VARCHAR},
+      D_PORT = #{record.dPort,jdbcType=VARCHAR},
+      D_SERVICE = #{record.dService,jdbcType=VARCHAR},
+      D_DATE = #{record.dDate,jdbcType=VARCHAR},
+      D_OF_PROJECT = #{record.dOfProject,jdbcType=VARCHAR},
+      D_DATABASE_TYPE = #{record.dDatabaseType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dhcc.dic.entity.TDatasource" >
+    update T_DATASOURCE
+    <set >
+      <if test="dName != null" >
+        D_NAME = #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dDesc != null" >
+        D_DESC = #{dDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="dType != null" >
+        D_TYPE = #{dType,jdbcType=VARCHAR},
+      </if>
+      <if test="dUsername != null" >
+        D_USERNAME = #{dUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="dPassword != null" >
+        D_PASSWORD = #{dPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="dIp != null" >
+        D_IP = #{dIp,jdbcType=VARCHAR},
+      </if>
+      <if test="dPort != null" >
+        D_PORT = #{dPort,jdbcType=VARCHAR},
+      </if>
+      <if test="dService != null" >
+        D_SERVICE = #{dService,jdbcType=VARCHAR},
+      </if>
+      <if test="dDate != null" >
+        D_DATE = #{dDate,jdbcType=VARCHAR},
+      </if>
+      <if test="dOfProject != null" >
+        D_OF_PROJECT = #{dOfProject,jdbcType=VARCHAR},
+      </if>
+      <if test="dDatabaseType != null" >
+        D_DATABASE_TYPE = #{dDatabaseType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where D_ID = #{dId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dhcc.dic.entity.TDatasource" >
+    update T_DATASOURCE
+    set D_NAME = #{dName,jdbcType=VARCHAR},
+      D_DESC = #{dDesc,jdbcType=VARCHAR},
+      D_TYPE = #{dType,jdbcType=VARCHAR},
+      D_USERNAME = #{dUsername,jdbcType=VARCHAR},
+      D_PASSWORD = #{dPassword,jdbcType=VARCHAR},
+      D_IP = #{dIp,jdbcType=VARCHAR},
+      D_PORT = #{dPort,jdbcType=VARCHAR},
+      D_SERVICE = #{dService,jdbcType=VARCHAR},
+      D_DATE = #{dDate,jdbcType=VARCHAR},
+      D_OF_PROJECT = #{dOfProject,jdbcType=VARCHAR},
+      D_DATABASE_TYPE = #{dDatabaseType,jdbcType=VARCHAR}
+    where D_ID = #{dId,jdbcType=VARCHAR}
+  </update>
+  <select id="getSysDatabaseTypeSelect" resultType="com.dhcc.dic.entity.SysSelect">
+  		SELECT P_OPT_CODE AS id,P_OPT_NAME AS text FROM T_SYS_PARM_DIC WHERE P_KEY_NAME='DATABASE_TYPE'
+  </select>
+</mapper>

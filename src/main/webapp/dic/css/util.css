@@ -1,0 +1,53 @@
+.dhcc-body{
+	min-width: 1050px !important; background-color: #eee !important;padding: 0px 10px !important;
+}
+.dhcc-search-form{
+	background-color: white !important;padding: 10px 10px !important;margin-top:15px !important;
+}
+.dhcc-table-list{
+	background-color: white !important; padding: 10px 10px !important;margin-top:15px !important;
+}
+.label-top {
+	margin: 0 0 10px;
+	display: block;
+}
+.margin-bottom20{
+	margin-bottom: 20px;
+}
+.dhcc-model{
+	width: 750px; height: auto; padding: 10px;max-height: 600px;
+}
+.dhcc-label {
+	text-align: right;
+	display: inline-block !important;
+	width: 100px !important;
+	line-height: 40px !important;
+}
+
+.dhcc-input-div {
+	margin-left:10px;
+	display: inline-block !important;
+	width: 210px !important;
+	text-align: left !important;
+	line-height: 40px !important;
+	height:40px !important;
+}
+.dhcc-search-button-div{
+	text-align: right; padding-right: 30px;margin-top:5px;
+}
+.label-top {
+	margin: 0 0 10px;
+	display: block;
+}
+.dhcc-input-width{
+	width: 200px !important;
+}
+.dhcc-form-div{
+	width: 800px; height: auto; padding: 10px;
+}
+.dhcc-save-button-div{
+	text-align: right; padding-right: 30px;margin-top:5px;margin-bottom:20px;
+}
+.dhcc-table-tab-confirm-div{
+	padding-bottom:10px;position: absolute; bottom: 2px;width: 100%;text-align: right;background-color:white;z-index:999;
+}

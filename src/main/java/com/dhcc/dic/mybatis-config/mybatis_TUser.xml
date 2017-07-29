@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhcc.dic.dao.TUserDao" >
+  <resultMap id="BaseResultMap" type="com.dhcc.dic.entity.TUser" >
+    <id column="U_ID" property="uId" jdbcType="VARCHAR" />
+    <result column="U_CN_NAME" property="uCnName" jdbcType="VARCHAR" />
+    <result column="U_USER_NAME" property="uUserName" jdbcType="VARCHAR" />
+    <result column="U_PASSWORD" property="uPassword" jdbcType="VARCHAR" />
+    <result column="U_TABLESPACE" property="uTablespace" jdbcType="VARCHAR" />
+    <result column="U_DESC" property="uDesc" jdbcType="VARCHAR" />
+    <result column="U_DATE" property="uDate" jdbcType="VARCHAR" />
+    <result column="U_SYNC_STATE" property="uSyncState" jdbcType="VARCHAR" />
+    <result column="U_ACCESS" property="uAccess" jdbcType="VARCHAR" />
+    <result column="U_OF_DATASOURCE" property="uOfDatasource" jdbcType="VARCHAR" />
+    <result column="U_OF_PROJECT" property="uOfProject" jdbcType="VARCHAR" />
+    <result column="U_TEMP_TABLESPACE" property="uTempTablespace" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    U_ID, U_CN_NAME, U_USER_NAME, U_PASSWORD, U_TABLESPACE, U_DESC, U_DATE, U_SYNC_STATE, 
+    U_ACCESS, U_OF_DATASOURCE, U_OF_PROJECT, U_TEMP_TABLESPACE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dhcc.dic.entity.TUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_USER
+    where U_ID = #{uId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_USER
+    where U_ID = #{uId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dhcc.dic.entity.TUserExample" >
+    delete from T_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dhcc.dic.entity.TUser" >
+  	<selectKey resultType="String" order="BEFORE" keyProperty="uId"> 
+		SELECT SEQ_USER.NEXTVAL FROM dual 
+	</selectKey>
+    insert into T_USER (U_ID, U_CN_NAME, U_USER_NAME, 
+      U_PASSWORD, U_TABLESPACE, U_DESC, 
+      U_DATE, U_SYNC_STATE, U_ACCESS, 
+      U_OF_DATASOURCE, U_OF_PROJECT, U_TEMP_TABLESPACE
+      )
+    values (#{uId,jdbcType=VARCHAR}, #{uCnName,jdbcType=VARCHAR}, #{uUserName,jdbcType=VARCHAR}, 
+      #{uPassword,jdbcType=VARCHAR}, #{uTablespace,jdbcType=VARCHAR}, #{uDesc,jdbcType=VARCHAR}, 
+      #{uDate,jdbcType=VARCHAR}, #{uSyncState,jdbcType=VARCHAR}, #{uAccess,jdbcType=VARCHAR}, 
+      #{uOfDatasource,jdbcType=VARCHAR}, #{uOfProject,jdbcType=VARCHAR}, #{uTempTablespace,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TUser" >
+    insert into T_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        U_ID,
+      </if>
+      <if test="uCnName != null" >
+        U_CN_NAME,
+      </if>
+      <if test="uUserName != null" >
+        U_USER_NAME,
+      </if>
+      <if test="uPassword != null" >
+        U_PASSWORD,
+      </if>
+      <if test="uTablespace != null" >
+        U_TABLESPACE,
+      </if>
+      <if test="uDesc != null" >
+        U_DESC,
+      </if>
+      <if test="uDate != null" >
+        U_DATE,
+      </if>
+      <if test="uSyncState != null" >
+        U_SYNC_STATE,
+      </if>
+      <if test="uAccess != null" >
+        U_ACCESS,
+      </if>
+      <if test="uOfDatasource != null" >
+        U_OF_DATASOURCE,
+      </if>
+      <if test="uOfProject != null" >
+        U_OF_PROJECT,
+      </if>
+      <if test="uTempTablespace != null" >
+        U_TEMP_TABLESPACE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        #{uId,jdbcType=VARCHAR},
+      </if>
+      <if test="uCnName != null" >
+        #{uCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="uUserName != null" >
+        #{uUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null" >
+        #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uTablespace != null" >
+        #{uTablespace,jdbcType=VARCHAR},
+      </if>
+      <if test="uDesc != null" >
+        #{uDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="uDate != null" >
+        #{uDate,jdbcType=VARCHAR},
+      </if>
+      <if test="uSyncState != null" >
+        #{uSyncState,jdbcType=VARCHAR},
+      </if>
+      <if test="uAccess != null" >
+        #{uAccess,jdbcType=VARCHAR},
+      </if>
+      <if test="uOfDatasource != null" >
+        #{uOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="uOfProject != null" >
+        #{uOfProject,jdbcType=VARCHAR},
+      </if>
+      <if test="uTempTablespace != null" >
+        #{uTempTablespace,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dhcc.dic.entity.TUserExample" resultType="java.lang.Integer" >
+    select count(*) from T_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_USER
+    <set >
+      <if test="record.uId != null" >
+        U_ID = #{record.uId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uCnName != null" >
+        U_CN_NAME = #{record.uCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uUserName != null" >
+        U_USER_NAME = #{record.uUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uPassword != null" >
+        U_PASSWORD = #{record.uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uTablespace != null" >
+        U_TABLESPACE = #{record.uTablespace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uDesc != null" >
+        U_DESC = #{record.uDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uDate != null" >
+        U_DATE = #{record.uDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uSyncState != null" >
+        U_SYNC_STATE = #{record.uSyncState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uAccess != null" >
+        U_ACCESS = #{record.uAccess,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uOfDatasource != null" >
+        U_OF_DATASOURCE = #{record.uOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uOfProject != null" >
+        U_OF_PROJECT = #{record.uOfProject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uTempTablespace != null" >
+        U_TEMP_TABLESPACE = #{record.uTempTablespace,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_USER
+    set U_ID = #{record.uId,jdbcType=VARCHAR},
+      U_CN_NAME = #{record.uCnName,jdbcType=VARCHAR},
+      U_USER_NAME = #{record.uUserName,jdbcType=VARCHAR},
+      U_PASSWORD = #{record.uPassword,jdbcType=VARCHAR},
+      U_TABLESPACE = #{record.uTablespace,jdbcType=VARCHAR},
+      U_DESC = #{record.uDesc,jdbcType=VARCHAR},
+      U_DATE = #{record.uDate,jdbcType=VARCHAR},
+      U_SYNC_STATE = #{record.uSyncState,jdbcType=VARCHAR},
+      U_ACCESS = #{record.uAccess,jdbcType=VARCHAR},
+      U_OF_DATASOURCE = #{record.uOfDatasource,jdbcType=VARCHAR},
+      U_OF_PROJECT = #{record.uOfProject,jdbcType=VARCHAR},
+      U_TEMP_TABLESPACE = #{record.uTempTablespace,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dhcc.dic.entity.TUser" >
+    update T_USER
+    <set >
+      <if test="uCnName != null" >
+        U_CN_NAME = #{uCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="uUserName != null" >
+        U_USER_NAME = #{uUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null" >
+        U_PASSWORD = #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uTablespace != null" >
+        U_TABLESPACE = #{uTablespace,jdbcType=VARCHAR},
+      </if>
+      <if test="uDesc != null" >
+        U_DESC = #{uDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="uDate != null" >
+        U_DATE = #{uDate,jdbcType=VARCHAR},
+      </if>
+      <if test="uSyncState != null" >
+        U_SYNC_STATE = #{uSyncState,jdbcType=VARCHAR},
+      </if>
+      <if test="uAccess != null" >
+        U_ACCESS = #{uAccess,jdbcType=VARCHAR},
+      </if>
+      <if test="uOfDatasource != null" >
+        U_OF_DATASOURCE = #{uOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="uOfProject != null" >
+        U_OF_PROJECT = #{uOfProject,jdbcType=VARCHAR},
+      </if>
+      <if test="uTempTablespace != null" >
+        U_TEMP_TABLESPACE = #{uTempTablespace,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where U_ID = #{uId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dhcc.dic.entity.TUser" >
+    update T_USER
+    set U_CN_NAME = #{uCnName,jdbcType=VARCHAR},
+      U_USER_NAME = #{uUserName,jdbcType=VARCHAR},
+      U_PASSWORD = #{uPassword,jdbcType=VARCHAR},
+      U_TABLESPACE = #{uTablespace,jdbcType=VARCHAR},
+      U_DESC = #{uDesc,jdbcType=VARCHAR},
+      U_DATE = #{uDate,jdbcType=VARCHAR},
+      U_SYNC_STATE = #{uSyncState,jdbcType=VARCHAR},
+      U_ACCESS = #{uAccess,jdbcType=VARCHAR},
+      U_OF_DATASOURCE = #{uOfDatasource,jdbcType=VARCHAR},
+      U_OF_PROJECT = #{uOfProject,jdbcType=VARCHAR},
+      U_TEMP_TABLESPACE = #{uTempTablespace,jdbcType=VARCHAR}
+    where U_ID = #{uId,jdbcType=VARCHAR}
+  </update>
+</mapper>

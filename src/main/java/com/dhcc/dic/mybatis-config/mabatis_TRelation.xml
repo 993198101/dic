@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhcc.dic.dao.TRelationDao" >
+  <resultMap id="BaseResultMap" type="com.dhcc.dic.entity.TRelation" >
+    <id column="R_ID" property="rId" jdbcType="VARCHAR" />
+    <result column="R_MENU_ID" property="rMenuId" jdbcType="VARCHAR" />
+    <result column="R_MENU_TYPE" property="rMenuType" jdbcType="VARCHAR" />
+    <result column="R_TABLE" property="rTable" jdbcType="VARCHAR" />
+    <result column="R_PK_ID" property="rPkId" jdbcType="VARCHAR" />
+    <result column="R_DESC" property="rDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    R_ID, R_MENU_ID, R_MENU_TYPE, R_TABLE, R_PK_ID, R_DESC
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dhcc.dic.entity.TRelationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_RELATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_RELATION
+    where R_ID = #{rId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_RELATION
+    where R_ID = #{rId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dhcc.dic.entity.TRelationExample" >
+    delete from T_RELATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dhcc.dic.entity.TRelation" >
+  	<selectKey resultType="String" order="BEFORE" keyProperty="rId"> 
+		SELECT SEQ_RELATION.NEXTVAL FROM dual 
+	</selectKey>
+    insert into T_RELATION (R_ID, R_MENU_ID, R_MENU_TYPE, 
+      R_TABLE, R_PK_ID, R_DESC
+      )
+    values (#{rId,jdbcType=VARCHAR}, #{rMenuId,jdbcType=VARCHAR}, #{rMenuType,jdbcType=VARCHAR}, 
+      #{rTable,jdbcType=VARCHAR}, #{rPkId,jdbcType=VARCHAR}, #{rDesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TRelation" >
+    insert into T_RELATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rId != null" >
+        R_ID,
+      </if>
+      <if test="rMenuId != null" >
+        R_MENU_ID,
+      </if>
+      <if test="rMenuType != null" >
+        R_MENU_TYPE,
+      </if>
+      <if test="rTable != null" >
+        R_TABLE,
+      </if>
+      <if test="rPkId != null" >
+        R_PK_ID,
+      </if>
+      <if test="rDesc != null" >
+        R_DESC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rId != null" >
+        #{rId,jdbcType=VARCHAR},
+      </if>
+      <if test="rMenuId != null" >
+        #{rMenuId,jdbcType=VARCHAR},
+      </if>
+      <if test="rMenuType != null" >
+        #{rMenuType,jdbcType=VARCHAR},
+      </if>
+      <if test="rTable != null" >
+        #{rTable,jdbcType=VARCHAR},
+      </if>
+      <if test="rPkId != null" >
+        #{rPkId,jdbcType=VARCHAR},
+      </if>
+      <if test="rDesc != null" >
+        #{rDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dhcc.dic.entity.TRelationExample" resultType="java.lang.Integer" >
+    select count(*) from T_RELATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_RELATION
+    <set >
+      <if test="record.rId != null" >
+        R_ID = #{record.rId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rMenuId != null" >
+        R_MENU_ID = #{record.rMenuId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rMenuType != null" >
+        R_MENU_TYPE = #{record.rMenuType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rTable != null" >
+        R_TABLE = #{record.rTable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rPkId != null" >
+        R_PK_ID = #{record.rPkId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rDesc != null" >
+        R_DESC = #{record.rDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_RELATION
+    set R_ID = #{record.rId,jdbcType=VARCHAR},
+      R_MENU_ID = #{record.rMenuId,jdbcType=VARCHAR},
+      R_MENU_TYPE = #{record.rMenuType,jdbcType=VARCHAR},
+      R_TABLE = #{record.rTable,jdbcType=VARCHAR},
+      R_PK_ID = #{record.rPkId,jdbcType=VARCHAR},
+      R_DESC = #{record.rDesc,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dhcc.dic.entity.TRelation" >
+    update T_RELATION
+    <set >
+      <if test="rMenuId != null" >
+        R_MENU_ID = #{rMenuId,jdbcType=VARCHAR},
+      </if>
+      <if test="rMenuType != null" >
+        R_MENU_TYPE = #{rMenuType,jdbcType=VARCHAR},
+      </if>
+      <if test="rTable != null" >
+        R_TABLE = #{rTable,jdbcType=VARCHAR},
+      </if>
+      <if test="rPkId != null" >
+        R_PK_ID = #{rPkId,jdbcType=VARCHAR},
+      </if>
+      <if test="rDesc != null" >
+        R_DESC = #{rDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where R_ID = #{rId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dhcc.dic.entity.TRelation" >
+    update T_RELATION
+    set R_MENU_ID = #{rMenuId,jdbcType=VARCHAR},
+      R_MENU_TYPE = #{rMenuType,jdbcType=VARCHAR},
+      R_TABLE = #{rTable,jdbcType=VARCHAR},
+      R_PK_ID = #{rPkId,jdbcType=VARCHAR},
+      R_DESC = #{rDesc,jdbcType=VARCHAR}
+    where R_ID = #{rId,jdbcType=VARCHAR}
+  </update>
+</mapper>

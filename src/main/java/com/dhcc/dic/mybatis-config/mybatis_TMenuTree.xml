@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhcc.dic.dao.TMenuTreeDao" >
+  <resultMap id="BaseResultMap" type="com.dhcc.dic.entity.TMenuTree" >
+    <id column="M_ID" property="mId" jdbcType="VARCHAR" />
+    <result column="M_TEXT" property="mText" jdbcType="VARCHAR" />
+    <result column="M_PARENT_ID" property="mParentId" jdbcType="VARCHAR" />
+    <result column="M_DESC" property="mDesc" jdbcType="VARCHAR" />
+    <result column="M_DATE" property="mDate" jdbcType="VARCHAR" />
+    <result column="M_ENABLE" property="mEnable" jdbcType="VARCHAR" />
+    <result column="M_URL" property="mUrl" jdbcType="VARCHAR" />
+    <result column="M_ICON" property="mIcon" jdbcType="VARCHAR" />
+    <result column="M_STATE" property="mState" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <delete id="RecursiveDeleteTree" parameterType="String">
+  		DELETE FROM T_MENU_TREE WHERE M_ID IN (SELECT M_ID FROM T_MENU_TREE START WITH M_ID=${startMId} CONNECT BY PRIOR M_ID=M_PARENT_ID)
+  </delete>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    M_ID, M_TEXT, M_PARENT_ID, M_DESC, M_DATE, M_ENABLE, M_URL, M_ICON, M_STATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dhcc.dic.entity.TMenuTreeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_MENU_TREE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_MENU_TREE
+    where M_ID = #{mId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_MENU_TREE
+    where M_ID = #{mId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dhcc.dic.entity.TMenuTreeExample" >
+    delete from T_MENU_TREE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dhcc.dic.entity.TMenuTree" >
+    <selectKey resultType="String" order="BEFORE" keyProperty="mId"> 
+		SELECT SEQ_SYS_MENU.NEXTVAL FROM dual 
+	</selectKey>
+    insert into T_MENU_TREE (M_ID, M_TEXT, M_PARENT_ID, 
+      M_DESC, M_DATE, M_ENABLE, 
+      M_URL, M_ICON, M_STATE
+      )
+    values (#{mId,jdbcType=VARCHAR}, #{mText,jdbcType=VARCHAR}, #{mParentId,jdbcType=VARCHAR}, 
+      #{mDesc,jdbcType=VARCHAR}, #{mDate,jdbcType=VARCHAR}, #{mEnable,jdbcType=VARCHAR}, 
+      #{mUrl,jdbcType=VARCHAR}, #{mIcon,jdbcType=VARCHAR}, #{mState,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TMenuTree" >
+    <selectKey resultType="String" order="BEFORE" keyProperty="mId"> 
+		SELECT SEQ_SYS_MENU.NEXTVAL FROM dual 
+	</selectKey>
+    insert into T_MENU_TREE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mId != null" >
+        M_ID,
+      </if>
+      <if test="mText != null" >
+        M_TEXT,
+      </if>
+      <if test="mParentId != null" >
+        M_PARENT_ID,
+      </if>
+      <if test="mDesc != null" >
+        M_DESC,
+      </if>
+      <if test="mDate != null" >
+        M_DATE,
+      </if>
+      <if test="mEnable != null" >
+        M_ENABLE,
+      </if>
+      <if test="mUrl != null" >
+        M_URL,
+      </if>
+      <if test="mIcon != null" >
+        M_ICON,
+      </if>
+      <if test="mState != null" >
+        M_STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mId != null" >
+        #{mId,jdbcType=VARCHAR},
+      </if>
+      <if test="mText != null" >
+        #{mText,jdbcType=VARCHAR},
+      </if>
+      <if test="mParentId != null" >
+        #{mParentId,jdbcType=VARCHAR},
+      </if>
+      <if test="mDesc != null" >
+        #{mDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="mDate != null" >
+        #{mDate,jdbcType=VARCHAR},
+      </if>
+      <if test="mEnable != null" >
+        #{mEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="mUrl != null" >
+        #{mUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="mIcon != null" >
+        #{mIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="mState != null" >
+        #{mState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dhcc.dic.entity.TMenuTreeExample" resultType="java.lang.Integer" >
+    select count(*) from T_MENU_TREE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_MENU_TREE
+    <set >
+      <if test="record.mId != null" >
+        M_ID = #{record.mId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mText != null" >
+        M_TEXT = #{record.mText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mParentId != null" >
+        M_PARENT_ID = #{record.mParentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mDesc != null" >
+        M_DESC = #{record.mDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mDate != null" >
+        M_DATE = #{record.mDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mEnable != null" >
+        M_ENABLE = #{record.mEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mUrl != null" >
+        M_URL = #{record.mUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mIcon != null" >
+        M_ICON = #{record.mIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mState != null" >
+        M_STATE = #{record.mState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_MENU_TREE
+    set M_ID = #{record.mId,jdbcType=VARCHAR},
+      M_TEXT = #{record.mText,jdbcType=VARCHAR},
+      M_PARENT_ID = #{record.mParentId,jdbcType=VARCHAR},
+      M_DESC = #{record.mDesc,jdbcType=VARCHAR},
+      M_DATE = #{record.mDate,jdbcType=VARCHAR},
+      M_ENABLE = #{record.mEnable,jdbcType=VARCHAR},
+      M_URL = #{record.mUrl,jdbcType=VARCHAR},
+      M_ICON = #{record.mIcon,jdbcType=VARCHAR},
+      M_STATE = #{record.mState,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dhcc.dic.entity.TMenuTree" >
+    update T_MENU_TREE
+    <set >
+      <if test="mText != null" >
+        M_TEXT = #{mText,jdbcType=VARCHAR},
+      </if>
+      <if test="mParentId != null" >
+        M_PARENT_ID = #{mParentId,jdbcType=VARCHAR},
+      </if>
+      <if test="mDesc != null" >
+        M_DESC = #{mDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="mDate != null" >
+        M_DATE = #{mDate,jdbcType=VARCHAR},
+      </if>
+      <if test="mEnable != null" >
+        M_ENABLE = #{mEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="mUrl != null" >
+        M_URL = #{mUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="mIcon != null" >
+        M_ICON = #{mIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="mState != null" >
+        M_STATE = #{mState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where M_ID = #{mId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dhcc.dic.entity.TMenuTree" >
+    update T_MENU_TREE
+    set M_TEXT = #{mText,jdbcType=VARCHAR},
+      M_PARENT_ID = #{mParentId,jdbcType=VARCHAR},
+      M_DESC = #{mDesc,jdbcType=VARCHAR},
+      M_DATE = #{mDate,jdbcType=VARCHAR},
+      M_ENABLE = #{mEnable,jdbcType=VARCHAR},
+      M_URL = #{mUrl,jdbcType=VARCHAR},
+      M_ICON = #{mIcon,jdbcType=VARCHAR},
+      M_STATE = #{mState,jdbcType=VARCHAR}
+    where M_ID = #{mId,jdbcType=VARCHAR}
+  </update>
+</mapper>

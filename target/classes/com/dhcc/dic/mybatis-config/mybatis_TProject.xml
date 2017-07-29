@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhcc.dic.dao.TProjectDao" >
+  <resultMap id="BaseResultMap" type="com.dhcc.dic.entity.TProject" >
+    <id column="P_ID" property="pId" jdbcType="VARCHAR" />
+    <result column="P_NAME" property="pName" jdbcType="VARCHAR" />
+    <result column="P_DESC" property="pDesc" jdbcType="VARCHAR" />
+    <result column="P_DATE" property="pDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    P_ID, P_NAME, P_DESC, P_DATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dhcc.dic.entity.TProjectExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_PROJECT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_PROJECT
+    where P_ID = #{pId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_PROJECT
+    where P_ID = #{pId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dhcc.dic.entity.TProjectExample" >
+    delete from T_PROJECT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dhcc.dic.entity.TProject" >
+    <selectKey resultType="String" order="BEFORE" keyProperty="pId"> 
+		SELECT SEQ_PROJECT.NEXTVAL FROM dual 
+	</selectKey>
+    insert into T_PROJECT (P_ID, P_NAME, P_DESC, 
+      P_DATE)
+    values (#{pId,jdbcType=VARCHAR}, #{pName,jdbcType=VARCHAR}, #{pDesc,jdbcType=VARCHAR}, 
+      #{pDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TProject" >
+    <selectKey resultType="String" order="BEFORE" keyProperty="pId"> 
+		SELECT SEQ_PROJECT.NEXTVAL FROM dual 
+	</selectKey>
+    insert into T_PROJECT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pId != null" >
+        P_ID,
+      </if>
+      <if test="pName != null" >
+        P_NAME,
+      </if>
+      <if test="pDesc != null" >
+        P_DESC,
+      </if>
+      <if test="pDate != null" >
+        P_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pId != null" >
+        #{pId,jdbcType=VARCHAR},
+      </if>
+      <if test="pName != null" >
+        #{pName,jdbcType=VARCHAR},
+      </if>
+      <if test="pDesc != null" >
+        #{pDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="pDate != null" >
+        #{pDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dhcc.dic.entity.TProjectExample" resultType="java.lang.Integer" >
+    select count(*) from T_PROJECT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_PROJECT
+    <set >
+      <if test="record.pId != null" >
+        P_ID = #{record.pId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pName != null" >
+        P_NAME = #{record.pName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pDesc != null" >
+        P_DESC = #{record.pDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pDate != null" >
+        P_DATE = #{record.pDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_PROJECT
+    set P_ID = #{record.pId,jdbcType=VARCHAR},
+      P_NAME = #{record.pName,jdbcType=VARCHAR},
+      P_DESC = #{record.pDesc,jdbcType=VARCHAR},
+      P_DATE = #{record.pDate,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dhcc.dic.entity.TProject" >
+    update T_PROJECT
+    <set >
+      <if test="pName != null" >
+        P_NAME = #{pName,jdbcType=VARCHAR},
+      </if>
+      <if test="pDesc != null" >
+        P_DESC = #{pDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="pDate != null" >
+        P_DATE = #{pDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where P_ID = #{pId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dhcc.dic.entity.TProject" >
+    update T_PROJECT
+    set P_NAME = #{pName,jdbcType=VARCHAR},
+      P_DESC = #{pDesc,jdbcType=VARCHAR},
+      P_DATE = #{pDate,jdbcType=VARCHAR}
+    where P_ID = #{pId,jdbcType=VARCHAR}
+  </update>
+</mapper>

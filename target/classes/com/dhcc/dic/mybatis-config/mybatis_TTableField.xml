@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhcc.dic.dao.TTableFieldDao" >
+  <resultMap id="BaseResultMap" type="com.dhcc.dic.entity.TTableField" >
+    <id column="F_ID" property="fId" jdbcType="VARCHAR" />
+    <result column="F_NAME" property="fName" jdbcType="VARCHAR" />
+    <result column="F_CN_NAME" property="fCnName" jdbcType="VARCHAR" />
+    <result column="F_ALIAS" property="fAlias" jdbcType="VARCHAR" />
+    <result column="F_CTRL_TYPE" property="fCtrlType" jdbcType="VARCHAR" />
+    <result column="F_FUNC_TYPE" property="fFuncType" jdbcType="VARCHAR" />
+    <result column="F_CTRL_CONSTRAINTS" property="fCtrlConstraints" jdbcType="VARCHAR" />
+    <result column="F_TYPE" property="fType" jdbcType="VARCHAR" />
+    <result column="F_SIZE" property="fSize" jdbcType="VARCHAR" />
+    <result column="F_SCALE" property="fScale" jdbcType="VARCHAR" />
+    <result column="F_DEFAULT" property="fDefault" jdbcType="VARCHAR" />
+    <result column="F_COMMENT" property="fComment" jdbcType="VARCHAR" />
+    <result column="F_NULLABLE" property="fNullable" jdbcType="VARCHAR" />
+    <result column="F_DESC" property="fDesc" jdbcType="VARCHAR" />
+    <result column="F_SHOW_NUMBER" property="fShowNumber" jdbcType="VARCHAR" />
+    <result column="F_IS_SUIT_QUERY" property="fIsSuitQuery" jdbcType="VARCHAR" />
+    <result column="F_SHOW_ROW" property="fShowRow" jdbcType="VARCHAR" />
+    <result column="F_SHOW_COL" property="fShowCol" jdbcType="VARCHAR" />
+    <result column="F_SHOWABLE" property="fShowable" jdbcType="VARCHAR" />
+    <result column="F_DATA_ELEMENT" property="fDataElement" jdbcType="VARCHAR" />
+    <result column="F_OF_TABLE" property="fOfTable" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    F_ID, F_NAME, F_CN_NAME, F_ALIAS, F_CTRL_TYPE, F_FUNC_TYPE, F_CTRL_CONSTRAINTS, F_TYPE, 
+    F_SIZE, F_SCALE, F_DEFAULT, F_COMMENT, F_NULLABLE, F_DESC, F_SHOW_NUMBER, F_IS_SUIT_QUERY, 
+    F_SHOW_ROW, F_SHOW_COL, F_SHOWABLE, F_DATA_ELEMENT, F_OF_TABLE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dhcc.dic.entity.TTableFieldExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_TABLE_FIELD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_TABLE_FIELD
+    where F_ID = #{fId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_TABLE_FIELD
+    where F_ID = #{fId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dhcc.dic.entity.TTableFieldExample" >
+    delete from T_TABLE_FIELD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dhcc.dic.entity.TTableField" >
+    insert into T_TABLE_FIELD (F_ID, F_NAME, F_CN_NAME, 
+      F_ALIAS, F_CTRL_TYPE, F_FUNC_TYPE, 
+      F_CTRL_CONSTRAINTS, F_TYPE, F_SIZE, 
+      F_SCALE, F_DEFAULT, F_COMMENT, 
+      F_NULLABLE, F_DESC, F_SHOW_NUMBER, 
+      F_IS_SUIT_QUERY, F_SHOW_ROW, F_SHOW_COL, 
+      F_SHOWABLE, F_DATA_ELEMENT, F_OF_TABLE
+      )
+    values (#{fId,jdbcType=VARCHAR}, #{fName,jdbcType=VARCHAR}, #{fCnName,jdbcType=VARCHAR}, 
+      #{fAlias,jdbcType=VARCHAR}, #{fCtrlType,jdbcType=VARCHAR}, #{fFuncType,jdbcType=VARCHAR}, 
+      #{fCtrlConstraints,jdbcType=VARCHAR}, #{fType,jdbcType=VARCHAR}, #{fSize,jdbcType=VARCHAR}, 
+      #{fScale,jdbcType=VARCHAR}, #{fDefault,jdbcType=VARCHAR}, #{fComment,jdbcType=VARCHAR}, 
+      #{fNullable,jdbcType=VARCHAR}, #{fDesc,jdbcType=VARCHAR}, #{fShowNumber,jdbcType=VARCHAR}, 
+      #{fIsSuitQuery,jdbcType=VARCHAR}, #{fShowRow,jdbcType=VARCHAR}, #{fShowCol,jdbcType=VARCHAR}, 
+      #{fShowable,jdbcType=VARCHAR}, #{fDataElement,jdbcType=VARCHAR}, #{fOfTable,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TTableField" >
+    insert into T_TABLE_FIELD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        F_ID,
+      </if>
+      <if test="fName != null" >
+        F_NAME,
+      </if>
+      <if test="fCnName != null" >
+        F_CN_NAME,
+      </if>
+      <if test="fAlias != null" >
+        F_ALIAS,
+      </if>
+      <if test="fCtrlType != null" >
+        F_CTRL_TYPE,
+      </if>
+      <if test="fFuncType != null" >
+        F_FUNC_TYPE,
+      </if>
+      <if test="fCtrlConstraints != null" >
+        F_CTRL_CONSTRAINTS,
+      </if>
+      <if test="fType != null" >
+        F_TYPE,
+      </if>
+      <if test="fSize != null" >
+        F_SIZE,
+      </if>
+      <if test="fScale != null" >
+        F_SCALE,
+      </if>
+      <if test="fDefault != null" >
+        F_DEFAULT,
+      </if>
+      <if test="fComment != null" >
+        F_COMMENT,
+      </if>
+      <if test="fNullable != null" >
+        F_NULLABLE,
+      </if>
+      <if test="fDesc != null" >
+        F_DESC,
+      </if>
+      <if test="fShowNumber != null" >
+        F_SHOW_NUMBER,
+      </if>
+      <if test="fIsSuitQuery != null" >
+        F_IS_SUIT_QUERY,
+      </if>
+      <if test="fShowRow != null" >
+        F_SHOW_ROW,
+      </if>
+      <if test="fShowCol != null" >
+        F_SHOW_COL,
+      </if>
+      <if test="fShowable != null" >
+        F_SHOWABLE,
+      </if>
+      <if test="fDataElement != null" >
+        F_DATA_ELEMENT,
+      </if>
+      <if test="fOfTable != null" >
+        F_OF_TABLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        #{fId,jdbcType=VARCHAR},
+      </if>
+      <if test="fName != null" >
+        #{fName,jdbcType=VARCHAR},
+      </if>
+      <if test="fCnName != null" >
+        #{fCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="fAlias != null" >
+        #{fAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="fCtrlType != null" >
+        #{fCtrlType,jdbcType=VARCHAR},
+      </if>
+      <if test="fFuncType != null" >
+        #{fFuncType,jdbcType=VARCHAR},
+      </if>
+      <if test="fCtrlConstraints != null" >
+        #{fCtrlConstraints,jdbcType=VARCHAR},
+      </if>
+      <if test="fType != null" >
+        #{fType,jdbcType=VARCHAR},
+      </if>
+      <if test="fSize != null" >
+        #{fSize,jdbcType=VARCHAR},
+      </if>
+      <if test="fScale != null" >
+        #{fScale,jdbcType=VARCHAR},
+      </if>
+      <if test="fDefault != null" >
+        #{fDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="fComment != null" >
+        #{fComment,jdbcType=VARCHAR},
+      </if>
+      <if test="fNullable != null" >
+        #{fNullable,jdbcType=VARCHAR},
+      </if>
+      <if test="fDesc != null" >
+        #{fDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="fShowNumber != null" >
+        #{fShowNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="fIsSuitQuery != null" >
+        #{fIsSuitQuery,jdbcType=VARCHAR},
+      </if>
+      <if test="fShowRow != null" >
+        #{fShowRow,jdbcType=VARCHAR},
+      </if>
+      <if test="fShowCol != null" >
+        #{fShowCol,jdbcType=VARCHAR},
+      </if>
+      <if test="fShowable != null" >
+        #{fShowable,jdbcType=VARCHAR},
+      </if>
+      <if test="fDataElement != null" >
+        #{fDataElement,jdbcType=VARCHAR},
+      </if>
+      <if test="fOfTable != null" >
+        #{fOfTable,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dhcc.dic.entity.TTableFieldExample" resultType="java.lang.Integer" >
+    select count(*) from T_TABLE_FIELD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_TABLE_FIELD
+    <set >
+      <if test="record.fId != null" >
+        F_ID = #{record.fId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fName != null" >
+        F_NAME = #{record.fName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fCnName != null" >
+        F_CN_NAME = #{record.fCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fAlias != null" >
+        F_ALIAS = #{record.fAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fCtrlType != null" >
+        F_CTRL_TYPE = #{record.fCtrlType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fFuncType != null" >
+        F_FUNC_TYPE = #{record.fFuncType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fCtrlConstraints != null" >
+        F_CTRL_CONSTRAINTS = #{record.fCtrlConstraints,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fType != null" >
+        F_TYPE = #{record.fType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fSize != null" >
+        F_SIZE = #{record.fSize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fScale != null" >
+        F_SCALE = #{record.fScale,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fDefault != null" >
+        F_DEFAULT = #{record.fDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fComment != null" >
+        F_COMMENT = #{record.fComment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fNullable != null" >
+        F_NULLABLE = #{record.fNullable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fDesc != null" >
+        F_DESC = #{record.fDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fShowNumber != null" >
+        F_SHOW_NUMBER = #{record.fShowNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fIsSuitQuery != null" >
+        F_IS_SUIT_QUERY = #{record.fIsSuitQuery,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fShowRow != null" >
+        F_SHOW_ROW = #{record.fShowRow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fShowCol != null" >
+        F_SHOW_COL = #{record.fShowCol,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fShowable != null" >
+        F_SHOWABLE = #{record.fShowable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fDataElement != null" >
+        F_DATA_ELEMENT = #{record.fDataElement,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fOfTable != null" >
+        F_OF_TABLE = #{record.fOfTable,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_TABLE_FIELD
+    set F_ID = #{record.fId,jdbcType=VARCHAR},
+      F_NAME = #{record.fName,jdbcType=VARCHAR},
+      F_CN_NAME = #{record.fCnName,jdbcType=VARCHAR},
+      F_ALIAS = #{record.fAlias,jdbcType=VARCHAR},
+      F_CTRL_TYPE = #{record.fCtrlType,jdbcType=VARCHAR},
+      F_FUNC_TYPE = #{record.fFuncType,jdbcType=VARCHAR},
+      F_CTRL_CONSTRAINTS = #{record.fCtrlConstraints,jdbcType=VARCHAR},
+      F_TYPE = #{record.fType,jdbcType=VARCHAR},
+      F_SIZE = #{record.fSize,jdbcType=VARCHAR},
+      F_SCALE = #{record.fScale,jdbcType=VARCHAR},
+      F_DEFAULT = #{record.fDefault,jdbcType=VARCHAR},
+      F_COMMENT = #{record.fComment,jdbcType=VARCHAR},
+      F_NULLABLE = #{record.fNullable,jdbcType=VARCHAR},
+      F_DESC = #{record.fDesc,jdbcType=VARCHAR},
+      F_SHOW_NUMBER = #{record.fShowNumber,jdbcType=VARCHAR},
+      F_IS_SUIT_QUERY = #{record.fIsSuitQuery,jdbcType=VARCHAR},
+      F_SHOW_ROW = #{record.fShowRow,jdbcType=VARCHAR},
+      F_SHOW_COL = #{record.fShowCol,jdbcType=VARCHAR},
+      F_SHOWABLE = #{record.fShowable,jdbcType=VARCHAR},
+      F_DATA_ELEMENT = #{record.fDataElement,jdbcType=VARCHAR},
+      F_OF_TABLE = #{record.fOfTable,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dhcc.dic.entity.TTableField" >
+    update T_TABLE_FIELD
+    <set >
+      <if test="fName != null" >
+        F_NAME = #{fName,jdbcType=VARCHAR},
+      </if>
+      <if test="fCnName != null" >
+        F_CN_NAME = #{fCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="fAlias != null" >
+        F_ALIAS = #{fAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="fCtrlType != null" >
+        F_CTRL_TYPE = #{fCtrlType,jdbcType=VARCHAR},
+      </if>
+      <if test="fFuncType != null" >
+        F_FUNC_TYPE = #{fFuncType,jdbcType=VARCHAR},
+      </if>
+      <if test="fCtrlConstraints != null" >
+        F_CTRL_CONSTRAINTS = #{fCtrlConstraints,jdbcType=VARCHAR},
+      </if>
+      <if test="fType != null" >
+        F_TYPE = #{fType,jdbcType=VARCHAR},
+      </if>
+      <if test="fSize != null" >
+        F_SIZE = #{fSize,jdbcType=VARCHAR},
+      </if>
+      <if test="fScale != null" >
+        F_SCALE = #{fScale,jdbcType=VARCHAR},
+      </if>
+      <if test="fDefault != null" >
+        F_DEFAULT = #{fDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="fComment != null" >
+        F_COMMENT = #{fComment,jdbcType=VARCHAR},
+      </if>
+      <if test="fNullable != null" >
+        F_NULLABLE = #{fNullable,jdbcType=VARCHAR},
+      </if>
+      <if test="fDesc != null" >
+        F_DESC = #{fDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="fShowNumber != null" >
+        F_SHOW_NUMBER = #{fShowNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="fIsSuitQuery != null" >
+        F_IS_SUIT_QUERY = #{fIsSuitQuery,jdbcType=VARCHAR},
+      </if>
+      <if test="fShowRow != null" >
+        F_SHOW_ROW = #{fShowRow,jdbcType=VARCHAR},
+      </if>
+      <if test="fShowCol != null" >
+        F_SHOW_COL = #{fShowCol,jdbcType=VARCHAR},
+      </if>
+      <if test="fShowable != null" >
+        F_SHOWABLE = #{fShowable,jdbcType=VARCHAR},
+      </if>
+      <if test="fDataElement != null" >
+        F_DATA_ELEMENT = #{fDataElement,jdbcType=VARCHAR},
+      </if>
+      <if test="fOfTable != null" >
+        F_OF_TABLE = #{fOfTable,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where F_ID = #{fId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dhcc.dic.entity.TTableField" >
+    update T_TABLE_FIELD
+    set F_NAME = #{fName,jdbcType=VARCHAR},
+      F_CN_NAME = #{fCnName,jdbcType=VARCHAR},
+      F_ALIAS = #{fAlias,jdbcType=VARCHAR},
+      F_CTRL_TYPE = #{fCtrlType,jdbcType=VARCHAR},
+      F_FUNC_TYPE = #{fFuncType,jdbcType=VARCHAR},
+      F_CTRL_CONSTRAINTS = #{fCtrlConstraints,jdbcType=VARCHAR},
+      F_TYPE = #{fType,jdbcType=VARCHAR},
+      F_SIZE = #{fSize,jdbcType=VARCHAR},
+      F_SCALE = #{fScale,jdbcType=VARCHAR},
+      F_DEFAULT = #{fDefault,jdbcType=VARCHAR},
+      F_COMMENT = #{fComment,jdbcType=VARCHAR},
+      F_NULLABLE = #{fNullable,jdbcType=VARCHAR},
+      F_DESC = #{fDesc,jdbcType=VARCHAR},
+      F_SHOW_NUMBER = #{fShowNumber,jdbcType=VARCHAR},
+      F_IS_SUIT_QUERY = #{fIsSuitQuery,jdbcType=VARCHAR},
+      F_SHOW_ROW = #{fShowRow,jdbcType=VARCHAR},
+      F_SHOW_COL = #{fShowCol,jdbcType=VARCHAR},
+      F_SHOWABLE = #{fShowable,jdbcType=VARCHAR},
+      F_DATA_ELEMENT = #{fDataElement,jdbcType=VARCHAR},
+      F_OF_TABLE = #{fOfTable,jdbcType=VARCHAR}
+    where F_ID = #{fId,jdbcType=VARCHAR}
+  </update>
+</mapper>

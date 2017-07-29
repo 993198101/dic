@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhcc.dic.dao.TTableDao" >
+  <resultMap id="BaseResultMap" type="com.dhcc.dic.entity.TTable" >
+    <id column="T_ID" property="tId" jdbcType="VARCHAR" />
+    <result column="T_NAME" property="tName" jdbcType="VARCHAR" />
+    <result column="T_CN_NAME" property="tCnName" jdbcType="VARCHAR" />
+    <result column="T_IS_ON_USE" property="tIsOnUse" jdbcType="VARCHAR" />
+    <result column="T_OF_TABLESPACE" property="tOfTablespace" jdbcType="VARCHAR" />
+    <result column="T_DESC" property="tDesc" jdbcType="VARCHAR" />
+    <result column="T_SYNC" property="tSync" jdbcType="VARCHAR" />
+    <result column="T_DATE" property="tDate" jdbcType="VARCHAR" />
+    <result column="T_OF_DATASOURCE" property="tOfDatasource" jdbcType="VARCHAR" />
+    <result column="T_OF_PROJECT" property="tOfProject" jdbcType="VARCHAR" />
+    <result column="T_OF_MODULE" property="tOfModule" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    T_ID, T_NAME, T_CN_NAME, T_IS_ON_USE, T_OF_TABLESPACE, T_DESC, T_SYNC, T_DATE, T_OF_DATASOURCE, 
+    T_OF_PROJECT, T_OF_MODULE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dhcc.dic.entity.TTableExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_TABLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_TABLE
+    where T_ID = #{tId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_TABLE
+    where T_ID = #{tId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dhcc.dic.entity.TTableExample" >
+    delete from T_TABLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dhcc.dic.entity.TTable" >
+    insert into T_TABLE (T_ID, T_NAME, T_CN_NAME, 
+      T_IS_ON_USE, T_OF_TABLESPACE, T_DESC, 
+      T_SYNC, T_DATE, T_OF_DATASOURCE, 
+      T_OF_PROJECT, T_OF_MODULE)
+    values (#{tId,jdbcType=VARCHAR}, #{tName,jdbcType=VARCHAR}, #{tCnName,jdbcType=VARCHAR}, 
+      #{tIsOnUse,jdbcType=VARCHAR}, #{tOfTablespace,jdbcType=VARCHAR}, #{tDesc,jdbcType=VARCHAR}, 
+      #{tSync,jdbcType=VARCHAR}, #{tDate,jdbcType=VARCHAR}, #{tOfDatasource,jdbcType=VARCHAR}, 
+      #{tOfProject,jdbcType=VARCHAR}, #{tOfModule,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TTable" >
+    insert into T_TABLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tId != null" >
+        T_ID,
+      </if>
+      <if test="tName != null" >
+        T_NAME,
+      </if>
+      <if test="tCnName != null" >
+        T_CN_NAME,
+      </if>
+      <if test="tIsOnUse != null" >
+        T_IS_ON_USE,
+      </if>
+      <if test="tOfTablespace != null" >
+        T_OF_TABLESPACE,
+      </if>
+      <if test="tDesc != null" >
+        T_DESC,
+      </if>
+      <if test="tSync != null" >
+        T_SYNC,
+      </if>
+      <if test="tDate != null" >
+        T_DATE,
+      </if>
+      <if test="tOfDatasource != null" >
+        T_OF_DATASOURCE,
+      </if>
+      <if test="tOfProject != null" >
+        T_OF_PROJECT,
+      </if>
+      <if test="tOfModule != null" >
+        T_OF_MODULE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tId != null" >
+        #{tId,jdbcType=VARCHAR},
+      </if>
+      <if test="tName != null" >
+        #{tName,jdbcType=VARCHAR},
+      </if>
+      <if test="tCnName != null" >
+        #{tCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="tIsOnUse != null" >
+        #{tIsOnUse,jdbcType=VARCHAR},
+      </if>
+      <if test="tOfTablespace != null" >
+        #{tOfTablespace,jdbcType=VARCHAR},
+      </if>
+      <if test="tDesc != null" >
+        #{tDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="tSync != null" >
+        #{tSync,jdbcType=VARCHAR},
+      </if>
+      <if test="tDate != null" >
+        #{tDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tOfDatasource != null" >
+        #{tOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="tOfProject != null" >
+        #{tOfProject,jdbcType=VARCHAR},
+      </if>
+      <if test="tOfModule != null" >
+        #{tOfModule,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dhcc.dic.entity.TTableExample" resultType="java.lang.Integer" >
+    select count(*) from T_TABLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_TABLE
+    <set >
+      <if test="record.tId != null" >
+        T_ID = #{record.tId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tName != null" >
+        T_NAME = #{record.tName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tCnName != null" >
+        T_CN_NAME = #{record.tCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tIsOnUse != null" >
+        T_IS_ON_USE = #{record.tIsOnUse,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tOfTablespace != null" >
+        T_OF_TABLESPACE = #{record.tOfTablespace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tDesc != null" >
+        T_DESC = #{record.tDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tSync != null" >
+        T_SYNC = #{record.tSync,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tDate != null" >
+        T_DATE = #{record.tDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tOfDatasource != null" >
+        T_OF_DATASOURCE = #{record.tOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tOfProject != null" >
+        T_OF_PROJECT = #{record.tOfProject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tOfModule != null" >
+        T_OF_MODULE = #{record.tOfModule,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_TABLE
+    set T_ID = #{record.tId,jdbcType=VARCHAR},
+      T_NAME = #{record.tName,jdbcType=VARCHAR},
+      T_CN_NAME = #{record.tCnName,jdbcType=VARCHAR},
+      T_IS_ON_USE = #{record.tIsOnUse,jdbcType=VARCHAR},
+      T_OF_TABLESPACE = #{record.tOfTablespace,jdbcType=VARCHAR},
+      T_DESC = #{record.tDesc,jdbcType=VARCHAR},
+      T_SYNC = #{record.tSync,jdbcType=VARCHAR},
+      T_DATE = #{record.tDate,jdbcType=VARCHAR},
+      T_OF_DATASOURCE = #{record.tOfDatasource,jdbcType=VARCHAR},
+      T_OF_PROJECT = #{record.tOfProject,jdbcType=VARCHAR},
+      T_OF_MODULE = #{record.tOfModule,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dhcc.dic.entity.TTable" >
+    update T_TABLE
+    <set >
+      <if test="tName != null" >
+        T_NAME = #{tName,jdbcType=VARCHAR},
+      </if>
+      <if test="tCnName != null" >
+        T_CN_NAME = #{tCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="tIsOnUse != null" >
+        T_IS_ON_USE = #{tIsOnUse,jdbcType=VARCHAR},
+      </if>
+      <if test="tOfTablespace != null" >
+        T_OF_TABLESPACE = #{tOfTablespace,jdbcType=VARCHAR},
+      </if>
+      <if test="tDesc != null" >
+        T_DESC = #{tDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="tSync != null" >
+        T_SYNC = #{tSync,jdbcType=VARCHAR},
+      </if>
+      <if test="tDate != null" >
+        T_DATE = #{tDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tOfDatasource != null" >
+        T_OF_DATASOURCE = #{tOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="tOfProject != null" >
+        T_OF_PROJECT = #{tOfProject,jdbcType=VARCHAR},
+      </if>
+      <if test="tOfModule != null" >
+        T_OF_MODULE = #{tOfModule,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where T_ID = #{tId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dhcc.dic.entity.TTable" >
+    update T_TABLE
+    set T_NAME = #{tName,jdbcType=VARCHAR},
+      T_CN_NAME = #{tCnName,jdbcType=VARCHAR},
+      T_IS_ON_USE = #{tIsOnUse,jdbcType=VARCHAR},
+      T_OF_TABLESPACE = #{tOfTablespace,jdbcType=VARCHAR},
+      T_DESC = #{tDesc,jdbcType=VARCHAR},
+      T_SYNC = #{tSync,jdbcType=VARCHAR},
+      T_DATE = #{tDate,jdbcType=VARCHAR},
+      T_OF_DATASOURCE = #{tOfDatasource,jdbcType=VARCHAR},
+      T_OF_PROJECT = #{tOfProject,jdbcType=VARCHAR},
+      T_OF_MODULE = #{tOfModule,jdbcType=VARCHAR}
+    where T_ID = #{tId,jdbcType=VARCHAR}
+  </update>
+</mapper>
