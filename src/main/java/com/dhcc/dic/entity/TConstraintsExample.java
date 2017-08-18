@@ -523,6 +523,76 @@ public class TConstraintsExample {
             addCriterion("CONS_REF_TABLE_ID not between", value1, value2, "consRefTableId");
             return (Criteria) this;
         }
+
+        public Criteria andConsIsRealIsNull() {
+            addCriterion("CONS_IS_REAL is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andConsIsRealIsNotNull() {
+            addCriterion("CONS_IS_REAL is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andConsIsRealEqualTo(String value) {
+            addCriterion("CONS_IS_REAL =", value, "consIsReal");
+            return (Criteria) this;
+        }
+
+        public Criteria andConsIsRealNotEqualTo(String value) {
+            addCriterion("CONS_IS_REAL <>", value, "consIsReal");
+            return (Criteria) this;
+        }
+
+        public Criteria andConsIsRealGreaterThan(String value) {
+            addCriterion("CONS_IS_REAL >", value, "consIsReal");
+            return (Criteria) this;
+        }
+
+        public Criteria andConsIsRealGreaterThanOrEqualTo(String value) {
+            addCriterion("CONS_IS_REAL >=", value, "consIsReal");
+            return (Criteria) this;
+        }
+
+        public Criteria andConsIsRealLessThan(String value) {
+            addCriterion("CONS_IS_REAL <", value, "consIsReal");
+            return (Criteria) this;
+        }
+
+        public Criteria andConsIsRealLessThanOrEqualTo(String value) {
+            addCriterion("CONS_IS_REAL <=", value, "consIsReal");
+            return (Criteria) this;
+        }
+
+        public Criteria andConsIsRealLike(String value) {
+            addCriterion("CONS_IS_REAL like", value, "consIsReal");
+            return (Criteria) this;
+        }
+
+        public Criteria andConsIsRealNotLike(String value) {
+            addCriterion("CONS_IS_REAL not like", value, "consIsReal");
+            return (Criteria) this;
+        }
+
+        public Criteria andConsIsRealIn(List<String> values) {
+            addCriterion("CONS_IS_REAL in", values, "consIsReal");
+            return (Criteria) this;
+        }
+
+        public Criteria andConsIsRealNotIn(List<String> values) {
+            addCriterion("CONS_IS_REAL not in", values, "consIsReal");
+            return (Criteria) this;
+        }
+
+        public Criteria andConsIsRealBetween(String value1, String value2) {
+            addCriterion("CONS_IS_REAL between", value1, value2, "consIsReal");
+            return (Criteria) this;
+        }
+
+        public Criteria andConsIsRealNotBetween(String value1, String value2) {
+            addCriterion("CONS_IS_REAL not between", value1, value2, "consIsReal");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

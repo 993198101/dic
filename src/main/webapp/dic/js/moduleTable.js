@@ -76,5 +76,5 @@ function deleteModule(moduleId){
 	});
 }
 function editModule(id){
-	location.href=editUrl+"?moduleId="+id;
+	parent.addMainTab("模块_"+id,editUrl+"?moduleId="+id);
 }

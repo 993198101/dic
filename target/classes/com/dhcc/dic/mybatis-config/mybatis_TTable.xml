@@ -107,6 +107,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dhcc.dic.entity.TTable" >
+  	<selectKey resultType="String" order="BEFORE" keyProperty="tId"> 
+		SELECT SEQ_TABLE.NEXTVAL FROM dual 
+	</selectKey>
     insert into T_TABLE (T_ID, T_NAME, T_CN_NAME, 
       T_IS_ON_USE, T_OF_TABLESPACE, T_DESC, 
       T_SYNC, T_DATE, T_OF_DATASOURCE, 
@@ -303,4 +306,7 @@
       T_OF_MODULE = #{tOfModule,jdbcType=VARCHAR}
     where T_ID = #{tId,jdbcType=VARCHAR}
   </update>
+  <select id="getSysOptionList" resultType="com.dhcc.dic.entity.SysOption">
+  		SELECT  P_OPT_CODE AS id,P_OPT_NAME AS text FROM T_SYS_PARM_DIC WHERE P_KEY_NAME='YES_OR_NO'
+  </select>
 </mapper>

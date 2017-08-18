@@ -13,6 +13,8 @@ public class TConstraints {
 
     private String consRefTableId;
 
+    private String consIsReal;
+
     public String getConsId() {
         return consId;
     }
@@ -59,5 +61,13 @@ public class TConstraints {
 
     public void setConsRefTableId(String consRefTableId) {
         this.consRefTableId = consRefTableId == null ? null : consRefTableId.trim();
+    }
+
+    public String getConsIsReal() {
+        return consIsReal;
+    }
+
+    public void setConsIsReal(String consIsReal) {
+        this.consIsReal = consIsReal == null ? null : consIsReal.trim();
     }
 }

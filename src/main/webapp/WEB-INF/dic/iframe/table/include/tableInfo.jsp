@@ -5,35 +5,45 @@
 	<div class="dhcc-input-div">
 		<input class="easyui-textbox theme-textbox dhcc-input-width"
 			name="tName"
-			data-options="prompt:'输入表名称...',required:true,validType:'length[1,20]'">
+			data-options="prompt:'输入表名称...',required:true,validType:'isTableName'">
 	</div>
-	<span style="display: inline-block; width: 20px;"></span> <label
-		class="dhcc-label">表中文名:</label>
+	<span style="display: inline-block; width: 20px;"></span> 
+	<label	class="dhcc-label">表中文名:</label>
 	<div class="dhcc-input-div">
 		<input class="easyui-textbox theme-textbox dhcc-input-width"
 			name="tCnName"
-			data-options="prompt:'输入表中文名...',required:true,validType:'length[1,20]'">
+			data-options="prompt:'输入表中文名...',validType:'length[1,30]'">
 	</div>
 	<br /> <br /> <label class="dhcc-label">所属业务模块:</label>
 	<div class="dhcc-input-div">
-		<select class="easyui-combobox dhcc-input-width" name="tOfModule"
-			data-options="valueField:'id',textField:'text',url:'../table/getSysDatabaseTypeSelect'">
-			<!--option 在url获取  -->
+		<select class="easyui-combobox dhcc-input-width module_option_list" name="tOfModule" id="tOfModule"
+			data-options="valueField:'mId',textField:'mName',panelHeight: 'auto',onLoadSuccess: function () {   
+  				var data = $('#tOfModule').combobox('getData');  
+             	if (data.length > 0) {  
+                  $('#tOfModule').combobox('select', data[0].mId);  
+              	}   
+ 		}">
+			<!--option 在jq加载时获取  -->
 		</select>
 	</div>
 	<span style="display: inline-block; width: 20px;"></span> <label
 		class="dhcc-label">是否在用:</label>
 	<div class="dhcc-input-div">
-		<select class="easyui-combobox dhcc-input-width" name="tIsOnUse" value="yes"
-			data-options="valueField:'id',textField:'text',url:'../table/getSysDatabaseTypeSelect',required:true">
+		<select class="easyui-combobox dhcc-input-width yes_no_option_list" name="tIsOnUse" value="yes"
+			data-options="valueField:'id',textField:'text',panelHeight: 'auto',required:true,value:'1'">
 			<!--option 在url获取  -->
 		</select>
 	</div>
 	<br /> <br /> <label class="dhcc-label">表空间:</label>
 	<div class="dhcc-input-div">
-		<select class="easyui-combobox dhcc-input-width" name="tOfTablespace" value="USERS"
-			data-options="valueField:'id',textField:'text',url:'../table/getSysDatabaseTypeSelect',required:true">
-			<!--option 在url获取  -->
+		<select class="easyui-combobox dhcc-input-width tablespace-option-list" name="tOfTablespace" id="tOfTablespace"
+			data-options="valueField:'tId',textField:'tName',panelHeight: 'auto',onLoadSuccess: function () {   
+  				var data = $('#tOfTablespace').combobox('getData');  
+             	if (data.length > 0) {  
+                  $('#tOfTablespace').combobox('select', data[0].tId);  
+              	}   
+ 			}">
+			<!--option 在jq加载时获取  -->
 		</select>
 	</div>
 	<span style="display: inline-block; width: 20px;"></span> <label
@@ -41,7 +51,7 @@
 	<div class="dhcc-input-div">
 		<input class="easyui-textbox" name="tDesc"
 			style="height: 60px; width: 300px;"
-			data-options="prompt:'输入表描述...',multiline:true,required:true,validType:'length[1,40]'" />
+			data-options="prompt:'输入表描述...',multiline:true,validType:'length[1,40]'" />
 	</div>
 </form>
 <br />

@@ -57,8 +57,9 @@ function button(value,row,index){
 }
 
 function submitForm(){
+	var res=$('#addBusDatasourceForm').form('enableValidation').form('validate');
+	if(!res) return ;
 	var formJson = $('#addBusDatasourceForm').serializeObject();
-	console.log(formJson);
     ajax(addUrl,JSON.stringify(formJson),'post').done(function(data){
 		$.messager.progress('close');//关闭进度
 		 $("#w").window('close');
@@ -81,16 +82,16 @@ function deleteBusDatasource(dId){
 	 */
 	ajax(deleteUrl+"?dId="+dId).done(function(data) {
 		if(data.result==1){
-			$.messager.alert('删除业务数据源','删除业务数据源成成功!','success');
+			$.messager.alert('删除业务数据源','删除业务数据源成功!','success');
 			$("#dataGrid").datagrid('reload',queryParams);
 		}else{
-			$.messager.alert('删除业务数据源','删除业务数据源成成功!','success');
+			$.messager.alert('删除业务数据源','删除业务数据源成失败!','danger');
 		}
 		parent.loadSec("../menu/getAllMenus");
 	});
 }
 function editBusdatasource(id){
-	location.href=editUrl+"?datasourceId="+id;
+	parent.addMainTab("业务数据源_"+id,editUrl+"?datasourceId="+id);
 }
 function query(){
 	queryParams={};

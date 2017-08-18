@@ -161,32 +161,32 @@ public class MenuTreeUtil {
 				"closed");
 		this.tMenuTreeDao.insert(allMenu);
 		// 全量--表
-		TMenuTree allTableMenu = new TMenuTree(null, "表", allMenu.getmId(), "表", mDate, "1", "../menu/gotoAllTableTable?datasourceId="+tDatasource.getdId(),
+		TMenuTree allTableMenu = new TMenuTree(null, "表", allMenu.getmId(), "表", mDate, "1", "../menu/gotoAllTableTable?datasourceId="+tDatasource.getdId()+"&projectId="+tDatasource.getdOfProject()+"&moduleId=0",
 				null, "open");
 		this.tMenuTreeDao.insert(allTableMenu);
 		// 全量--视图
-		TMenuTree allViewMenu = new TMenuTree(null, "视图", allMenu.getmId(), "视图", mDate, "1", "../menu/gotoViewTable",
+		TMenuTree allViewMenu = new TMenuTree(null, "视图", allMenu.getmId(), "视图", mDate, "1", "../menu/gotoViewTable?datasourceId="+tDatasource.getdId()+"&projectId="+tDatasource.getdOfProject()+"&moduleId=0",
 				null, "open");
 		this.tMenuTreeDao.insert(allViewMenu);
 		// 全量--序列
-		TMenuTree allSeqMenu = new TMenuTree(null, "序列", allMenu.getmId(), "序列", mDate, "1", "../menu/gotoSeqTable",
+		TMenuTree allSeqMenu = new TMenuTree(null, "序列", allMenu.getmId(), "序列", mDate, "1", "../menu/gotoSeqTable?datasourceId="+tDatasource.getdId()+"&projectId="+tDatasource.getdOfProject()+"&moduleId=0",
 				null, "open");
 		this.tMenuTreeDao.insert(allSeqMenu);
 		// 全量--索引
-		TMenuTree allIndexMenu = new TMenuTree(null, "索引", allMenu.getmId(), "索引", mDate, "1", "../menu/gotoIndexTable",
+		TMenuTree allIndexMenu = new TMenuTree(null, "索引", allMenu.getmId(), "索引", mDate, "1", "../menu/gotoIndexTable?datasourceId="+tDatasource.getdId()+"&projectId="+tDatasource.getdOfProject()+"&moduleId=0",
 				null, "open");
 		this.tMenuTreeDao.insert(allIndexMenu);
 		// 全量--数据元
 		TMenuTree allDataElementMenu = new TMenuTree(null, "数据元", allMenu.getmId(), "数据元", mDate, "1",
-				"../menu/gotoDataElementTable", null, "closed");
+				"../menu/gotoDataElementTable?datasourceId="+tDatasource.getdId()+"&projectId="+tDatasource.getdOfProject()+"&moduleId=0", null, "closed");
 		this.tMenuTreeDao.insert(allDataElementMenu);
 		// 全量--数据元--数据元信息
 		TMenuTree allDataElementInfoMenu = new TMenuTree(null, "数据元信息", allDataElementMenu.getmId(), "数据元信息", mDate,
-				"1", "../menu/gotoDataElementInfoTable", null, "open");
+				"1", "../menu/gotoDataElementInfoTable?datasourceId="+tDatasource.getdId()+"&projectId="+tDatasource.getdOfProject()+"&moduleId=0", null, "open");
 		this.tMenuTreeDao.insert(allDataElementInfoMenu);
 		// 全量--数据元--引用标准
 		TMenuTree allRefStandardMenu = new TMenuTree(null, "引用标准", allDataElementMenu.getmId(), "引用标准", mDate, "1",
-				"../menu/gotoRefStandardTable", null, "open");
+				"../menu/gotoRefStandardTable?datasourceId="+tDatasource.getdId()+"&projectId="+tDatasource.getdOfProject()+"&moduleId=0", null, "open");
 		this.tMenuTreeDao.insert(allRefStandardMenu);
 
 		// 按模块

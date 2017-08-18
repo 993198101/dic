@@ -86,14 +86,23 @@ public class MenuTreeController {
     	return "dic/iframe/moduleForm";
     }
     @RequestMapping("/gotoAllTableTable")
-    public ModelAndView gotoAllTable(String menuId,String datasourceId){
+    public ModelAndView gotoAllTable(String projectId,String menuId,String datasourceId){
     	ModelAndView mv=new ModelAndView("dic/iframe/table/tableMainTable");
     	mv.addObject("datasourceId",datasourceId);
     	mv.addObject("menuId",menuId);
+    	mv.addObject("projectId",projectId);
     	return mv;
     }
     @RequestMapping("/gotoTableMainForm")
     public String gotoTableMainForm(){
     	return "dic/iframe/table/tableMainForm";
+    }
+    @RequestMapping("/gotoIndexTable")
+    public String gotoIndex(){
+    	return "/dic/iframe/indexTable";
+    }
+    @RequestMapping("/gotoIndexForm")
+    public String gotoIndexForm(){
+    	return "/dic/iframe/indexForm";
     }
 }

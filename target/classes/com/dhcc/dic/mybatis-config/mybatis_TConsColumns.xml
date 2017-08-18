@@ -99,12 +99,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dhcc.dic.entity.TConsColumns" >
+  	<selectKey resultType="String" order="BEFORE" keyProperty="ccId"> 
+		SELECT SEQ_CONSTRAINTS_COLUMNS.NEXTVAL FROM dual 
+	</selectKey>
     insert into T_CONS_COLUMNS (CC_ID, CC_CONS_ID, CC_TABLE_ID, 
       CC_TABLE_FIELD_ID)
     values (#{ccId,jdbcType=VARCHAR}, #{ccConsId,jdbcType=VARCHAR}, #{ccTableId,jdbcType=VARCHAR}, 
       #{ccTableFieldId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TConsColumns" >
+    <selectKey resultType="String" order="BEFORE" keyProperty="ccId"> 
+		SELECT SEQ_CONSTRAINTS_COLUMNS.NEXTVAL FROM dual 
+	</selectKey>
     insert into T_CONS_COLUMNS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="ccId != null" >

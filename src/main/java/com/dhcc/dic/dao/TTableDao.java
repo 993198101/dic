@@ -1,5 +1,6 @@
 package com.dhcc.dic.dao;
 
+import com.dhcc.dic.entity.SysOption;
 import com.dhcc.dic.entity.TTable;
 import com.dhcc.dic.entity.TTableExample;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface TTableDao {
     int updateByPrimaryKeySelective(TTable record);
 
     int updateByPrimaryKey(TTable record);
+    
+    List<SysOption> getSysOptionList();
 }

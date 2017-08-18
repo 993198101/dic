@@ -83,7 +83,7 @@ function deleteUser(dId){
 	});
 }
 function editSysdatasource(id){
-	location.href=editUrl+"?userId="+id;
+	parent.addMainTab("用户_"+id,editUrl+"?userId="+id);
 }
 function query(){
 	queryParams={};

@@ -1,6 +1,12 @@
 package com.dhcc.dic.entity;
 
-public class SysSelect {
+import java.io.Serializable;
+
+public class SysOption implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3432080704554149027L;
 	private String id;
 	private String text;
 	private boolean selected;

@@ -39,7 +39,7 @@ $.fn.serializeObject = function()
        }    
    });    
    return o;    
-}; 
+};
 $.extend($.fn.validatebox.defaults.rules, {  
 	isValidIP: {  
         validator: function(value, param){  
@@ -52,6 +52,24 @@ $.extend($.fn.validatebox.defaults.rules, {
             return isValidPort(value);  
         },  
         message: '请输入正确的端口'
+    },
+    isTableName:{
+    	validator: function(value, param){  
+            return isTableName(value);  
+        },  
+        message: '请输入正确的表名-字母开头30字符以内'
+    },
+    tableFileSize:{
+    	validator: function(value, param){  
+            return tableFileSize(value);  
+        },  
+        message: '请输入符合要求的字段长度'
+    },
+    tableFileScale:{
+    	validator: function(value, param){  
+            return tableFileScale(value);  
+        },  
+        message: '请输入符合要求的字段精度'
     }
 }); 
 /*端口号校验*/  
@@ -68,7 +86,62 @@ function isValidPort(str)
 function isValidIP(ip) {
     var reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
     return reg.test(ip);
-} 
+}
+//表名校验
+function isTableName(name){
+	 var reg = /^[a-zA-Z]{1}[a-zA-Z0-9$#_]{0,29}$/
+	 return reg.test(name);
+}
+//字段长度
+function tableFileSize(size){
+	var value=$('#fType').combobox('getValue');
+	switch(value){
+		case "20"://VARCHAR2
+			
+		case "12"://NVARCAHR2
+			if(size<1||size>4000||size==undefined){
+					return false;
+				}
+			break;
+		case "24"://CHAR
+		case "13"://ROW
+		case "9": //NCHAR
+			if(size<1||size>2000){
+				return false;
+			}
+			break;
+		case "11"://NUMBER
+			if(size<1||size>38){
+				return false;
+			}
+			break;
+		case "17"://TIMESTAMP
+			if(size<1||size>9){
+				return false;
+			}
+			break;
+		case "3"://FLOAT
+			if(size<1||size>126){
+				return false;
+			}
+			break;
+	}
+	return true;
+}
+//字段精度
+function tableFileScale(Scale){
+	var value=$('#fType').combobox('getValue');
+	if(value=="11"){//NUMBER
+		if(Scale>-84&&Scale<127){
+			return true;
+		}else{
+			return false;
+		}
+	}else{
+		return false;
+	}
+}
+
 function formatterDate(date){
 	var y = date.getFullYear();
 	var m = date.getMonth()+1;

@@ -39,7 +39,7 @@
 </head>
 <body class="dhcc-body" >
 <div >
-    <div class="easyui-tabs" style="width:100%;height:500px;position:relative">
+    <div class="easyui-tabs" style="width:100%;height:500px;position:relative" data-options="onSelect:onSelect">
         <div title="表基本信息" style="padding:10px">
        		<jsp:include page="include/tableInfo.jsp" flush="true" />
         </div>

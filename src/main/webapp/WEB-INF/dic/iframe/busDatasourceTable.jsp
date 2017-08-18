@@ -183,7 +183,7 @@
 				<button type="button" onclick="back()" type="button" class="easyui-linkbutton button-line-green">返回</button>
 			</div>
 		</form>
-		<iframe name='formTargetIframe' style='display: none;'></iframe>,
+		<iframe name='formTargetIframe' style='display: none;'></iframe>
 	</div>
 	<script src="<%=path%>/dic/js/busDatasourceTable.js"></script>
 </body>

@@ -14,7 +14,6 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.druid.support.json.JSONUtils;
-import com.dhcc.dic.Exception.DicException;
 import com.dhcc.dic.controller.LoginController;
 
 /** 
@@ -36,12 +35,12 @@ public class ExceptionInterceptor implements HandlerExceptionResolver  {
             // 如果不是ajax，JSP格式返回
             // 为安全起见，只有业务异常我们对前端可见，否则否则统一归为系统异常
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("success", false);
-            if (exception instanceof DicException) {
-                map.put("errorMsg", exception.getMessage());
-            } else {
-                map.put("errorMsg", "系统异常！");
-            }
+            map.put("status", "failure");
+//            if (exception instanceof DicException) {
+//                map.put("errorMsg", exception.getMessage());
+//            } else {
+//                map.put("errorMsg", "系统异常！");
+//            }
             //这里需要手动将异常打印出来，由于没有配置log，实际生产环境应该打印到log里面
             exception.printStackTrace();
             //对于非ajax请求，我们都统一跳转到error.jsp页面
@@ -52,13 +51,14 @@ public class ExceptionInterceptor implements HandlerExceptionResolver  {
                 response.setContentType("application/json;charset=UTF-8");
                 PrintWriter writer = response.getWriter();
                 Map<String, Object> map = new HashMap<String, Object>();
-                map.put("success", false);
+                map.put("status", "failure");
                 // 为安全起见，只有业务异常我们对前端可见，否则统一归为系统异常
-                if (exception instanceof DicException) {
-                    map.put("errorMsg", exception.getMessage());
-                } else {
-                    map.put("errorMsg", "系统异常！");
-                }
+               
+//                if (exception instanceof DicException) {
+//                    map.put("errorMsg", exception.getMessage());
+//                } else {
+//                    map.put("errorMsg", "系统异常！");
+//                }
                 writer.write(JSONUtils.toJSONString(map));
                 writer.flush();
                 writer.close();

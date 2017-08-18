@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhcc.dic.dao.TTablespaceDao" >
+  <resultMap id="BaseResultMap" type="com.dhcc.dic.entity.TTablespace" >
+    <id column="T_ID" property="tId" jdbcType="VARCHAR" />
+    <result column="T_NAME" property="tName" jdbcType="VARCHAR" />
+    <result column="T_CN_NAME" property="tCnName" jdbcType="VARCHAR" />
+    <result column="T_DESC" property="tDesc" jdbcType="VARCHAR" />
+    <result column="T_TYPE" property="tType" jdbcType="VARCHAR" />
+    <result column="T_MIN_EXTENT" property="tMinExtent" jdbcType="VARCHAR" />
+    <result column="T_BLOCKSIZE" property="tBlocksize" jdbcType="VARCHAR" />
+    <result column="T_PARTITION_GROUP" property="tPartitionGroup" jdbcType="VARCHAR" />
+    <result column="T_LOGGING_CLAUSE" property="tLoggingClause" jdbcType="VARCHAR" />
+    <result column="T_FORCE_LOGGING" property="tForceLogging" jdbcType="VARCHAR" />
+    <result column="T_DEF_STORAGE_CLAUSE" property="tDefStorageClause" jdbcType="VARCHAR" />
+    <result column="T_ATTRIBUTE" property="tAttribute" jdbcType="VARCHAR" />
+    <result column="T_EXTENT_MANAGEMENT_CLAUSE" property="tExtentManagementClause" jdbcType="VARCHAR" />
+    <result column="T_STATE" property="tState" jdbcType="VARCHAR" />
+    <result column="T_SAVE_OBJ_STATE" property="tSaveObjState" jdbcType="VARCHAR" />
+    <result column="T_OF_DATASOURCE" property="tOfDatasource" jdbcType="VARCHAR" />
+    <result column="T_OF_PROJECT" property="tOfProject" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    T_ID, T_NAME, T_CN_NAME, T_DESC, T_TYPE, T_MIN_EXTENT, T_BLOCKSIZE, T_PARTITION_GROUP, 
+    T_LOGGING_CLAUSE, T_FORCE_LOGGING, T_DEF_STORAGE_CLAUSE, T_ATTRIBUTE, T_EXTENT_MANAGEMENT_CLAUSE, 
+    T_STATE, T_SAVE_OBJ_STATE, T_OF_DATASOURCE, T_OF_PROJECT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dhcc.dic.entity.TTablespaceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_TABLESPACE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_TABLESPACE
+    where T_ID = #{tId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_TABLESPACE
+    where T_ID = #{tId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dhcc.dic.entity.TTablespaceExample" >
+    delete from T_TABLESPACE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dhcc.dic.entity.TTablespace" >
+    insert into T_TABLESPACE (T_ID, T_NAME, T_CN_NAME, 
+      T_DESC, T_TYPE, T_MIN_EXTENT, 
+      T_BLOCKSIZE, T_PARTITION_GROUP, T_LOGGING_CLAUSE, 
+      T_FORCE_LOGGING, T_DEF_STORAGE_CLAUSE, T_ATTRIBUTE, 
+      T_EXTENT_MANAGEMENT_CLAUSE, T_STATE, T_SAVE_OBJ_STATE, 
+      T_OF_DATASOURCE, T_OF_PROJECT)
+    values (#{tId,jdbcType=VARCHAR}, #{tName,jdbcType=VARCHAR}, #{tCnName,jdbcType=VARCHAR}, 
+      #{tDesc,jdbcType=VARCHAR}, #{tType,jdbcType=VARCHAR}, #{tMinExtent,jdbcType=VARCHAR}, 
+      #{tBlocksize,jdbcType=VARCHAR}, #{tPartitionGroup,jdbcType=VARCHAR}, #{tLoggingClause,jdbcType=VARCHAR}, 
+      #{tForceLogging,jdbcType=VARCHAR}, #{tDefStorageClause,jdbcType=VARCHAR}, #{tAttribute,jdbcType=VARCHAR}, 
+      #{tExtentManagementClause,jdbcType=VARCHAR}, #{tState,jdbcType=VARCHAR}, #{tSaveObjState,jdbcType=VARCHAR}, 
+      #{tOfDatasource,jdbcType=VARCHAR}, #{tOfProject,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TTablespace" >
+    insert into T_TABLESPACE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tId != null" >
+        T_ID,
+      </if>
+      <if test="tName != null" >
+        T_NAME,
+      </if>
+      <if test="tCnName != null" >
+        T_CN_NAME,
+      </if>
+      <if test="tDesc != null" >
+        T_DESC,
+      </if>
+      <if test="tType != null" >
+        T_TYPE,
+      </if>
+      <if test="tMinExtent != null" >
+        T_MIN_EXTENT,
+      </if>
+      <if test="tBlocksize != null" >
+        T_BLOCKSIZE,
+      </if>
+      <if test="tPartitionGroup != null" >
+        T_PARTITION_GROUP,
+      </if>
+      <if test="tLoggingClause != null" >
+        T_LOGGING_CLAUSE,
+      </if>
+      <if test="tForceLogging != null" >
+        T_FORCE_LOGGING,
+      </if>
+      <if test="tDefStorageClause != null" >
+        T_DEF_STORAGE_CLAUSE,
+      </if>
+      <if test="tAttribute != null" >
+        T_ATTRIBUTE,
+      </if>
+      <if test="tExtentManagementClause != null" >
+        T_EXTENT_MANAGEMENT_CLAUSE,
+      </if>
+      <if test="tState != null" >
+        T_STATE,
+      </if>
+      <if test="tSaveObjState != null" >
+        T_SAVE_OBJ_STATE,
+      </if>
+      <if test="tOfDatasource != null" >
+        T_OF_DATASOURCE,
+      </if>
+      <if test="tOfProject != null" >
+        T_OF_PROJECT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tId != null" >
+        #{tId,jdbcType=VARCHAR},
+      </if>
+      <if test="tName != null" >
+        #{tName,jdbcType=VARCHAR},
+      </if>
+      <if test="tCnName != null" >
+        #{tCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="tDesc != null" >
+        #{tDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="tType != null" >
+        #{tType,jdbcType=VARCHAR},
+      </if>
+      <if test="tMinExtent != null" >
+        #{tMinExtent,jdbcType=VARCHAR},
+      </if>
+      <if test="tBlocksize != null" >
+        #{tBlocksize,jdbcType=VARCHAR},
+      </if>
+      <if test="tPartitionGroup != null" >
+        #{tPartitionGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="tLoggingClause != null" >
+        #{tLoggingClause,jdbcType=VARCHAR},
+      </if>
+      <if test="tForceLogging != null" >
+        #{tForceLogging,jdbcType=VARCHAR},
+      </if>
+      <if test="tDefStorageClause != null" >
+        #{tDefStorageClause,jdbcType=VARCHAR},
+      </if>
+      <if test="tAttribute != null" >
+        #{tAttribute,jdbcType=VARCHAR},
+      </if>
+      <if test="tExtentManagementClause != null" >
+        #{tExtentManagementClause,jdbcType=VARCHAR},
+      </if>
+      <if test="tState != null" >
+        #{tState,jdbcType=VARCHAR},
+      </if>
+      <if test="tSaveObjState != null" >
+        #{tSaveObjState,jdbcType=VARCHAR},
+      </if>
+      <if test="tOfDatasource != null" >
+        #{tOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="tOfProject != null" >
+        #{tOfProject,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dhcc.dic.entity.TTablespaceExample" resultType="java.lang.Integer" >
+    select count(*) from T_TABLESPACE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_TABLESPACE
+    <set >
+      <if test="record.tId != null" >
+        T_ID = #{record.tId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tName != null" >
+        T_NAME = #{record.tName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tCnName != null" >
+        T_CN_NAME = #{record.tCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tDesc != null" >
+        T_DESC = #{record.tDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tType != null" >
+        T_TYPE = #{record.tType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tMinExtent != null" >
+        T_MIN_EXTENT = #{record.tMinExtent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tBlocksize != null" >
+        T_BLOCKSIZE = #{record.tBlocksize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tPartitionGroup != null" >
+        T_PARTITION_GROUP = #{record.tPartitionGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tLoggingClause != null" >
+        T_LOGGING_CLAUSE = #{record.tLoggingClause,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tForceLogging != null" >
+        T_FORCE_LOGGING = #{record.tForceLogging,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tDefStorageClause != null" >
+        T_DEF_STORAGE_CLAUSE = #{record.tDefStorageClause,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tAttribute != null" >
+        T_ATTRIBUTE = #{record.tAttribute,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tExtentManagementClause != null" >
+        T_EXTENT_MANAGEMENT_CLAUSE = #{record.tExtentManagementClause,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tState != null" >
+        T_STATE = #{record.tState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tSaveObjState != null" >
+        T_SAVE_OBJ_STATE = #{record.tSaveObjState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tOfDatasource != null" >
+        T_OF_DATASOURCE = #{record.tOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tOfProject != null" >
+        T_OF_PROJECT = #{record.tOfProject,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_TABLESPACE
+    set T_ID = #{record.tId,jdbcType=VARCHAR},
+      T_NAME = #{record.tName,jdbcType=VARCHAR},
+      T_CN_NAME = #{record.tCnName,jdbcType=VARCHAR},
+      T_DESC = #{record.tDesc,jdbcType=VARCHAR},
+      T_TYPE = #{record.tType,jdbcType=VARCHAR},
+      T_MIN_EXTENT = #{record.tMinExtent,jdbcType=VARCHAR},
+      T_BLOCKSIZE = #{record.tBlocksize,jdbcType=VARCHAR},
+      T_PARTITION_GROUP = #{record.tPartitionGroup,jdbcType=VARCHAR},
+      T_LOGGING_CLAUSE = #{record.tLoggingClause,jdbcType=VARCHAR},
+      T_FORCE_LOGGING = #{record.tForceLogging,jdbcType=VARCHAR},
+      T_DEF_STORAGE_CLAUSE = #{record.tDefStorageClause,jdbcType=VARCHAR},
+      T_ATTRIBUTE = #{record.tAttribute,jdbcType=VARCHAR},
+      T_EXTENT_MANAGEMENT_CLAUSE = #{record.tExtentManagementClause,jdbcType=VARCHAR},
+      T_STATE = #{record.tState,jdbcType=VARCHAR},
+      T_SAVE_OBJ_STATE = #{record.tSaveObjState,jdbcType=VARCHAR},
+      T_OF_DATASOURCE = #{record.tOfDatasource,jdbcType=VARCHAR},
+      T_OF_PROJECT = #{record.tOfProject,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dhcc.dic.entity.TTablespace" >
+    update T_TABLESPACE
+    <set >
+      <if test="tName != null" >
+        T_NAME = #{tName,jdbcType=VARCHAR},
+      </if>
+      <if test="tCnName != null" >
+        T_CN_NAME = #{tCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="tDesc != null" >
+        T_DESC = #{tDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="tType != null" >
+        T_TYPE = #{tType,jdbcType=VARCHAR},
+      </if>
+      <if test="tMinExtent != null" >
+        T_MIN_EXTENT = #{tMinExtent,jdbcType=VARCHAR},
+      </if>
+      <if test="tBlocksize != null" >
+        T_BLOCKSIZE = #{tBlocksize,jdbcType=VARCHAR},
+      </if>
+      <if test="tPartitionGroup != null" >
+        T_PARTITION_GROUP = #{tPartitionGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="tLoggingClause != null" >
+        T_LOGGING_CLAUSE = #{tLoggingClause,jdbcType=VARCHAR},
+      </if>
+      <if test="tForceLogging != null" >
+        T_FORCE_LOGGING = #{tForceLogging,jdbcType=VARCHAR},
+      </if>
+      <if test="tDefStorageClause != null" >
+        T_DEF_STORAGE_CLAUSE = #{tDefStorageClause,jdbcType=VARCHAR},
+      </if>
+      <if test="tAttribute != null" >
+        T_ATTRIBUTE = #{tAttribute,jdbcType=VARCHAR},
+      </if>
+      <if test="tExtentManagementClause != null" >
+        T_EXTENT_MANAGEMENT_CLAUSE = #{tExtentManagementClause,jdbcType=VARCHAR},
+      </if>
+      <if test="tState != null" >
+        T_STATE = #{tState,jdbcType=VARCHAR},
+      </if>
+      <if test="tSaveObjState != null" >
+        T_SAVE_OBJ_STATE = #{tSaveObjState,jdbcType=VARCHAR},
+      </if>
+      <if test="tOfDatasource != null" >
+        T_OF_DATASOURCE = #{tOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="tOfProject != null" >
+        T_OF_PROJECT = #{tOfProject,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where T_ID = #{tId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dhcc.dic.entity.TTablespace" >
+    update T_TABLESPACE
+    set T_NAME = #{tName,jdbcType=VARCHAR},
+      T_CN_NAME = #{tCnName,jdbcType=VARCHAR},
+      T_DESC = #{tDesc,jdbcType=VARCHAR},
+      T_TYPE = #{tType,jdbcType=VARCHAR},
+      T_MIN_EXTENT = #{tMinExtent,jdbcType=VARCHAR},
+      T_BLOCKSIZE = #{tBlocksize,jdbcType=VARCHAR},
+      T_PARTITION_GROUP = #{tPartitionGroup,jdbcType=VARCHAR},
+      T_LOGGING_CLAUSE = #{tLoggingClause,jdbcType=VARCHAR},
+      T_FORCE_LOGGING = #{tForceLogging,jdbcType=VARCHAR},
+      T_DEF_STORAGE_CLAUSE = #{tDefStorageClause,jdbcType=VARCHAR},
+      T_ATTRIBUTE = #{tAttribute,jdbcType=VARCHAR},
+      T_EXTENT_MANAGEMENT_CLAUSE = #{tExtentManagementClause,jdbcType=VARCHAR},
+      T_STATE = #{tState,jdbcType=VARCHAR},
+      T_SAVE_OBJ_STATE = #{tSaveObjState,jdbcType=VARCHAR},
+      T_OF_DATASOURCE = #{tOfDatasource,jdbcType=VARCHAR},
+      T_OF_PROJECT = #{tOfProject,jdbcType=VARCHAR}
+    where T_ID = #{tId,jdbcType=VARCHAR}
+  </update>
+</mapper>

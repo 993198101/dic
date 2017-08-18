@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dhcc.dic.dao.TModuleDao;
-import com.dhcc.dic.entity.SysSelect;
+import com.dhcc.dic.entity.SysOption;
 import com.dhcc.dic.entity.TModule;
 import com.dhcc.dic.entity.TModuleExample;
 import com.dhcc.dic.entity.TMenuTree;
@@ -26,6 +26,7 @@ public class ModuleServiceImpl  implements ModuleService{
 	private MenuTreeUtil menuTreeUtil;
 	@Override
 	public List<TModule> getPage(int pageNum,int pageSize,TModule tModule) throws Exception  {
+		PageHelper.startPage(pageNum, pageSize);
 		List<TModule> tModules=null;
 		TModuleExample example=new TModuleExample();
 		Criteria criteria=example.createCriteria();
@@ -96,6 +97,12 @@ public class ModuleServiceImpl  implements ModuleService{
 			tMenuTree.setmText(tModule.getmName());
 			this.menuTreeUtil.editMenuTree(tMenuTree);
 		}
+	}
+	@Override
+	public List<TModule> getModuleList(String projectId) throws Exception {
+		TModuleExample example=new TModuleExample();
+		example.createCriteria().andMOfProjectEqualTo(projectId);
+		return this.tModuleDao.selectByExample(example);
 	}
 
 }

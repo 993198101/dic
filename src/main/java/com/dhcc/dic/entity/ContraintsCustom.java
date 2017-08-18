@@ -1,24 +1,27 @@
 package com.dhcc.dic.entity;
 
-import java.util.List;
+
 
 public class ContraintsCustom extends TConstraints{
 	
-	List<TTableField> consField;
+	TTableField[] consFieldName;
 	
-	List<TTableField> RefConsField;
-	
-	public List<TTableField> getConsField() {
-		return consField;
+	String[] refConsFieldId;
+
+	public TTableField[] getConsFieldName() {
+		return consFieldName;
 	}
-	public void setConsField(List<TTableField> consField) {
-		this.consField = consField;
+
+	public void setConsFieldName(TTableField[] consFieldName) {
+		this.consFieldName = consFieldName;
 	}
-	public List<TTableField> getRefConsField() {
-		return RefConsField;
+
+	public String[] getRefConsFieldId() {
+		return refConsFieldId;
 	}
-	public void setRefConsField(List<TTableField> refConsField) {
-		RefConsField = refConsField;
+
+	public void setRefConsFieldId(String[] refConsFieldId) {
+		this.refConsFieldId = refConsFieldId;
 	}
 	
 }

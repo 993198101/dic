@@ -12,7 +12,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import com.dhcc.dic.dao.MenuTreeDao;
 import com.dhcc.dic.dao.TDatasourceDao;
 import com.dhcc.dic.dao.TMenuTreeDao;
-import com.dhcc.dic.entity.SysSelect;
+import com.dhcc.dic.entity.SysOption;
 import com.dhcc.dic.entity.TDatasource;
 import com.dhcc.dic.entity.TDatasourceExample;
 import com.dhcc.dic.entity.TProjectExample;
@@ -33,6 +33,7 @@ public class SysDatasourceServiceImpl implements SysDatasourceService{
 	@Override
 	public List<TDatasource> getPage(int pageNum,int pageSize,TDatasource tDatasource) throws Exception  {
 		List<TDatasource> tDatasources=null;
+		PageHelper.startPage(pageNum, pageSize);
 		TDatasourceExample example=new TDatasourceExample();
 		Criteria criteria=example.createCriteria();
 		if(tDatasource.getdId()!=null)
@@ -79,9 +80,9 @@ public class SysDatasourceServiceImpl implements SysDatasourceService{
 		
 	}
 	@Override
-	public List<SysSelect> getSysDatabaseTypeSelect() throws Exception {
-		List<SysSelect> sysSelects=this.tDatasourceDao.getSysDatabaseTypeSelect();
-		return sysSelects;
+	public List<SysOption> getSysDatabaseTypeSelect() throws Exception {
+		List<SysOption> sysOptions=this.tDatasourceDao.getSysDatabaseTypeSelect();
+		return sysOptions;
 	}
 	/**
 	 * 删除某个系统数据源

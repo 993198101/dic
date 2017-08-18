@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<TUser> getPage(int pageNum, int pageSize, TUser tUser) throws Exception {
 		List<TUser> users=null;
+		PageHelper.startPage(pageNum, pageSize);
 		TUserExample example=new TUserExample();
 		Criteria criteria=example.createCriteria();
 		if(tUser.getuId()!=null)

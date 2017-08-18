@@ -2,7 +2,7 @@ package com.dhcc.dic.service;
 
 import java.util.List;
 
-import com.dhcc.dic.entity.SysSelect;
+import com.dhcc.dic.entity.SysOption;
 import com.dhcc.dic.entity.TModule;
 
 public interface ModuleService {
@@ -11,4 +11,5 @@ public interface ModuleService {
 	public void deleteModuleById(String dId) throws Exception;
 	public TModule getModuleById(String datasourceId) throws Exception;
 	public void editModule(TModule datasource) throws Exception;
+	public List<TModule> getModuleList(String projectId) throws Exception;
 }

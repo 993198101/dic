@@ -1,6 +1,6 @@
 package com.dhcc.dic.dao;
 
-import com.dhcc.dic.entity.SysSelect;
+import com.dhcc.dic.entity.SysOption;
 import com.dhcc.dic.entity.TDatasource;
 import com.dhcc.dic.entity.TDatasourceExample;
 import java.util.List;
@@ -29,5 +29,5 @@ public interface TDatasourceDao {
 
     int updateByPrimaryKey(TDatasource record);
     
-    List<SysSelect> getSysDatabaseTypeSelect();
+    List<SysOption> getSysDatabaseTypeSelect();
 }

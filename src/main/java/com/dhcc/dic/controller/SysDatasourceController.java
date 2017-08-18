@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dhcc.dic.entity.SysSelect;
+import com.dhcc.dic.entity.SysOption;
 import com.dhcc.dic.entity.TDatasource;
 import com.dhcc.dic.entity.TProject;
 import com.dhcc.dic.service.SysDatasourceService;
@@ -36,8 +36,8 @@ public class SysDatasourceController {
 	}
 	@RequestMapping("/getSysDatabaseTypeSelect")
 	@ResponseBody
-	public List<SysSelect> getSysDatabaseTypeSelect() throws Exception{
-		List<SysSelect> options=null;
+	public List<SysOption> getSysDatabaseTypeSelect() throws Exception{
+		List<SysOption> options=null;
 		try{
 			options=this.sysDatasourceService.getSysDatabaseTypeSelect();
 		}catch(Exception e){

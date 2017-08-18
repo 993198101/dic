@@ -76,7 +76,7 @@ function deleteProject(pId){
 	});
 }
 function editProject(id){
-	location.href=editUrl+"?projectId="+id;
+	parent.addMainTab("项目_"+id,editUrl+"?projectId="+id);
 }
 function GetQueryString(name)
 {

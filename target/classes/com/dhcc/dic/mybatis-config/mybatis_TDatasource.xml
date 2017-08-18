@@ -326,7 +326,7 @@
       D_DATABASE_TYPE = #{dDatabaseType,jdbcType=VARCHAR}
     where D_ID = #{dId,jdbcType=VARCHAR}
   </update>
-  <select id="getSysDatabaseTypeSelect" resultType="com.dhcc.dic.entity.SysSelect">
+  <select id="getSysDatabaseTypeSelect" resultType="com.dhcc.dic.entity.SysOption">
   		SELECT P_OPT_CODE AS id,P_OPT_NAME AS text FROM T_SYS_PARM_DIC WHERE P_KEY_NAME='DATABASE_TYPE'
   </select>
 </mapper>

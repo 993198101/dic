@@ -113,6 +113,5 @@ function deleteSysDatasource(dId){
 	});
 }
 function editSysdatasource(id){
-	location.href=editUrl+"?datasourceId="+id;
+	parent.addMainTab("系统数据源_"+id,editUrl+"?datasourceId="+id);
 }
-////$("#myForm").form('load',{"email":"993198101q.com"}); 初始化表单

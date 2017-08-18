@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dhcc.dic.entity.SysSelect;
+import com.dhcc.dic.entity.SysOption;
 import com.dhcc.dic.entity.TDatasource;
 import com.dhcc.dic.service.BusDatasourceService;
 import com.github.pagehelper.PageInfo;
@@ -34,8 +34,8 @@ public class BusDatasourceController {
 	}
 	@RequestMapping("/getBusDatabaseTypeSelect")
 	@ResponseBody
-	public List<SysSelect> getBusDatabaseTypeSelect(){
-		List<SysSelect> options=null;
+	public List<SysOption> getBusDatabaseTypeSelect(){
+		List<SysOption> options=null;
 		try{
 			options=this.busDatasourceService.getSysDatabaseTypeSelect();
 		}catch(Exception e){

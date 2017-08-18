@@ -15,6 +15,8 @@ $(function(){
 	})
 });
 function saveEdit(){
+	var res=$('#datasourceForm').form('enableValidation').form('validate');
+	if(!res) return;
 	var formJson = $('#datasourceForm').serializeObject();   
      ajax(saveEditUrl,JSON.stringify(formJson),'post').done(function(data){
 		if(data.result>0){

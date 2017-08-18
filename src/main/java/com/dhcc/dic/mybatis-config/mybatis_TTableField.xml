@@ -118,6 +118,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dhcc.dic.entity.TTableField" >
+    <selectKey resultType="String" order="BEFORE" keyProperty="fId"> 
+		SELECT SEQ_TABLE_FIELD.NEXTVAL FROM dual 
+	</selectKey>
     insert into T_TABLE_FIELD (F_ID, F_NAME, F_CN_NAME, 
       F_ALIAS, F_CTRL_TYPE, F_FUNC_TYPE, 
       F_CTRL_CONSTRAINTS, F_TYPE, F_SIZE, 

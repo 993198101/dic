@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhcc.dic.dao.TIndexDao" >
+  <resultMap id="BaseResultMap" type="com.dhcc.dic.entity.TIndex" >
+    <id column="I_ID" property="iId" jdbcType="VARCHAR" />
+    <result column="I_OF_TABLE" property="iOfTable" jdbcType="VARCHAR" />
+    <result column="I_NAME" property="iName" jdbcType="VARCHAR" />
+    <result column="I_CN_NAME" property="iCnName" jdbcType="VARCHAR" />
+    <result column="I_DESC" property="iDesc" jdbcType="VARCHAR" />
+    <result column="I_DATE" property="iDate" jdbcType="VARCHAR" />
+    <result column="I_TYPE" property="iType" jdbcType="VARCHAR" />
+    <result column="I_SYNC_STATE" property="iSyncState" jdbcType="VARCHAR" />
+    <result column="I_OF_MODULE" property="iOfModule" jdbcType="VARCHAR" />
+    <result column="I_OF_DATASOURCE" property="iOfDatasource" jdbcType="VARCHAR" />
+    <result column="I_OF_PROJECT" property="iOfProject" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap type="com.dhcc.dic.entity.IndexDTO" id="indexDTOMap">
+  	<id column="I_ID" property="iId" jdbcType="VARCHAR" />
+    <result column="I_OF_TABLE" property="iOfTable" jdbcType="VARCHAR" />
+    <result column="I_NAME" property="iName" jdbcType="VARCHAR" />
+    <result column="I_CN_NAME" property="iCnName" jdbcType="VARCHAR" />
+    <result column="I_DESC" property="iDesc" jdbcType="VARCHAR" />
+    <result column="I_DATE" property="iDate" jdbcType="VARCHAR" />
+    <result column="I_TYPE" property="iType" jdbcType="VARCHAR" />
+    <result column="I_SYNC_STATE" property="iSyncState" jdbcType="VARCHAR" />
+    <result column="I_OF_MODULE" property="iOfModule" jdbcType="VARCHAR" />
+    <result column="I_OF_DATASOURCE" property="iOfDatasource" jdbcType="VARCHAR" />
+    <result column="I_OF_PROJECT" property="iOfProject" jdbcType="VARCHAR" />
+    <collection ofType="String" property="refColumns">
+    	<id column="COLUMN_ID"  jdbcType="VARCHAR"/>
+    </collection>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    I_ID, I_OF_TABLE, I_NAME, I_CN_NAME, I_DESC, I_DATE, I_TYPE, I_SYNC_STATE, I_OF_MODULE, 
+    I_OF_DATASOURCE, I_OF_PROJECT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dhcc.dic.entity.TIndexExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_INDEX
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_INDEX
+    where I_ID = #{iId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_INDEX
+    where I_ID = #{iId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dhcc.dic.entity.TIndexExample" >
+    delete from T_INDEX
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dhcc.dic.entity.TIndex" >
+  	<selectKey resultType="String" order="BEFORE" keyProperty="iId"> 
+		SELECT SEQ_INDEX.NEXTVAL FROM dual 
+	</selectKey>
+    insert into T_INDEX (I_ID, I_OF_TABLE, I_NAME, 
+      I_CN_NAME, I_DESC, I_DATE, 
+      I_TYPE, I_SYNC_STATE, I_OF_MODULE, 
+      I_OF_DATASOURCE, I_OF_PROJECT)
+    values (#{iId,jdbcType=VARCHAR}, #{iOfTable,jdbcType=VARCHAR}, #{iName,jdbcType=VARCHAR}, 
+      #{iCnName,jdbcType=VARCHAR}, #{iDesc,jdbcType=VARCHAR}, #{iDate,jdbcType=VARCHAR}, 
+      #{iType,jdbcType=VARCHAR}, #{iSyncState,jdbcType=VARCHAR}, #{iOfModule,jdbcType=VARCHAR}, 
+      #{iOfDatasource,jdbcType=VARCHAR}, #{iOfProject,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TIndex" >
+    <selectKey resultType="String" order="BEFORE" keyProperty="iId"> 
+		SELECT SEQ_INDEX.NEXTVAL FROM dual 
+	</selectKey>
+    insert into T_INDEX
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iId != null" >
+        I_ID,
+      </if>
+      <if test="iOfTable != null" >
+        I_OF_TABLE,
+      </if>
+      <if test="iName != null" >
+        I_NAME,
+      </if>
+      <if test="iCnName != null" >
+        I_CN_NAME,
+      </if>
+      <if test="iDesc != null" >
+        I_DESC,
+      </if>
+      <if test="iDate != null" >
+        I_DATE,
+      </if>
+      <if test="iType != null" >
+        I_TYPE,
+      </if>
+      <if test="iSyncState != null" >
+        I_SYNC_STATE,
+      </if>
+      <if test="iOfModule != null" >
+        I_OF_MODULE,
+      </if>
+      <if test="iOfDatasource != null" >
+        I_OF_DATASOURCE,
+      </if>
+      <if test="iOfProject != null" >
+        I_OF_PROJECT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iId != null" >
+        #{iId,jdbcType=VARCHAR},
+      </if>
+      <if test="iOfTable != null" >
+        #{iOfTable,jdbcType=VARCHAR},
+      </if>
+      <if test="iName != null" >
+        #{iName,jdbcType=VARCHAR},
+      </if>
+      <if test="iCnName != null" >
+        #{iCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="iDesc != null" >
+        #{iDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="iDate != null" >
+        #{iDate,jdbcType=VARCHAR},
+      </if>
+      <if test="iType != null" >
+        #{iType,jdbcType=VARCHAR},
+      </if>
+      <if test="iSyncState != null" >
+        #{iSyncState,jdbcType=VARCHAR},
+      </if>
+      <if test="iOfModule != null" >
+        #{iOfModule,jdbcType=VARCHAR},
+      </if>
+      <if test="iOfDatasource != null" >
+        #{iOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="iOfProject != null" >
+        #{iOfProject,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dhcc.dic.entity.TIndexExample" resultType="java.lang.Integer" >
+    select count(*) from T_INDEX
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_INDEX
+    <set >
+      <if test="record.iId != null" >
+        I_ID = #{record.iId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iOfTable != null" >
+        I_OF_TABLE = #{record.iOfTable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iName != null" >
+        I_NAME = #{record.iName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iCnName != null" >
+        I_CN_NAME = #{record.iCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iDesc != null" >
+        I_DESC = #{record.iDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iDate != null" >
+        I_DATE = #{record.iDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iType != null" >
+        I_TYPE = #{record.iType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iSyncState != null" >
+        I_SYNC_STATE = #{record.iSyncState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iOfModule != null" >
+        I_OF_MODULE = #{record.iOfModule,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iOfDatasource != null" >
+        I_OF_DATASOURCE = #{record.iOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iOfProject != null" >
+        I_OF_PROJECT = #{record.iOfProject,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_INDEX
+    set I_ID = #{record.iId,jdbcType=VARCHAR},
+      I_OF_TABLE = #{record.iOfTable,jdbcType=VARCHAR},
+      I_NAME = #{record.iName,jdbcType=VARCHAR},
+      I_CN_NAME = #{record.iCnName,jdbcType=VARCHAR},
+      I_DESC = #{record.iDesc,jdbcType=VARCHAR},
+      I_DATE = #{record.iDate,jdbcType=VARCHAR},
+      I_TYPE = #{record.iType,jdbcType=VARCHAR},
+      I_SYNC_STATE = #{record.iSyncState,jdbcType=VARCHAR},
+      I_OF_MODULE = #{record.iOfModule,jdbcType=VARCHAR},
+      I_OF_DATASOURCE = #{record.iOfDatasource,jdbcType=VARCHAR},
+      I_OF_PROJECT = #{record.iOfProject,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dhcc.dic.entity.TIndex" >
+    update T_INDEX
+    <set >
+      <if test="iOfTable != null" >
+        I_OF_TABLE = #{iOfTable,jdbcType=VARCHAR},
+      </if>
+      <if test="iName != null" >
+        I_NAME = #{iName,jdbcType=VARCHAR},
+      </if>
+      <if test="iCnName != null" >
+        I_CN_NAME = #{iCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="iDesc != null" >
+        I_DESC = #{iDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="iDate != null" >
+        I_DATE = #{iDate,jdbcType=VARCHAR},
+      </if>
+      <if test="iType != null" >
+        I_TYPE = #{iType,jdbcType=VARCHAR},
+      </if>
+      <if test="iSyncState != null" >
+        I_SYNC_STATE = #{iSyncState,jdbcType=VARCHAR},
+      </if>
+      <if test="iOfModule != null" >
+        I_OF_MODULE = #{iOfModule,jdbcType=VARCHAR},
+      </if>
+      <if test="iOfDatasource != null" >
+        I_OF_DATASOURCE = #{iOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="iOfProject != null" >
+        I_OF_PROJECT = #{iOfProject,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where I_ID = #{iId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dhcc.dic.entity.TIndex" >
+    update T_INDEX
+    set I_OF_TABLE = #{iOfTable,jdbcType=VARCHAR},
+      I_NAME = #{iName,jdbcType=VARCHAR},
+      I_CN_NAME = #{iCnName,jdbcType=VARCHAR},
+      I_DESC = #{iDesc,jdbcType=VARCHAR},
+      I_DATE = #{iDate,jdbcType=VARCHAR},
+      I_TYPE = #{iType,jdbcType=VARCHAR},
+      I_SYNC_STATE = #{iSyncState,jdbcType=VARCHAR},
+      I_OF_MODULE = #{iOfModule,jdbcType=VARCHAR},
+      I_OF_DATASOURCE = #{iOfDatasource,jdbcType=VARCHAR},
+      I_OF_PROJECT = #{iOfProject,jdbcType=VARCHAR}
+    where I_ID = #{iId,jdbcType=VARCHAR}
+  </update>
+  <select id="getIndexDTO" parameterType="String" resultMap="indexDTOMap">
+  		SELECT * FROM T_INDEX A LEFT JOIN T_INDEX_COLUMNS B ON A.I_ID=B.INDEX_ID WHERE A.I_ID=#{indexId}
+  </select>
+  <!-- 
+  <select id="getIndexDTO" parameterType="String" resultMap="indexDTOMap">
+  
+  </select> -->
+</mapper>

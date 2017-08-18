@@ -3,25 +3,19 @@
 <div style="height: 500px; width: 400px;">
 	<form id="tablePKForm" >
 		<label style="display: inline-block">输入主键名:</label> 
-		<input class="easyui-textbox" id="PKName" style="width: 200px;" />
-	<table class="table table-celled table-structured">
+		<input class="easyui-textbox" name="PKName" id="PKName" style="width: 200px;" />
+	<br/>
+	<br/>
+	<table id="tablePKColumnsDatagrid" class="easyui-datagrid"
+		style="width: 99%"
+		data-options="rownumbers:true,singleSelect: false,singleSelect:true,checkOnSelect:true,selectOnCheck:false,onLoadSuccess:PKOnloadSuccess ">
 		<thead>
 			<tr>
-				<th>列</th>
-				<th>选择</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>id</td>
-				<td><input type="checkbox" name="chose" value="id" /></td>
-			</tr>
-			<tr>
-				<td>name</td>
-				<td><input type="checkbox" name="chose" value="id" /></td>
-			</tr>
-		</tbody>
-	</table>
+				<th data-options="field:'columns'">列</th>
+				<th data-options="field:'checkbox',checkbox:true">选择</th>
+				</tr>
+				</thead>
+		</table>
 	</form>
 </div>
 <div class="dhcc-table-tab-confirm-div">

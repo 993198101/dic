@@ -8,6 +8,7 @@
     <result column="CONS_TABLE_ID" property="consTableId" jdbcType="VARCHAR" />
     <result column="CONS_REF_CONS_ID" property="consRefConsId" jdbcType="VARCHAR" />
     <result column="CONS_REF_TABLE_ID" property="consRefTableId" jdbcType="VARCHAR" />
+    <result column="CONS_IS_REAL" property="consIsReal" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,7 +69,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    CONS_ID, CONS_NAME, CONS_TYPE, CONS_TABLE_ID, CONS_REF_CONS_ID, CONS_REF_TABLE_ID
+    CONS_ID, CONS_NAME, CONS_TYPE, CONS_TABLE_ID, CONS_REF_CONS_ID, CONS_REF_TABLE_ID, 
+    CONS_IS_REAL
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dhcc.dic.entity.TConstraintsExample" >
     select
@@ -101,14 +103,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dhcc.dic.entity.TConstraints" >
+  <selectKey resultType="String" order="BEFORE" keyProperty="consId"> 
+		SELECT SEQ_CONSTRAINTS.NEXTVAL FROM dual 
+	</selectKey>
     insert into T_CONSTRAINTS (CONS_ID, CONS_NAME, CONS_TYPE, 
-      CONS_TABLE_ID, CONS_REF_CONS_ID, CONS_REF_TABLE_ID
-      )
+      CONS_TABLE_ID, CONS_REF_CONS_ID, CONS_REF_TABLE_ID, 
+      CONS_IS_REAL)
     values (#{consId,jdbcType=VARCHAR}, #{consName,jdbcType=VARCHAR}, #{consType,jdbcType=VARCHAR}, 
-      #{consTableId,jdbcType=VARCHAR}, #{consRefConsId,jdbcType=VARCHAR}, #{consRefTableId,jdbcType=VARCHAR}
-      )
+      #{consTableId,jdbcType=VARCHAR}, #{consRefConsId,jdbcType=VARCHAR}, #{consRefTableId,jdbcType=VARCHAR}, 
+      #{consIsReal,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TConstraints" >
+    <selectKey resultType="String" order="BEFORE" keyProperty="consId"> 
+		SELECT SEQ_CONSTRAINTS.NEXTVAL FROM dual 
+	</selectKey>
     insert into T_CONSTRAINTS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="consId != null" >
@@ -129,6 +137,9 @@
       <if test="consRefTableId != null" >
         CONS_REF_TABLE_ID,
       </if>
+      <if test="consIsReal != null" >
+        CONS_IS_REAL,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="consId != null" >
@@ -148,6 +159,9 @@
       </if>
       <if test="consRefTableId != null" >
         #{consRefTableId,jdbcType=VARCHAR},
+      </if>
+      <if test="consIsReal != null" >
+        #{consIsReal,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -178,6 +192,9 @@
       <if test="record.consRefTableId != null" >
         CONS_REF_TABLE_ID = #{record.consRefTableId,jdbcType=VARCHAR},
       </if>
+      <if test="record.consIsReal != null" >
+        CONS_IS_REAL = #{record.consIsReal,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -190,7 +207,8 @@
       CONS_TYPE = #{record.consType,jdbcType=VARCHAR},
       CONS_TABLE_ID = #{record.consTableId,jdbcType=VARCHAR},
       CONS_REF_CONS_ID = #{record.consRefConsId,jdbcType=VARCHAR},
-      CONS_REF_TABLE_ID = #{record.consRefTableId,jdbcType=VARCHAR}
+      CONS_REF_TABLE_ID = #{record.consRefTableId,jdbcType=VARCHAR},
+      CONS_IS_REAL = #{record.consIsReal,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -213,6 +231,9 @@
       <if test="consRefTableId != null" >
         CONS_REF_TABLE_ID = #{consRefTableId,jdbcType=VARCHAR},
       </if>
+      <if test="consIsReal != null" >
+        CONS_IS_REAL = #{consIsReal,jdbcType=VARCHAR},
+      </if>
     </set>
     where CONS_ID = #{consId,jdbcType=VARCHAR}
   </update>
@@ -222,7 +243,8 @@
       CONS_TYPE = #{consType,jdbcType=VARCHAR},
       CONS_TABLE_ID = #{consTableId,jdbcType=VARCHAR},
       CONS_REF_CONS_ID = #{consRefConsId,jdbcType=VARCHAR},
-      CONS_REF_TABLE_ID = #{consRefTableId,jdbcType=VARCHAR}
+      CONS_REF_TABLE_ID = #{consRefTableId,jdbcType=VARCHAR},
+      CONS_IS_REAL = #{consIsReal,jdbcType=VARCHAR}
     where CONS_ID = #{consId,jdbcType=VARCHAR}
   </update>
 </mapper>

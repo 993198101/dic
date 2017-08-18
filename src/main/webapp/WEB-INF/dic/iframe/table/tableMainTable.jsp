@@ -58,28 +58,28 @@
     <label class="dhcc-label">是否在用:</label>
     <div class="dhcc-input-div">
         <select id="isOnUse" class="easyui-combobox"
-                name="dDatabaseType"
-                data-options="valueField:'id',textField:'text',url:'../table/getSysDatabaseTypeSelect'"
+                data-options="url:'../sysParmDic/getOptionList?keyName=YES_OR_NO',valueField:'id',textField:'text',panelHeight: 'auto'"
                 style="width: 200px;">
-            <!--option 在url获取  -->
+            <!--option 在url  -->
         </select>
     </div>
     <span style="display: inline-block; width: 20px;"></span>
     <label class="dhcc-label">表空间:</label>
     <div class="dhcc-input-div">
         <input class="easyui-textbox theme-textbox dhcc-input-width" name="dPort" id="dPort"
-               data-options="prompt:'输入端口号...'">
+               data-options="prompt:'输入表空间名...'">
     </div>
     <span style="display: inline-block; width: 20px;"></span>
     <label class="dhcc-label">所属业务模块:</label>
     <div class="dhcc-input-div">
-        <select id="choseDatabaseType" class="easyui-combobox"
+        <select id="choseDatabaseType" class="easyui-combobox moduleList"
                 name="dDatabaseType"
-                data-options="valueField:'id',textField:'text',url:'../table/getSysDatabaseTypeSelect'"
+                data-options="valueField:'mId',textField:'mName',panelHeight: 'auto',url:'../table/getModuleOptionList?projectId=${projectId }'"
                 style="width: 200px;">
-            <!--option 在url获取  -->
+            <!--option 页面加载时一同获取  -->
         </select>
     </div>
+    <input name="tSync" value="1" hidden />
     <br/>
     <div class="dhcc-search-button-div">
         <button class="easyui-linkbutton button-line-blue" onclick="query()">查询 <i class="fa fa-search"></i></button>
@@ -91,18 +91,31 @@
 <div class="dhcc-table-list">
 	<!-- 模块和全量共用的是一个url只是参数不同，故需要进行判断见/dic/js/tableMainTable.js -->
     <table id="dataGrid" class="easyui-datagrid" style="width: 99%"
-           data-options="pagination:true,pageNumber:0,pageSize:10,cache:false,
-        collapsible:true,loadFilter:dataFilter,singleSelect:true,toolbar:'#add'">
+           data-options="pagination:true,loadFilter:dataFilter,pageNumber:0,pageSize:10,cache:false,
+        collapsible:true,singleSelect:true,toolbar:'#add'">
         <thead>
         <tr>
-            <th data-options="field:'dId',align:'center'">表编号</th>
-            <th data-options="field:'dName',align:'center'">表名</th>
-            <th data-options="field:'dDesc',align:'center'">表中文名</th>
-            <th data-options="field:'dUsername',align:'center'">所属业务模块</th>
-            <th data-options="field:'dPassword',align:'center'">是否在用</th>
-            <th data-options="field:'dIp',align:'center'">表空间</th>
-            <th data-options="field:'dPort',align:'center'">同步状态</th>
-            <th data-options="field:'dPort',align:'center'">表描述</th>
+            <th data-options="field:'tId',align:'center'">表编号</th>
+            <th data-options="field:'tName',align:'center'">表名</th>
+            <th data-options="field:'tCnName',align:'center'">表中文名</th>
+            <th data-options="field:'tOfModule',align:'center'">所属业务模块</th>
+            <th data-options="field:'tIsOnUse',align:'center',formatter:function(value){
+            																if(value=='1')
+            																	return '是'
+            																 if(value=='0')
+            																	return '否'}">是否在用</th>
+            <th data-options="field:'tOfTablespace',align:'center'">表空间</th>
+            <th data-options="field:'tSync',align:'center',formatter:function(value){
+            															if(value=='2')
+            																return '存在差异属性';
+            															if(value=='3')
+            																return '已同步';
+            															if(value=='0')
+            																return '系统存在,数据库不存在';
+            															if(value=='1')
+            																return '系统不存在,数据库存在';
+            														}">同步状态</th>
+            <th data-options="field:'tDesc',align:'center'">表描述</th>
             <th data-options="field:'button',align:'center',formatter:button">操作</th>
         </tr>
         </thead>
@@ -110,7 +123,8 @@
 </div>
 <div id="w" class="easyui-window" style="width:100%;height:550px;" title="表新增<span>表单</span>"
      data-options="modal:true,closed:true,cls:'theme-panel-red'">
-    <iframe src="gotoTableMainForm" id="tableFormIframe" width="100%" height="1070px"  frameborder="0"  scrolling="no"></iframe>
+    <!-- src="gotoTableMainForm"+queryString 位于tableMainTable.js-->
+    <iframe  id="tableMainFormIframe" src="" width="100%" height="1070px"  frameborder="0"  scrolling="no"></iframe>
 </div>
 <script src="<%=path %>/dic/js/tableMainTable.js"></script>
 
