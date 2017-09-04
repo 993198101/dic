@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dhcc.dic.dao.TIndexColumnsDAO" >
-  <resultMap id="BaseResultMap" type="com.dhcc.dic.entity.TIndexColumnsKey" >
+  <resultMap id="BaseResultMap" type="com.dhcc.dic.entity.TIndexColumns" >
     <id column="INDEX_ID" property="indexId" jdbcType="VARCHAR" />
     <id column="COLUMN_ID" property="columnId" jdbcType="VARCHAR" />
+    <result column="SORT" property="sort" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -64,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    INDEX_ID, COLUMN_ID
+    INDEX_ID, COLUMN_ID, SORT
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dhcc.dic.entity.TIndexColumnsExample" >
     select
@@ -80,6 +81,13 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.dhcc.dic.entity.TIndexColumnsKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_INDEX_COLUMNS
+    where INDEX_ID = #{indexId,jdbcType=VARCHAR}
+      and COLUMN_ID = #{columnId,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="com.dhcc.dic.entity.TIndexColumnsKey" >
     delete from T_INDEX_COLUMNS
     where INDEX_ID = #{indexId,jdbcType=VARCHAR}
@@ -91,11 +99,13 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.dhcc.dic.entity.TIndexColumnsKey" >
-    insert into T_INDEX_COLUMNS (INDEX_ID, COLUMN_ID)
-    values (#{indexId,jdbcType=VARCHAR}, #{columnId,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.dhcc.dic.entity.TIndexColumns" >
+    insert into T_INDEX_COLUMNS (INDEX_ID, COLUMN_ID, SORT
+      )
+    values (#{indexId,jdbcType=VARCHAR}, #{columnId,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TIndexColumnsKey" >
+  <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TIndexColumns" >
     insert into T_INDEX_COLUMNS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="indexId != null" >
@@ -104,6 +114,9 @@
       <if test="columnId != null" >
         COLUMN_ID,
       </if>
+      <if test="sort != null" >
+        SORT,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="indexId != null" >
@@ -111,6 +124,9 @@
       </if>
       <if test="columnId != null" >
         #{columnId,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -129,6 +145,9 @@
       <if test="record.columnId != null" >
         COLUMN_ID = #{record.columnId,jdbcType=VARCHAR},
       </if>
+      <if test="record.sort != null" >
+        SORT = #{record.sort,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -137,9 +156,26 @@
   <update id="updateByExample" parameterType="map" >
     update T_INDEX_COLUMNS
     set INDEX_ID = #{record.indexId,jdbcType=VARCHAR},
-      COLUMN_ID = #{record.columnId,jdbcType=VARCHAR}
+      COLUMN_ID = #{record.columnId,jdbcType=VARCHAR},
+      SORT = #{record.sort,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dhcc.dic.entity.TIndexColumns" >
+    update T_INDEX_COLUMNS
+    <set >
+      <if test="sort != null" >
+        SORT = #{sort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where INDEX_ID = #{indexId,jdbcType=VARCHAR}
+      and COLUMN_ID = #{columnId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dhcc.dic.entity.TIndexColumns" >
+    update T_INDEX_COLUMNS
+    set SORT = #{sort,jdbcType=VARCHAR}
+    where INDEX_ID = #{indexId,jdbcType=VARCHAR}
+      and COLUMN_ID = #{columnId,jdbcType=VARCHAR}
   </update>
 </mapper>

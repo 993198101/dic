@@ -2,6 +2,7 @@ package com.dhcc.dic.service;
 
 import java.util.List;
 
+import com.dhcc.dic.entity.DifTableDTO;
 import com.dhcc.dic.entity.SysOption;
 import com.dhcc.dic.entity.TCtrlType;
 import com.dhcc.dic.entity.TFuncType;
@@ -11,13 +12,12 @@ import com.dhcc.dic.entity.TableCustom;
 
 public interface TableService {
 	 List<TTable> getPage(int pageNum,int pageSize,TTable tTable) throws Exception;
-	 void addTable(String parentMenuId,TTable tTable) throws Exception;
-	 int deleteTableById(String dId) throws Exception;
-	 TTable getTableById(String datasourceId) throws Exception;
-	 void editTable(TTable datasource) throws Exception;
+	 int deleteTableById(String id) throws Exception;
 	 List<TTable> getTableList() throws Exception;
-	 void addOrEditTable(TableCustom tableCustom) throws Exception;
-	 
+	 void insertTable(TableCustom tableCustom) throws Exception;
+	 void updateTable(TableCustom tableCustom) throws Exception;
+	 TableCustom getTableCustom(String tableId) throws Exception;
+	 DifTableDTO getDifTableDTO(String tableName,String datasourceId) throws Exception;
 	 List<TTableField> getTableFieldList(String tableId) throws Exception;
 	 List<SysOption> getSysOptionList() throws Exception;
 	 

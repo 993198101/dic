@@ -14,22 +14,6 @@
     <result column="I_OF_DATASOURCE" property="iOfDatasource" jdbcType="VARCHAR" />
     <result column="I_OF_PROJECT" property="iOfProject" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap type="com.dhcc.dic.entity.IndexDTO" id="indexDTOMap">
-  	<id column="I_ID" property="iId" jdbcType="VARCHAR" />
-    <result column="I_OF_TABLE" property="iOfTable" jdbcType="VARCHAR" />
-    <result column="I_NAME" property="iName" jdbcType="VARCHAR" />
-    <result column="I_CN_NAME" property="iCnName" jdbcType="VARCHAR" />
-    <result column="I_DESC" property="iDesc" jdbcType="VARCHAR" />
-    <result column="I_DATE" property="iDate" jdbcType="VARCHAR" />
-    <result column="I_TYPE" property="iType" jdbcType="VARCHAR" />
-    <result column="I_SYNC_STATE" property="iSyncState" jdbcType="VARCHAR" />
-    <result column="I_OF_MODULE" property="iOfModule" jdbcType="VARCHAR" />
-    <result column="I_OF_DATASOURCE" property="iOfDatasource" jdbcType="VARCHAR" />
-    <result column="I_OF_PROJECT" property="iOfProject" jdbcType="VARCHAR" />
-    <collection ofType="String" property="refColumns">
-    	<id column="COLUMN_ID"  jdbcType="VARCHAR"/>
-    </collection>
-  </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -325,11 +309,32 @@
       I_OF_PROJECT = #{iOfProject,jdbcType=VARCHAR}
     where I_ID = #{iId,jdbcType=VARCHAR}
   </update>
-  <select id="getIndexDTO" parameterType="String" resultMap="indexDTOMap">
-  		SELECT * FROM T_INDEX A LEFT JOIN T_INDEX_COLUMNS B ON A.I_ID=B.INDEX_ID WHERE A.I_ID=#{indexId}
+  <resultMap type="com.dhcc.dic.entity.IndexDTO" id="indexDTOMap">
+  	<id column="I_ID" property="iId" jdbcType="VARCHAR" />
+    <result column="I_OF_TABLE" property="iOfTable" jdbcType="VARCHAR" />
+    <result column="I_NAME" property="iName" jdbcType="VARCHAR" />
+    <result column="I_CN_NAME" property="iCnName" jdbcType="VARCHAR" />
+    <result column="I_DESC" property="iDesc" jdbcType="VARCHAR" />
+    <result column="I_DATE" property="iDate" jdbcType="VARCHAR" />
+    <result column="I_TYPE" property="iType" jdbcType="VARCHAR" />
+    <result column="I_SYNC_STATE" property="iSyncState" jdbcType="VARCHAR" />
+    <result column="I_OF_MODULE" property="iOfModule" jdbcType="VARCHAR" />
+    <result column="I_OF_DATASOURCE" property="iOfDatasource" jdbcType="VARCHAR" />
+    <result column="I_OF_PROJECT" property="iOfProject" jdbcType="VARCHAR" />
+    <collection ofType="com.dhcc.dic.entity.IndexColumnsCustom" property="indexColCustomList">
+    	<id column="I_ID" property="indexId" jdbcType="VARCHAR"/>
+    	<id column="COLUMN_ID" property="columnId" jdbcType="VARCHAR"/>
+    	<result column="SORT" property="sort" jdbcType="VARCHAR" />
+    	<result column="F_NAME" property="colName" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  <select id="listTableIndexs" parameterType="String" resultMap="indexDTOMap">
+  		SELECT A.I_ID,A.I_OF_TABLE,A.I_NAME,A.I_CN_NAME,A.I_DESC,A.I_DATE,A.I_TYPE,
+  		A.I_SYNC_STATE,A.I_OF_MODULE,A.I_OF_DATASOURCE,A.I_OF_PROJECT,B.COLUMN_ID,
+  		B.SORT,C.F_NAME
+  		FROM T_INDEX A 
+  		LEFT JOIN T_INDEX_COLUMNS B ON A.I_ID=B.INDEX_ID 
+  		LEFT JOIN T_TABLE_FIELD C ON C.F_ID=B.COLUMN_ID 
+  		WHERE A.I_OF_TABLE=#{tableId}
   </select>
-  <!-- 
-  <select id="getIndexDTO" parameterType="String" resultMap="indexDTOMap">
-  
-  </select> -->
 </mapper>

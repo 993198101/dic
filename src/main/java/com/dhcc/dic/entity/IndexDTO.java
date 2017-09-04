@@ -3,14 +3,15 @@ package com.dhcc.dic.entity;
 import java.util.List;
 
 public class IndexDTO extends TIndex{
-	List<String> refColumns;
-
-	public List<String> getRefColumns() {
-		return refColumns;
-	}
-
-	public void setRefColumns(List<String> refColumns) {
-		this.refColumns = refColumns;
-	}
 	
+	List<IndexColumnsCustom> indexColCustomList;
+
+	public List<IndexColumnsCustom> getIndexColCustomList() {
+		return indexColCustomList;
+	}
+
+	public void setIndexColCustomList(List<IndexColumnsCustom> indexColCustomList) {
+		this.indexColCustomList = indexColCustomList;
+	}
+
 }

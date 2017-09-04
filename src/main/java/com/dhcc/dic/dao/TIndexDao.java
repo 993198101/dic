@@ -30,4 +30,6 @@ public interface TIndexDao {
     int updateByPrimaryKey(TIndex record);
     
     IndexDTO getIndexDTO(@Param("indexId")String indexId);
+    
+    List<IndexDTO> listTableIndexs(@Param("tableId") String tableId);
 }

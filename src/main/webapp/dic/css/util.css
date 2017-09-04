@@ -51,3 +51,8 @@
 .dhcc-table-tab-confirm-div{
 	padding-bottom:10px;position: absolute; bottom: 2px;width: 100%;text-align: right;background-color:white;z-index:999;
 }
+.dhcc-table th,.dhcc-table td {  
+        overflow: hidden;  
+        white-space: nowrap;  
+        text-overflow: ellipsis;  
+    }

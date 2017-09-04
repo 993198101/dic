@@ -54,7 +54,7 @@ function query(){
 		queryParams.iCnName=$('#iCnName').textbox('getValue');
 	if($('#iSyncState').combobox('getValue')!="")
 		queryParams.iSyncState=$('#iSyncState').combobox('getValue');
-	$('#dataGrid').datagrid('load',params);
+	$('#dataGrid').datagrid('load',queryParams);
 }
 function choseRefTable(record){
 	tableId=record.tId;

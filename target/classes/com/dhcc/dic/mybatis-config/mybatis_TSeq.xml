@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhcc.dic.dao.TSeqDAO" >
+  <resultMap id="BaseResultMap" type="com.dhcc.dic.entity.TSeq" >
+    <id column="S_ID" property="sId" jdbcType="VARCHAR" />
+    <result column="S_NAME" property="sName" jdbcType="VARCHAR" />
+    <result column="S_CN_NAME" property="sCnName" jdbcType="VARCHAR" />
+    <result column="S_INCREASE_SIZE" property="sIncreaseSize" jdbcType="DECIMAL" />
+    <result column="S_START" property="sStart" jdbcType="DECIMAL" />
+    <result column="S_HAS_MAX" property="sHasMax" jdbcType="VARCHAR" />
+    <result column="S_MAX_VALUE" property="sMaxValue" jdbcType="DECIMAL" />
+    <result column="S_CACHE_NUMBER" property="sCacheNumber" jdbcType="DECIMAL" />
+    <result column="S_SYNC_STATE" property="sSyncState" jdbcType="VARCHAR" />
+    <result column="S_DATE" property="sDate" jdbcType="VARCHAR" />
+    <result column="S_REF_TABLE" property="sRefTable" jdbcType="VARCHAR" />
+    <result column="S_REF_FIELD" property="sRefField" jdbcType="VARCHAR" />
+    <result column="S_OF_MODULE" property="sOfModule" jdbcType="VARCHAR" />
+    <result column="S_OF_DATASOURCE" property="sOfDatasource" jdbcType="VARCHAR" />
+    <result column="S_OF_PROJECT" property="sOfProject" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    S_ID, S_NAME, S_CN_NAME, S_INCREASE_SIZE, S_START, S_HAS_MAX, S_MAX_VALUE, S_CACHE_NUMBER, 
+    S_SYNC_STATE, S_DATE, S_REF_TABLE, S_REF_FIELD, S_OF_MODULE, S_OF_DATASOURCE, S_OF_PROJECT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dhcc.dic.entity.TSeqExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_SEQ
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_SEQ
+    where S_ID = #{sId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_SEQ
+    where S_ID = #{sId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dhcc.dic.entity.TSeqExample" >
+    delete from T_SEQ
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dhcc.dic.entity.TSeq" >
+    insert into T_SEQ (S_ID, S_NAME, S_CN_NAME, 
+      S_INCREASE_SIZE, S_START, S_HAS_MAX, 
+      S_MAX_VALUE, S_CACHE_NUMBER, S_SYNC_STATE, 
+      S_DATE, S_REF_TABLE, S_REF_FIELD, 
+      S_OF_MODULE, S_OF_DATASOURCE, S_OF_PROJECT
+      )
+    values (#{sId,jdbcType=VARCHAR}, #{sName,jdbcType=VARCHAR}, #{sCnName,jdbcType=VARCHAR}, 
+      #{sIncreaseSize,jdbcType=DECIMAL}, #{sStart,jdbcType=DECIMAL}, #{sHasMax,jdbcType=VARCHAR}, 
+      #{sMaxValue,jdbcType=DECIMAL}, #{sCacheNumber,jdbcType=DECIMAL}, #{sSyncState,jdbcType=VARCHAR}, 
+      #{sDate,jdbcType=VARCHAR}, #{sRefTable,jdbcType=VARCHAR}, #{sRefField,jdbcType=VARCHAR}, 
+      #{sOfModule,jdbcType=VARCHAR}, #{sOfDatasource,jdbcType=VARCHAR}, #{sOfProject,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TSeq" >
+    insert into T_SEQ
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sId != null" >
+        S_ID,
+      </if>
+      <if test="sName != null" >
+        S_NAME,
+      </if>
+      <if test="sCnName != null" >
+        S_CN_NAME,
+      </if>
+      <if test="sIncreaseSize != null" >
+        S_INCREASE_SIZE,
+      </if>
+      <if test="sStart != null" >
+        S_START,
+      </if>
+      <if test="sHasMax != null" >
+        S_HAS_MAX,
+      </if>
+      <if test="sMaxValue != null" >
+        S_MAX_VALUE,
+      </if>
+      <if test="sCacheNumber != null" >
+        S_CACHE_NUMBER,
+      </if>
+      <if test="sSyncState != null" >
+        S_SYNC_STATE,
+      </if>
+      <if test="sDate != null" >
+        S_DATE,
+      </if>
+      <if test="sRefTable != null" >
+        S_REF_TABLE,
+      </if>
+      <if test="sRefField != null" >
+        S_REF_FIELD,
+      </if>
+      <if test="sOfModule != null" >
+        S_OF_MODULE,
+      </if>
+      <if test="sOfDatasource != null" >
+        S_OF_DATASOURCE,
+      </if>
+      <if test="sOfProject != null" >
+        S_OF_PROJECT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sId != null" >
+        #{sId,jdbcType=VARCHAR},
+      </if>
+      <if test="sName != null" >
+        #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sCnName != null" >
+        #{sCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="sIncreaseSize != null" >
+        #{sIncreaseSize,jdbcType=DECIMAL},
+      </if>
+      <if test="sStart != null" >
+        #{sStart,jdbcType=DECIMAL},
+      </if>
+      <if test="sHasMax != null" >
+        #{sHasMax,jdbcType=VARCHAR},
+      </if>
+      <if test="sMaxValue != null" >
+        #{sMaxValue,jdbcType=DECIMAL},
+      </if>
+      <if test="sCacheNumber != null" >
+        #{sCacheNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="sSyncState != null" >
+        #{sSyncState,jdbcType=VARCHAR},
+      </if>
+      <if test="sDate != null" >
+        #{sDate,jdbcType=VARCHAR},
+      </if>
+      <if test="sRefTable != null" >
+        #{sRefTable,jdbcType=VARCHAR},
+      </if>
+      <if test="sRefField != null" >
+        #{sRefField,jdbcType=VARCHAR},
+      </if>
+      <if test="sOfModule != null" >
+        #{sOfModule,jdbcType=VARCHAR},
+      </if>
+      <if test="sOfDatasource != null" >
+        #{sOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="sOfProject != null" >
+        #{sOfProject,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dhcc.dic.entity.TSeqExample" resultType="java.lang.Integer" >
+    select count(*) from T_SEQ
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_SEQ
+    <set >
+      <if test="record.sId != null" >
+        S_ID = #{record.sId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sName != null" >
+        S_NAME = #{record.sName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sCnName != null" >
+        S_CN_NAME = #{record.sCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sIncreaseSize != null" >
+        S_INCREASE_SIZE = #{record.sIncreaseSize,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sStart != null" >
+        S_START = #{record.sStart,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sHasMax != null" >
+        S_HAS_MAX = #{record.sHasMax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sMaxValue != null" >
+        S_MAX_VALUE = #{record.sMaxValue,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sCacheNumber != null" >
+        S_CACHE_NUMBER = #{record.sCacheNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sSyncState != null" >
+        S_SYNC_STATE = #{record.sSyncState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sDate != null" >
+        S_DATE = #{record.sDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sRefTable != null" >
+        S_REF_TABLE = #{record.sRefTable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sRefField != null" >
+        S_REF_FIELD = #{record.sRefField,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sOfModule != null" >
+        S_OF_MODULE = #{record.sOfModule,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sOfDatasource != null" >
+        S_OF_DATASOURCE = #{record.sOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sOfProject != null" >
+        S_OF_PROJECT = #{record.sOfProject,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_SEQ
+    set S_ID = #{record.sId,jdbcType=VARCHAR},
+      S_NAME = #{record.sName,jdbcType=VARCHAR},
+      S_CN_NAME = #{record.sCnName,jdbcType=VARCHAR},
+      S_INCREASE_SIZE = #{record.sIncreaseSize,jdbcType=DECIMAL},
+      S_START = #{record.sStart,jdbcType=DECIMAL},
+      S_HAS_MAX = #{record.sHasMax,jdbcType=VARCHAR},
+      S_MAX_VALUE = #{record.sMaxValue,jdbcType=DECIMAL},
+      S_CACHE_NUMBER = #{record.sCacheNumber,jdbcType=DECIMAL},
+      S_SYNC_STATE = #{record.sSyncState,jdbcType=VARCHAR},
+      S_DATE = #{record.sDate,jdbcType=VARCHAR},
+      S_REF_TABLE = #{record.sRefTable,jdbcType=VARCHAR},
+      S_REF_FIELD = #{record.sRefField,jdbcType=VARCHAR},
+      S_OF_MODULE = #{record.sOfModule,jdbcType=VARCHAR},
+      S_OF_DATASOURCE = #{record.sOfDatasource,jdbcType=VARCHAR},
+      S_OF_PROJECT = #{record.sOfProject,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dhcc.dic.entity.TSeq" >
+    update T_SEQ
+    <set >
+      <if test="sName != null" >
+        S_NAME = #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sCnName != null" >
+        S_CN_NAME = #{sCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="sIncreaseSize != null" >
+        S_INCREASE_SIZE = #{sIncreaseSize,jdbcType=DECIMAL},
+      </if>
+      <if test="sStart != null" >
+        S_START = #{sStart,jdbcType=DECIMAL},
+      </if>
+      <if test="sHasMax != null" >
+        S_HAS_MAX = #{sHasMax,jdbcType=VARCHAR},
+      </if>
+      <if test="sMaxValue != null" >
+        S_MAX_VALUE = #{sMaxValue,jdbcType=DECIMAL},
+      </if>
+      <if test="sCacheNumber != null" >
+        S_CACHE_NUMBER = #{sCacheNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="sSyncState != null" >
+        S_SYNC_STATE = #{sSyncState,jdbcType=VARCHAR},
+      </if>
+      <if test="sDate != null" >
+        S_DATE = #{sDate,jdbcType=VARCHAR},
+      </if>
+      <if test="sRefTable != null" >
+        S_REF_TABLE = #{sRefTable,jdbcType=VARCHAR},
+      </if>
+      <if test="sRefField != null" >
+        S_REF_FIELD = #{sRefField,jdbcType=VARCHAR},
+      </if>
+      <if test="sOfModule != null" >
+        S_OF_MODULE = #{sOfModule,jdbcType=VARCHAR},
+      </if>
+      <if test="sOfDatasource != null" >
+        S_OF_DATASOURCE = #{sOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="sOfProject != null" >
+        S_OF_PROJECT = #{sOfProject,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where S_ID = #{sId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dhcc.dic.entity.TSeq" >
+    update T_SEQ
+    set S_NAME = #{sName,jdbcType=VARCHAR},
+      S_CN_NAME = #{sCnName,jdbcType=VARCHAR},
+      S_INCREASE_SIZE = #{sIncreaseSize,jdbcType=DECIMAL},
+      S_START = #{sStart,jdbcType=DECIMAL},
+      S_HAS_MAX = #{sHasMax,jdbcType=VARCHAR},
+      S_MAX_VALUE = #{sMaxValue,jdbcType=DECIMAL},
+      S_CACHE_NUMBER = #{sCacheNumber,jdbcType=DECIMAL},
+      S_SYNC_STATE = #{sSyncState,jdbcType=VARCHAR},
+      S_DATE = #{sDate,jdbcType=VARCHAR},
+      S_REF_TABLE = #{sRefTable,jdbcType=VARCHAR},
+      S_REF_FIELD = #{sRefField,jdbcType=VARCHAR},
+      S_OF_MODULE = #{sOfModule,jdbcType=VARCHAR},
+      S_OF_DATASOURCE = #{sOfDatasource,jdbcType=VARCHAR},
+      S_OF_PROJECT = #{sOfProject,jdbcType=VARCHAR}
+    where S_ID = #{sId,jdbcType=VARCHAR}
+  </update>
+</mapper>

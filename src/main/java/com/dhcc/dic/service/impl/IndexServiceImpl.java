@@ -12,6 +12,7 @@ import com.dhcc.dic.dao.TIndexColumnsDAO;
 import com.dhcc.dic.dao.TIndexDao;
 import com.dhcc.dic.entity.IndexDTO;
 import com.dhcc.dic.entity.TIndex;
+import com.dhcc.dic.entity.TIndexColumns;
 import com.dhcc.dic.entity.TIndexColumnsExample;
 import com.dhcc.dic.entity.TIndexColumnsKey;
 import com.dhcc.dic.entity.TIndexExample;
@@ -70,8 +71,7 @@ public class IndexServiceImpl implements IndexService{
 		indexDTO.setiDate(date);
 		indexDTO.setiSyncState("3");//已同步
 		this.tIndexDao.insert(indexDTO);
-		for(String colId:indexDTO.getRefColumns()){
-			 TIndexColumnsKey col=new TIndexColumnsKey(indexDTO.getiId(),colId);
+		for(TIndexColumns col:indexDTO.getIndexColCustomList()){
 			 this.tIndexColumnsDAO.insert(col);
 		}
 	}
@@ -89,14 +89,14 @@ public class IndexServiceImpl implements IndexService{
 
 	@Override
 	public void upadetIndex(IndexDTO indexDTO) throws Exception {
-		this.tIndexDao.updateByPrimaryKey(indexDTO);
+		this.tIndexDao.updateByPrimaryKeySelective(indexDTO);
 		TIndexColumnsExample example=new TIndexColumnsExample();
 		example.createCriteria().andIndexIdEqualTo(indexDTO.getiId());
-		this.tIndexColumnsDAO.deleteByExample(example);
-		for(String columnId:indexDTO.getRefColumns()){
-			TIndexColumnsKey record=new TIndexColumnsKey(indexDTO.getiId(),columnId);
-			this.tIndexColumnsDAO.insert(record);
-		}
+//		this.tIndexColumnsDAO.deleteByExample(example);
+//		for(String columnId:indexDTO.getRefColumns()){
+//			TIndexColumnsKey record=new TIndexColumnsKey(indexDTO.getiId(),columnId);
+//			this.tIndexColumnsDAO.insert(record);
+//		}
 	}
 
 }

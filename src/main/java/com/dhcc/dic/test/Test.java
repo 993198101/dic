@@ -5,29 +5,28 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.apache.poi.util.SystemOutLogger;
-
-import com.google.common.collect.Lists;
 
 public class Test {
-
-	    
+ 
+	
+	
 	public int getLastWordSize(String str){
         String strArr[]=str.split(" ");
         str =strArr[strArr.length-1];
         return str.length();
     }
     public static void main(String ...args){
-    	Test test=new Test();
-    	Solution s=test.new Solution();
-//        System.out.print(test.getLastWordSize("ABSIB T"));
-        ///////
-//   System.out.println(543/10*(3-1));
+//    	Test test=new Test();
+//    	Solution s=test.new Solution();
+//      System.out.print(test.getLastWordSize("ABSIB T"));
+//        
+//      System.out.println(543/10*(3-1));
     	int[] te = { 5,51,51,56 };
     	
-    	System.out.println(s.largestNumber(te));
+    	te[2]=te[3];
+    	Arrays.fill(te,5);
+    	System.out.println(Arrays.toString(te));
 //        test.sort(te);
         
     }

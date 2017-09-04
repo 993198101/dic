@@ -1,46 +1,56 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <div class="dhcc-search-form">
-	<label class="dhcc-label">字段名:</label>
+	<label
+		style="text-align: right; display: inline-block !important; width: 120px !important; line-height: 40px !important;">字段名:</label>
 	<div class="dhcc-input-div">
 		<input class="easyui-textbox dhcc-input-width" name="fName" id="fName"
 			data-options="prompt:'输入字段名...'" />
 	</div>
 	<label
-		class="dhcc-label">字段采用数据元:</label>
+		style="text-align: right; display: inline-block !important; width: 120px !important; line-height: 40px !important;">字段采用数据元:</label>
 	<div class="dhcc-input-div">
 		<select id="fDataElement" class="easyui-combobox" name="fDataElement"
 			data-options="valueField:'id',textField:'text'" style="width: 200px;">
 			<!--option 在url获取  -->
 		</select>
 	</div>
-	<label class="dhcc-label">字段中文名:</label>
+	<label
+		style="text-align: right; display: inline-block !important; width: 120px !important; line-height: 40px !important;">字段中文名:</label>
 	<div class="dhcc-input-div">
-		<input class="easyui-textbox dhcc-input-width" name="fCnName" id="fCnName"
-			data-options="prompt:'输入字段中文名...'" />
+		<input class="easyui-textbox dhcc-input-width" name="fCnName"
+			id="fCnName" data-options="prompt:'输入字段中文名...'" />
 	</div>
 
-	<br /> <label class="dhcc-label">是否索引查询字段:</label>
+	<br /> <label
+		style="text-align: right; display: inline-block !important; width: 120px !important; line-height: 40px !important;">是否索引查询字段:</label>
 	<div class="dhcc-input-div">
 		<select id="fIsSuitQuery" class="easyui-combobox yes_no_option_list"
-			name="fIsSuitQuery" data-options="valueField:'id',textField:'text',panelHeight:'auto'"
+			name="fIsSuitQuery"
+			data-options="valueField:'id',textField:'text',panelHeight:'auto'"
 			style="width: 200px;">
 			<!--option 在url获取  -->
 		</select>
 	</div>
 	<label
-		class="dhcc-label">控件类型 :</label>
+		style="text-align: right; display: inline-block !important; width: 120px !important; line-height: 40px !important;">控件类型
+		:</label>
 	<div class="dhcc-input-div">
-		<select id="fCtrlType" class="easyui-combobox ctrl-type-list" name="fCtrlType"
-			data-options="valueField:'cId',textField:'cName',url:'../table/listCtrlType',panelHeight:'auto'" style="width: 200px;">
+		<select id="fCtrlType" class="easyui-combobox ctrl-type-list"
+			name="fCtrlType"
+			data-options="valueField:'cId',textField:'cName',url:'../table/listCtrlType',panelHeight:'auto'"
+			style="width: 200px;">
 			<!--option 在url获取  -->
 		</select>
 	</div>
 	<label
-		class="dhcc-label">功能类型 :</label>
+		style="text-align: right; display: inline-block !important; width: 120px !important; line-height: 40px !important;">功能类型
+		:</label>
 	<div class="dhcc-input-div">
-		<select id="fFuncType" class="easyui-combobox func-type-list" name="fFuncType"
-			data-options="valueField:'fId',textField:'fName',url:'../table/listFuncType',panelHeight:'auto'" style="width: 200px;">
+		<select id="fFuncType" class="easyui-combobox func-type-list"
+			name="fFuncType"
+			data-options="valueField:'fId',textField:'fName',url:'../table/listFuncType',panelHeight:'auto'"
+			style="width: 200px;">
 			<!--option 在url获取  -->
 		</select>
 	</div>
@@ -98,9 +108,9 @@
 </div>
 
 <!-- 控件类型的模态框 -->
-<jsp:include page="tableCtrlTypeModal.jsp"/>
+<jsp:include page="tableCtrlTypeModal.jsp" />
 <!-- 功能类型的模态框 -->
-<jsp:include page="tableFuncTypeModal.jsp"/>
+<jsp:include page="tableFuncTypeModal.jsp" />
 <!-- 字段新增模态框 -->
 <div id="w" class="easyui-window dhcc-model" title="字段新增<span>表单</span>"
 	data-options="modal:true,closed:true,cls:'theme-panel-red',top:10">
@@ -108,59 +118,61 @@
 		action="/table/addTableFiled" target="formTargetIframe">
 		<label class="dhcc-label">字段名:</label>
 		<div class="dhcc-input-div">
-			<input class="easyui-textbox dhcc-input-width" name="fName"
+			<input class="easyui-textbox dhcc-input-width" name="fName" 
 				data-options="prompt:'输入字段名...',required:true,validType:'isTableName'" />
 		</div>
-		<span style="display: inline-block; width: 20px;"></span>
-		<label class="dhcc-label">字段类型:</label>
+		<span style="display: inline-block; width: 20px;"></span> <label
+			class="dhcc-label">字段类型:</label>
 		<div class="dhcc-input-div">
-			<select class="easyui-combobox col-type-option-list" id="fType" name="fType"
-				data-options="valueField:'id',textField:'text',panelHeight:'auto',value:'20',editable:false"
+			<select class="easyui-combobox col-type-option-list" id="fType"
+				name="fType"
+				data-options="valueField:'id',textField:'text',panelHeight:'auto',value:'20',editable:false,onSelect:choseColType"
 				style="width: 200px;">
 				<!--option 在url获取  -->
 			</select>
 		</div>
-		<br /> 
-		<label class="dhcc-label">字段长度:</label>
+		<br /> <label class="dhcc-label">字段长度:</label>
 		<div class="dhcc-input-div">
-			<input class="easyui-numberspinner theme-textbox-radius dhcc-input-width"
-				name="fSize" data-options="prompt:'输入字段长度...',spinAlign:'right',validType:'tableFileSize'">
+			<input
+				class="easyui-numberspinner theme-textbox-radius dhcc-input-width"
+				name="fSize" id="colSize"
+				data-options="prompt:'输入字段长度...',spinAlign:'right',validType:'tableFileSize'">
 		</div>
 		<span style="display: inline-block; width: 20px;"></span> <label
 			class="dhcc-label">字段精度:</label>
 		<div class="dhcc-input-div">
 			<input class="easyui-numberspinner theme-textbox dhcc-input-width"
-				name="fScale" data-options="prompt:'输入字段精度...',spinAlign:'right',validType:'tableFileScale'">
+				name="fScale" id="colScale"
+				data-options="prompt:'输入字段精度...',spinAlign:'right',validType:'tableFileScale'">
 		</div>
-		<br />
-		<label class="dhcc-label">字段中文名称:</label>
+		<br /> <label class="dhcc-label">字段中文名称:</label>
 		<div class="dhcc-input-div">
 			<input class="easyui-textbox theme-textbox dhcc-input-width"
-				name="fCnName" data-options="prompt:'输入字段中文名称...',validType:'length:[0,30]'">
+				name="fCnName"
+				data-options="prompt:'输入字段中文名称...',validType:'length:[0,30]'">
 		</div>
-		<span style="display: inline-block; width: 20px;"></span>
-		<label class="dhcc-label">字段别名:</label>
+		<span style="display: inline-block; width: 20px;"></span> <label
+			class="dhcc-label">字段别名:</label>
 		<div class="dhcc-input-div">
 			<input class="easyui-textbox theme-textbox dhcc-input-width"
-				name="fAlias" data-options="prompt:'输入字段别名...',validType:'length:[0,30]'">
+				name="fAlias"
+				data-options="prompt:'输入字段别名...',validType:'length:[0,30]'">
 		</div>
-		<br/>
-		<label class="dhcc-label">展示序号:</label>
+		<br /> <label class="dhcc-label">展示序号:</label>
 		<div class="dhcc-input-div">
 			<input class="easyui-textbox theme-textbox dhcc-input-width"
 				name="fShowNumber" data-options="prompt:'输入展示行...'">
 		</div>
-		<span style="display: inline-block; width: 20px;"></span>
-		<label class="dhcc-label">字段功能类型:</label>
+		<span style="display: inline-block; width: 20px;"></span> <label
+			class="dhcc-label">字段功能类型:</label>
 		<div class="dhcc-input-div">
 			<select class="easyui-combobox ctrl-type-list" name="fFuncType"
 				data-options="valueField:'fId',textField:'fName',url:'../table/listFuncType',panelHeight:'auto',editable:false"
 				style="width: 200px;">
-				
+
 			</select>
 		</div>
-		<br/>
-		<label class="dhcc-label">字段控件类型:</label>
+		<br /> <label class="dhcc-label">字段控件类型:</label>
 		<div class="dhcc-input-div">
 			<select class="easyui-combobox func-type-list" name="fCtrlType"
 				data-options="valueField:'cId',textField:'cName',url:'../table/listCtrlType',panelHeight:'auto',editable:false"
@@ -168,37 +180,34 @@
 				<!--option 在url获取  -->
 			</select>
 		</div>
-		<label style="text-align: right;
-						display: inline-block !important;
-						width: 122px !important;
-						line-height: 40px !important;">是否索引查询字段:</label>
+		<label
+			style="text-align: right; display: inline-block !important; width: 122px !important; line-height: 40px !important;">是否索引查询字段:</label>
 		<div class="dhcc-input-div">
-			<select class="easyui-combobox yes_no_option_list" name="fIsSuitQuery"
+			<select class="easyui-combobox yes_no_option_list"
+				name="fIsSuitQuery"
 				data-options="valueField:'id',textField:'text',panelHeight:'auto',editable:false"
 				style="width: 200px;">
 				<!--option 在jq获取  -->
 			</select>
 		</div>
-		<br/>
-		<label class="dhcc-label">控件约束:</label>
+		<br /> <label class="dhcc-label">控件约束:</label>
 		<div class="dhcc-input-div">
 			<input class="easyui-textbox theme-textbox dhcc-input-width"
 				name="fCtrlConstraints" data-options="prompt:'输入控件约束...'">
 		</div>
-		<span style="display: inline-block; width: 20px;"></span> 
-		<label class="dhcc-label">字段默认值:</label>
+		<span style="display: inline-block; width: 20px;"></span> <label
+			class="dhcc-label">字段默认值:</label>
 		<div class="dhcc-input-div">
 			<input class="easyui-textbox theme-textbox dhcc-input-width"
 				name="fDefault" data-options="prompt:'输入字段默认值...'">
 		</div>
-		<br/>
-		<label class="dhcc-label">字段注释:</label>
+		<br /> <label class="dhcc-label">字段注释:</label>
 		<div class="dhcc-input-div">
 			<input class="easyui-textbox theme-textbox dhcc-input-width"
 				name="fComment" data-options="prompt:'输入字段注释...'">
 		</div>
-		<span style="display: inline-block; width: 20px;"></span>
-		<label class="dhcc-label">是否可为空:</label>
+		<span style="display: inline-block; width: 20px;"></span> <label
+			class="dhcc-label">是否可为空:</label>
 		<div class="dhcc-input-div">
 			<select class="easyui-combobox yes_no_option_list" name="fNullable"
 				data-options="valueField:'id',textField:'text',panelHeight:'auto',editable:false"
@@ -206,20 +215,18 @@
 				<!--option 在jq获取  -->
 			</select>
 		</div>
-		<br/>
-		<label class="dhcc-label">展示行:</label>
+		<br /> <label class="dhcc-label">展示行:</label>
 		<div class="dhcc-input-div">
 			<input class="easyui-textbox theme-textbox dhcc-input-width"
 				name="fShowRow" data-options="prompt:'输入展示行...'">
 		</div>
-		<span style="display: inline-block; width: 20px;"></span>
-		<label class="dhcc-label">展示列:</label>
+		<span style="display: inline-block; width: 20px;"></span> <label
+			class="dhcc-label">展示列:</label>
 		<div class="dhcc-input-div">
 			<input class="easyui-textbox theme-textbox dhcc-input-width"
 				name="fShowCol" data-options="prompt:'输入展示列...'">
 		</div>
-		<br/>
-		<label class="dhcc-label">是否展示:</label>
+		<br /> <label class="dhcc-label">是否展示:</label>
 		<div class="dhcc-input-div">
 			<select class="easyui-combobox yes_no_option_list" name="fShowAble"
 				data-options="valueField:'id',textField:'text',panelHeight:'auto',editable:false"
@@ -227,14 +234,13 @@
 				<!--option 在jq获取  -->
 			</select>
 		</div>
-		<span style="display: inline-block; width: 20px;"></span>
-		<label class="dhcc-label">描述:</label>
+		<span style="display: inline-block; width: 20px;"></span> <label
+			class="dhcc-label">描述:</label>
 		<div class="dhcc-input-div">
 			<input class="easyui-textbox theme-textbox dhcc-input-width"
 				name="fDesc" data-options="prompt:'输入描述...'">
 		</div>
-		<br/>
-		<label	class="dhcc-label">字段采用数据元:</label>
+		<br /> <label class="dhcc-label">字段采用数据元:</label>
 		<div class="dhcc-input-div">
 			<select class="easyui-combobox" name="fDataElement"
 				data-options="valueField:'id',textField:'text'"
@@ -242,6 +248,7 @@
 				<!--option 在url获取  -->
 			</select>
 		</div>
+		<input name="fOfTable" hidden />
 		<input name=rowId hidden /> <br />
 		<div class="dhcc-search-button-div">
 			<button type="button" onclick="submitTableFieldForm()"

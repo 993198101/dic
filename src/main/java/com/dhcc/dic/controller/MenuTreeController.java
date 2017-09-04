@@ -105,4 +105,25 @@ public class MenuTreeController {
     public String gotoIndexForm(){
     	return "/dic/iframe/indexForm";
     }
+    @RequestMapping("/gotoDifTableMainForm")
+    public String gotoDifTableMainForm(){
+    	return "/dic/iframe/table/difTableMainForm";
+    }
+    @RequestMapping("/gotoViewTable")
+    public String gotoViewTable(){
+    	return "/dic/iframe/viewTable";
+    }
+    @RequestMapping("/gotoViewForm")
+    public String gotoViewForm(){
+    	return "/dic/iframe/viewForm";
+    }
+    @RequestMapping("/gotoSeqTable")
+    public String gotoSeqTable(){
+    	return "/dic/iframe/seqTable";
+    }
+    @RequestMapping("/gotoSeqForm")
+    public String gotoSeqForm(){
+    	return "/dic/iframe/seqForm";
+    }
+    
 }

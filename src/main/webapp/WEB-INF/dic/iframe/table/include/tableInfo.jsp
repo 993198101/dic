@@ -4,8 +4,8 @@
 	<label class="dhcc-label">表名称:</label>
 	<div class="dhcc-input-div">
 		<input class="easyui-textbox theme-textbox dhcc-input-width"
-			name="tName"
-			data-options="prompt:'输入表名称...',required:true,validType:'isTableName'">
+			name="tName" id="tableName"
+			data-options="prompt:'输入表名称...',required:true,validType:'isTableName',value:'newTable'">
 	</div>
 	<span style="display: inline-block; width: 20px;"></span> 
 	<label	class="dhcc-label">表中文名:</label>
@@ -17,12 +17,7 @@
 	<br /> <br /> <label class="dhcc-label">所属业务模块:</label>
 	<div class="dhcc-input-div">
 		<select class="easyui-combobox dhcc-input-width module_option_list" name="tOfModule" id="tOfModule"
-			data-options="valueField:'mId',textField:'mName',panelHeight: 'auto',onLoadSuccess: function () {   
-  				var data = $('#tOfModule').combobox('getData');  
-             	if (data.length > 0) {  
-                  $('#tOfModule').combobox('select', data[0].mId);  
-              	}   
- 		}">
+			data-options="valueField:'mId',textField:'mName',panelHeight: 'auto',value:'0'">
 			<!--option 在jq加载时获取  -->
 		</select>
 	</div>
@@ -37,22 +32,19 @@
 	<br /> <br /> <label class="dhcc-label">表空间:</label>
 	<div class="dhcc-input-div">
 		<select class="easyui-combobox dhcc-input-width tablespace-option-list" name="tOfTablespace" id="tOfTablespace"
-			data-options="valueField:'tId',textField:'tName',panelHeight: 'auto',onLoadSuccess: function () {   
-  				var data = $('#tOfTablespace').combobox('getData');  
-             	if (data.length > 0) {  
-                  $('#tOfTablespace').combobox('select', data[0].tId);  
-              	}   
- 			}">
+			data-options="valueField:'tId',textField:'tName',panelHeight: 'auto',value:'0'">
 			<!--option 在jq加载时获取  -->
 		</select>
 	</div>
-	<span style="display: inline-block; width: 20px;"></span> <label
-		class="dhcc-label">表描述:</label>
+	<span style="display: inline-block; width: 20px;"></span> 
+	<label	class="dhcc-label">表描述:</label>
 	<div class="dhcc-input-div">
 		<input class="easyui-textbox" name="tDesc"
 			style="height: 60px; width: 300px;"
 			data-options="prompt:'输入表描述...',multiline:true,validType:'length[1,40]'" />
 	</div>
+	<input name="tOfDatasource" hidden />
+	<input name="tOfProject" hidden />
 </form>
 <br />
 <div class="dhcc-table-tab-confirm-div">

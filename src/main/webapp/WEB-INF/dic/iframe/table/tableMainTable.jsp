@@ -79,7 +79,6 @@
             <!--option 页面加载时一同获取  -->
         </select>
     </div>
-    <input name="tSync" value="1" hidden />
     <br/>
     <div class="dhcc-search-button-div">
         <button class="easyui-linkbutton button-line-blue" onclick="query()">查询 <i class="fa fa-search"></i></button>
@@ -92,7 +91,15 @@
 	<!-- 模块和全量共用的是一个url只是参数不同，故需要进行判断见/dic/js/tableMainTable.js -->
     <table id="dataGrid" class="easyui-datagrid" style="width: 99%"
            data-options="pagination:true,loadFilter:dataFilter,pageNumber:0,pageSize:10,cache:false,
-        collapsible:true,singleSelect:true,toolbar:'#add'">
+        collapsible:true,singleSelect:true,toolbar:'#add',rowStyler: function(index,row){
+																		var value=row.tSync;
+																		if(value=='2')
+            																return 'color:#db2828;font-weight:bold;';
+            															if(value=='0')
+            																return 'color:#b5cc18;font-weight:bold;'; 
+            															if(value=='1')
+            																return 'color:#a333c8;font-weight:bold;';
+	}">
         <thead>
         <tr>
             <th data-options="field:'tId',align:'center'">表编号</th>
@@ -124,9 +131,8 @@
 <div id="w" class="easyui-window" style="width:100%;height:550px;" title="表新增<span>表单</span>"
      data-options="modal:true,closed:true,cls:'theme-panel-red'">
     <!-- src="gotoTableMainForm"+queryString 位于tableMainTable.js-->
-    <iframe  id="tableMainFormIframe" src="" width="100%" height="1070px"  frameborder="0"  scrolling="no"></iframe>
+    <iframe  id="tableMainFormIframe"  width="100%" height="548px;"  frameborder="0"  scrolling="no"></iframe>
 </div>
 <script src="<%=path %>/dic/js/tableMainTable.js"></script>
-
 </body>
 </html>

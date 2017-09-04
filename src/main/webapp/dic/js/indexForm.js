@@ -51,12 +51,12 @@ function saveEdit(){
 		formJson.refColumns=formJson.refColumns.split("030");
 	}
      ajax(updateIndexUrl,JSON.stringify(formJson),'post').done(function(data){
-		if(data.status="success"){
-			$.messager.alert('索引','修改数据源成功!，','success');
+		if(data.status=="success"){
+			$.messager.alert('索引','修改索引成功!，','success');
 			//updateTabs(menuTitle,formJson.iName);
 			//parent.loadSec("../menu/getAllMenus");
 		}else{
-			$.messager.alert('索引','修改数据源失败!，','danger');
+			$.messager.alert('索引','修改索引失败!，','danger');
 		}
 	});
 }

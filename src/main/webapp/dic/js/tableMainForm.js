@@ -13,10 +13,11 @@ $(function() {
 	if (getQueryString("datasourceId") != null) {
 		queryParams.datasourceId = getQueryString("datasourceId");
 	}
-	if (getQueryString("tableId") != null) {
-		loadEdit();
+	if (getQueryString("tableId") != null) {// 如果是编辑到此页面，加载值
 		tableId = getQueryString("tableId");
+		loadEdit(tableId);
 	}
+	// 加载下拉
 	ajax("../table/getStableOptionList?projectId=" + queryParams.projectId
 					+ "&datasourceId=" + queryParams.datasourceId).done(
 			function(data) {
@@ -29,16 +30,11 @@ $(function() {
 	});
 
 });
-var tableId = "0";
+var tableId = "-1";
 var tableName = "newTable"
 var addOrEditTableUrl = "../table/addOrEditTable";
 var firstCLickPk = true;
-var queryParams = {
-	moduleId : "0",
-	projectId : "0",
-	datasourceId : "0"
-};
-
+var queryParams = {};
 function back() {
 	$("#w").window('close');
 }
@@ -50,55 +46,141 @@ function button(value, row, index) {
 			+ row.rowId + ");'>删除</button>";
 }
 // 加载table数据
-var loadEditUrl = "/table/getEdit"
+var loadEditUrl = "../table/getTableCustom"
 function loadEdit(tableId) {
 	ajax(loadEditUrl + "?tableId=" + tableId).done(function(data) {
+		console.log(data);
 		// 表信息赋值
-		$("#tableInfoForm").form('load', data.tableInfo);
+		$("#tableInfoForm").form('load', data.tableCustom.tableInfo);
 		// 字段赋值
-		tableFieldList = data.tableFields;
+		tableFieldList = data.tableCustom.tableFields;
 		tableFieldListBackup = tableFieldList.concat(); // 数组复制
 		var i = 0;
 		for (i = 0; i < tableFieldList.length; i++) {
 			tableFieldList[i].rowId = i;
 		}
-		tableFieldNextId = i + 1;
+		tableFieldNextId = i;
 		$('#tableFieldDatagrid').datagrid('loadData', {
 			"rows" : tableFieldList,
 			"total" : tableFieldList.length
 		});
-
-		// 主键赋值
-		$('#tablePKForm').form('load', data);// *********未操作
+		for (var j = 0; j < data.tableCustom.tableConstraints.length; j++) {
+			var cons = data.tableCustom.tableConstraints[j];
+			switch (cons.consType) {
+			case "PK":// 主键赋值
+				$('#tablePKForm').form('load', {
+					PKName : cons.consName,consId:cons.consId
+				});// 表单赋名
+				tablePK = cons; // model赋值
+				break;
+			case "FK":
+				tableFKList.push(cons);
+				break;
+			case "Unique":
+				tableUniqueList.push(cons);
+				break;
+			}
+		}
+		modelToViewPK();// 勾选下方,根据pk和字段初始化表单与字段勾选
+		var b=0;
+		for (b=0;b<tableFKList.length;b++){
+			tableFKList[b].rowId=b;
+		}
+		rowIdFK=b;
+		$('#tableFKDatagrid').datagrid('loadData', tableFKList);
+		reSelectFK();
+		var c=0;
+		for (c=0;c<tableUniqueList.length;c++){
+			tableUniqueList[c].rowId=c;
+		}
+		rowIdUnique=c;
+		$('#tableUniqueDatagrid').datagrid('loadData', tableUniqueList);
+		reSelectUnique();
 		// 外键赋值
 		// 唯一约束赋值
 		// 索引页赋值
-
+		tableIndexList = data.tableCustom.tableIndexs;
+		var a=0;
+		for (a=0;a<tableIndexList.length;a++){
+			tableIndexList[a].indexRowId=a;
+		}
+		indexRowId=a;
+		$('#tableIndexDatagrid').datagrid('loadData', tableIndexList);
+		reSelectIndex();
 	}).fail(function(error) {
 		$.messager.alert("表信息加载", "表信息加载失败，错误码" + error.status, "danger");
 	});
 }
 function onSelect(title, index) {
 	switch (title) {
-	case "外键管理":
-		$("#checkboxFK").children(".datagrid-header-check").children(
-				"input[type='checkbox']")[0].disabled = true;
+		case "外键管理":
+			$("#checkboxFK").children(".datagrid-header-check").children("input[type='checkbox']")[0].disabled = true;
 		break;
-	case "唯一索引管理":
+		case "唯一索引管理":
 		break;
 	}
+	tableName=$("#tableName").textbox('getValue');
 }
 function tableFieldListChange() {
-	// 如果有选择的外键，修改可选字段
-	if (selectFK != undefined)
-		reLoadTableFKColumnsDatagrid(tableFieldList, selectFK);
+	//--------------------------主键-----------------------
 	// 字段改变修改主键选择项
+	var tableFieldNames=[];
+	for(var i=0;i<tableFieldList.length;i++){
+		tableFieldNames.push(tableFieldList[i].fName);
+	}
+	//如果主键包含的字段不匹配先有字段，清空主键
+	if(tablePK!=null)
+	if(tablePK.consFieldName!=null&&tablePK.consFieldName!=undefined&&tablePK.consFieldName.length>0){
+		for(var i=0;i<tablePK.consFieldName.length;i++){
+			if($.inArray(tablePK.consFieldName[i].fName,tableFieldNames)==-1){
+				$("#PKName").textbox('setValue','');
+			}
+		}
+	}
 	tablePKColumnsDatagrid = convertorPK(tableFieldList, tablePK);
 	$('#tablePKColumnsDatagrid').datagrid('loadData', tablePKColumnsDatagrid);
-	if (selectUnique != undefined)
-		reLoadTableUniqueColumnsDatagrid(tableFieldList, selectUnique);
-	if (selectIndex != undefined)
-		reLoadTableIndexColumnsDatagrid(tableFieldList, selectIndex);
+	//--------------------------外键-----------------------
+	if(tableFKList.length>0){
+		for(var i=0;i<tableFKList.length;i++){
+			var consFieldNameList=tableFKList[i].consFieldName;
+			for(var j=0;j<consFieldNameList.length;j++){
+				var consFieldName=consFieldNameList[j].fName;
+				if($.inArray(consFieldName,tableFieldNames)==-1){
+					selectFK = findTableFk(tableFKList[i].rowId);
+					removeTableFK();
+				}
+			}
+		}
+	}
+	reLoadTableFKColumnsDatagrid(tableFieldList, selectFK);
+	//--------------------------唯一约束-----------------------
+	if(tableUniqueList.length>0){
+		for(var i=0;i<tableUniqueList.length;i++){
+			var consFieldNameList=tableUniqueList[i].consFieldName;
+			for(var j=0;j<consFieldNameList.length;j++){
+				var consFieldName=consFieldNameList[j].fName;
+				if($.inArray(consFieldName,tableFieldNames)==-1){
+					selectUnique = findTableUnique(tableUniqueList[i].rowId);
+					removeUnique();
+				}
+			}
+		}
+	}
+	reLoadTableUniqueColumnsDatagrid(tableFieldList, selectUnique);
+	//--------------------------索引-----------------------
+	if(tableIndexList.length>0){
+		for(var i=0;i<tableIndexList.length;i++){
+			var consFieldNameList=tableIndexList[i].indexColCustomList;
+			for(var j=0;j<consFieldNameList.length;j++){
+				var consFieldName=consFieldNameList[j].colName;
+				if($.inArray(consFieldName,tableFieldNames)==-1){
+					selectIndex = findTableIndex(tableIndexList[i].indexRowId);
+					removeTableIndex();
+				}
+			}
+		}
+	}
+	reLoadTableIndexColumnsDatagrid(tableFieldList, selectIndex);
 }
 /**
  * 
@@ -113,8 +195,7 @@ function convertorPK(tableFieldList, tablePK) {
 				'columns' : tableFieldList[i].fName
 			};
 			if (tablePK != null) {
-				if (tablePK.consFieldName == undefined
-						|| tablePK.consFieldName == null) {
+				if (tablePK.consFieldName == undefined|| tablePK.consFieldName == null) {
 					tablePK.consFieldName = new Array();
 				}
 				var tablePKNames = tablePK.consFieldName.concat();// 将外键名数组 复制
@@ -145,9 +226,10 @@ function viewToModelPK() {
 	if (selectedRows != undefined && selectedRows != null
 			& selectedRows.length > 0) {
 		tablePK = {
-			consId : null,
+			consId:$('#tablePKForm').serializeObject().consId==""?null:$('#tablePKForm').serializeObject().consId,
 			consName : null,
 			consType : "PK",
+			consTableId:tableId,
 			consFieldName : [],
 			consRefTableId : null,
 			refConsFieldId : [],
@@ -164,6 +246,21 @@ function viewToModelPK() {
 	}
 	return tablePK;
 }
+function modelToViewPK() {
+	tablePKColumnsDatagrid = convertorPK(tableFieldList, tablePK);
+	$('#tablePKColumnsDatagrid').datagrid('loadData', tablePKColumnsDatagrid);
+	var rows = $('#tablePKColumnsDatagrid').datagrid('getRows');
+	for (var i = 0; i < rows.length; i++) {
+		var row = rows[i];
+		var index = $('#tablePKColumnsDatagrid').datagrid('getRowIndex', row);
+		if(tablePK!=null&&tablePK.consFieldName!=null)
+		for (var j = 0; j < tablePK.consFieldName.length; j++) {
+			if (tablePK.consFieldName[j].fName == row.columns) {
+				$('#tablePKColumnsDatagrid').datagrid('checkRow', index);
+			}
+		}
+	}
+}
 /**
  * 
  * 主键的管理的js结束
@@ -174,9 +271,13 @@ function submitForm() {
 		return false;
 	}
 	var tableInfo = $('#tableInfoForm').serializeObject(); // tableInfo页的form表单
+	if(queryParams.datasourceId!=null&&queryParams.datasourceId!=undefined)
 	tableInfo.tOfDatasource = queryParams.datasourceId;
+	if(queryParams.projectId!=null&&queryParams.projectId!=undefined)
 	tableInfo.tOfProject = queryParams.projectId;
+	if(queryParams.moduleId!=null&&queryParams.moduleId!=undefined)
 	tableInfo.tOfModule = queryParams.moduleId;
+	tableInfo.tId=tableId;
 	var tableConstraints = new Array();
 	if (tableFKList.length > 0)
 		tableConstraints = tableConstraints.concat(tableFKList);
@@ -187,8 +288,8 @@ function submitForm() {
 	if (tableUniqueList.length > 0) {
 		tableConstraints = tableConstraints.concat(tableUniqueList);
 	}
-	if(tableIndexList.length > 0){
-		for(var i=0;i<tableIndexList.length;i++){
+	if (tableIndexList.length > 0) {
+		for (var i = 0; i < tableIndexList.length; i++) {
 			tableIndexList[i].iOfDatasource = queryParams.datasourceId;
 			tableIndexList[i].iOfProject = queryParams.projectId;
 			tableIndexList[i].iOfModule = queryParams.moduleId;
@@ -198,18 +299,27 @@ function submitForm() {
 		tableInfo : tableInfo,
 		tableFields : tableFieldList,
 		tableConstraints : tableConstraints,
-		tableIndexs:tableIndexList
+		tableIndexs : tableIndexList
 	}
-//	console.log(formJson);
-//	return false;
+//	 console.log(formJson);
+//	 return false;
 	ajax(addOrEditTableUrl, JSON.stringify(formJson), 'post').done(
 			function(data) {
-				if(data.status=="failure"){
-					$.messager.alert("新增表", "新增表失败", "danger");
-				}else{
-					parent.$.messager.alert("新增表", "新增表成功", "success");
-					parent.$('#dataGrid').datagrid('reload');
-					parent.$('#w').window('close');
+				if (data.status == "failure") {
+					if(tableId=="-1"){
+						$.messager.alert("新增表", "新增表失败", "danger");
+					}else{
+						$.messager.alert("修改表", "修改表失败", "danger");
+					}
+				} else {
+					if(tableId=="-1"){
+						parent.$.messager.alert("新增表", "新增表成功", "success");
+						parent.$('#dataGrid').datagrid('reload');
+						parent.$('#w').window('close');
+					}else{
+						location.reload();
+					}
+					
 				}
 			});
 }
@@ -248,7 +358,8 @@ function nexLoadTableField() {
 // 新增字段，由于不直接进入数据库，设置rowId到页面 隐藏表单域
 function addTableField() {
 	$('#addTableFiledForm').form('load', {
-		"rowId" : tableFieldNextId
+		"rowId" : tableFieldNextId,
+		"fOfTable":tableId
 	});
 	$("#w").window('open');
 }
@@ -260,9 +371,9 @@ function submitTableFieldForm() {
 	if (res == true) {
 		if (isEdit == false) {
 			tableFieldNextId++;
-			for(var i=0;i<tableFieldListBackup.length;i++){
-				if(tableFieldListBackup[i].fName==tableFieldJson.fName){
-					$.messager.alert("提示","字段名不能重复","danger");
+			for (var i = 0; i < tableFieldListBackup.length; i++) {
+				if (tableFieldListBackup[i].fName == tableFieldJson.fName) {
+					$.messager.alert("提示", "字段名不能重复", "danger");
 					return false;
 				}
 			}
@@ -279,8 +390,8 @@ function submitTableFieldForm() {
 		$('#w').window('close');
 		tableFieldListChange();
 		isEdit = false;
-	}else{
-		$.messager.alert("添加字段","失败,表单验证未通过","danger");
+	} else {
+		$.messager.alert("添加字段", "失败,表单验证未通过", "danger");
 	}
 }
 function test() {
@@ -298,10 +409,13 @@ function editTableField(id) {
 	tableFieldList = tableFieldListBackup.concat();
 	$('#w').window('open');
 	$('#addTableFiledForm').form('load', formJson);
+	tableFieldListChange();
 	isEdit = true;
 }
 // 删除字段，操作tableFieList
 function deleteTableField(id) {
+	var e=window.event || arguments.callee.caller.arguments[0];
+	e.stopPropagation();
 	for (var i = 0; i < tableFieldListBackup.length; i++) {
 		if (tableFieldListBackup[i].rowId == id) {
 			tableFieldListBackup.splice(i, 1);
@@ -309,6 +423,7 @@ function deleteTableField(id) {
 	}
 	tableFieldList = tableFieldListBackup.concat();
 	nexLoadTableField();
+	tableFieldListChange();
 }
 
 // 字段查询,特别的删除元素 i--
@@ -372,22 +487,22 @@ var getTablePKUrl = "table/getTablePKs";
  * 新增 -》
  * 增加list-reload上方--清空关联表的选择项--清空关联列的model--根据选择的FK，reload下方，勾选下方（注意为了避免递归，进行判断此时下方页面已被勾选，不进行重复勾选）.
  * 勾选下方-》勾选下方，设置model，reload上方，选择上方的操作行，reload下方
- * ，勾选下方（注意为了避免递归，进行判断此时下方页面已被勾选，不进行重复勾选）. 关联表变化-》
- * 下面关联列是   获取editor.target 赋列表的
+ * ，勾选下方（注意为了避免递归，进行判断此时下方页面已被勾选，不进行重复勾选）. 关联表变化-》 下面关联列是 获取editor.target 赋列表的
  */
 
 var selectIndexFK = undefined; // 页面选择的行
 var selectFK = undefined; // 选择的FK
 var editIndexFK = undefined; // 上方修改的序号
+var editIndexFKCol=undefined;//下面正在修改的索引
 var tableFKList = []; // 所有的外键集合
-var consIdFK = 1; // 自增Id
+var rowIdFK = 1; // 自增Id
 var choseRefTableId = undefined;// 选择的外键关联表Id
 var refColumns = []; // 根据关联表变化的所有 关联列的modelList
 var tableFKColumnsDatagrid = [];// 下方的datagrid的List
 function addtableFK() {
-	var FKName = tableName + "_FK" + consIdFK;
+	var FKName = tableName + "_FK" + rowIdFK;
 	var tableFK = {
-		consId : consIdFK,
+		rowId : rowIdFK,
 		consName : FKName,
 		consType : "FK",
 		consFieldName : [],
@@ -396,13 +511,13 @@ function addtableFK() {
 		consIsReal : 'REAL'
 	}
 	tableFKList.push(tableFK);
-	consIdFK++;
+	rowIdFK++;
 	selectFK = tableFKList[tableFKList.length - 1];
 	appendFK();
 }
 function findTableFk(id) {
 	for (var i = 0; i < tableFKList.length; i++) {
-		if (tableFKList[i].consId == id) {
+		if (tableFKList[i].rowId == id) {
 			return tableFKList[i];
 		}
 	}
@@ -422,20 +537,26 @@ document.getElementById("tableFKDiv").onclick = function(e) {
 		var row = $('#tableFKDatagrid').datagrid('getRows')[editIndexFK];
 		if (row == null || row == undefined)
 			return;
-		var model = findTableFk(row.consId);
+		var model = findTableFk(row.rowId);
 		model.consName = row.consName;
 		endEditing();
 	}
+	if(editIndexFKCol!=undefined){
+		endEditingFKCol();
+	}
+	
 }
 document.getElementById("tableFKDatagridDiv").onclick = function(e) {
 	e.stopPropagation();
 }
-
+document.getElementById("tabFKDiv").onclick = function(e) {
+	e.stopPropagation();
+}
 function onClickRowFK(rowIndex, rowData) {
 	if ($('#tableFKDatagrid').datagrid('getSelected') == null) {
 		selectFK = undefined;
 	} else {
-		selectFK = findTableFk(rowData.consId);
+		selectFK = findTableFk(rowData.rowId);
 	}
 	selectIndexFK = rowIndex;
 	if (selectFK.consRefTableId != null) {
@@ -449,7 +570,7 @@ function onClickRowFK(rowIndex, rowData) {
 function removeTableFK() {
 	if (selectFK != undefined) {
 		for (var i = 0; i < tableFKList.length; i++) {
-			if (tableFKList[i].consId == selectFK.consId) {
+			if (tableFKList[i].rowId == selectFK.rowId) {
 				tableFKList.splice(i, 1);
 				$('#tableFKDatagrid').datagrid('loadData', tableFKList);
 				selectIndexFK = undefined;
@@ -466,6 +587,24 @@ function endEditing() {
 	if ($('#tableFKDatagrid').datagrid('validateRow', editIndexFK)) {
 		$('#tableFKDatagrid').datagrid('endEdit', editIndexFK);
 		editIndexFK = undefined;
+		return true;
+	} else {
+		return false;
+	}
+}
+function endEditingFKCol(){
+	if (editIndexFKCol == undefined) {
+		return true;
+	}
+	if ($('#tableFKColumnsDatagrid').datagrid('validateRow', editIndexFKCol)) {
+		$('#tableFKColumnsDatagrid').datagrid('endEdit', editIndexFKCol);
+		var row = $('#tableFKColumnsDatagrid').datagrid('getRows')[editIndexFKCol];
+		if (row == null || row == undefined)
+			return;
+		selectFK.refConsFieldId.push(row.select);
+		$('#tableFKDatagrid').datagrid('loadData', tableFKList);
+		reSelectFK();
+		editIndexFKCol = undefined;
 		return true;
 	} else {
 		return false;
@@ -495,13 +634,15 @@ function onDblClickRowFK(index, field) {
 
 function convertor(tableFieldList, tableFK) {
 	var datas = [];
+	if(tableFK!=undefined&&tableFK!=null)
 	if (tableFieldList != null)
 		for (var i = 0; i < tableFieldList.length; i++) {
 			var data = {
 				'columns' : tableFieldList[i].fName
 			};
 			if (tableFK != null) {
-				if (tableFK.consFieldName == undefined|| tableFK.consFieldName == null) {
+				if (tableFK.consFieldName == undefined
+						|| tableFK.consFieldName == null) {
 					tableFK.consFieldName = new Array();
 				}
 				var tableFKNames = tableFK.consFieldName.concat();// 将外键名数组 复制
@@ -548,7 +689,7 @@ function onUncheckFK(rowIndex, rowData) {
 	target.combobox('setValue', null);
 	$('#tableFKDatagrid').datagrid('loadData', tableFKList);
 	reSelectFK();
-	ChoseRefColEnable(rowIndex, false);
+	//// ChoseRefColEnable(rowIndex, false);
 }
 function onCheckFK(rowIndex, rowData) {
 	if (selectFK != undefined) {
@@ -559,11 +700,26 @@ function onCheckFK(rowIndex, rowData) {
 		});
 		$('#tableFKDatagrid').datagrid('loadData', tableFKList);
 		reSelectFK();
-		ChoseRefColEnable(rowIndex, true);// 让关联列的下拉框可操作
+		// ChoseRefColEnable(rowIndex, true);// 让关联列的下拉框可操作
 	}
 	selectFK.refConsFieldId.splice(0, selectFK.refConsFieldId.length);
 }
-
+function onDblClickRowFKCol(rowIndex,rowData){
+	editIndexFKCol=rowIndex;
+	$('#tableFKColumnsDatagrid').datagrid('beginEdit',rowIndex);
+	var target = $('#tableFKColumnsDatagrid').datagrid('getEditor', {
+		index : rowIndex,
+		field : 'select'
+	}).target;
+	target.combobox('loadData', refColumns);
+}
+function refColFormatter(value,row){
+	for(var i=0;i<refColumns.length;i++){
+		if(refColumns[i].fId==value){
+			return refColumns[i].fName;
+		}
+	}
+}
 function onLoadSuccessFK(data) {
 	var rows = data.rows;
 	for (var i = 0; i < rows.length; i++) {
@@ -579,11 +735,12 @@ function onLoadSuccessFK(data) {
 		} else {
 			target.combobox('setValue', null);
 		}
-		if (rows[i].checked == true) {
-			target.combobox('enable');
-		} else {
-			target.combobox('disable');
-		}
+//		if (rows[i].checked == true) {
+//			target.combobox('enable');
+//		} else {
+//			target.combobox('disable');
+//		}
+		$('#tableFKColumnsDatagrid').datagrid('endEdit', i);
 	}
 }
 function FkTest() {
@@ -646,6 +803,7 @@ function reSelectFK() {
 		$("#tableFKDatagrid").datagrid('selectRow', selectIndexFK);
 		onClickRowFK(selectIndexFK, rows[selectIndexFK]);
 	} else {
+		selectFK=undefined;
 		$('#refTableCombobox').combobox('setValue', null);
 		refColumns.splice(0, refColumns);
 		reLoadTableFKColumnsDatagrid([], selectFK);
@@ -664,7 +822,7 @@ $(".alert-close").click(function() {
 var selectIndexUnique = undefined; // 页面选择的行
 var selectUnique = undefined; // 选择的FK
 var tableUniqueList = []; // 所有的外键集合
-var consIdUnique = 1; // 自增Id
+var rowIdUnique = 1; // 自增Id
 var editIndexUnique = undefined;// 上面正在修改的唯一约束
 function endEditingUnique() {
 	if (editIndexUnique == undefined) {
@@ -675,7 +833,7 @@ function endEditingUnique() {
 		var row = $('#tableUniqueDatagrid').datagrid('getRows')[editIndexUnique];
 		if (row == null || row == undefined)
 			return;
-		var model = findTableUnique(row.consId);
+		var model = findTableUnique(row.rowId);
 		model.consName = row.consName;
 		editIndexUnique = undefined;
 		return true;
@@ -684,9 +842,9 @@ function endEditingUnique() {
 	}
 }
 function addtableUnique() {
-	var UniqueName = tableName + "_Unique" + consIdUnique;
+	var UniqueName = tableName + "UNIQUE" + rowIdUnique;
 	var tableUnique = {
-		consId : consIdUnique,
+		rowId : rowIdUnique,
 		consName : UniqueName,
 		consType : "Unique",
 		consFieldName : [],
@@ -695,7 +853,7 @@ function addtableUnique() {
 		consIsReal : 'REAL'
 	}
 	tableUniqueList.push(tableUnique);
-	consIdUnique++;
+	rowIdUnique++;
 	selectUnique = tableUniqueList[tableUniqueList.length - 1];
 	appendUnique();
 }
@@ -717,7 +875,7 @@ document.getElementById("tableUniqueDatagridDiv").onclick = function(e) {
 }
 function findTableUnique(id) {
 	for (var i = 0; i < tableUniqueList.length; i++) {
-		if (tableUniqueList[i].consId == id) {
+		if (tableUniqueList[i].rowId == id) {
 			return tableUniqueList[i];
 		}
 	}
@@ -747,6 +905,7 @@ function reLoadTableUniqueColumnsDatagrid(tableFieldList, selectUnique) {
 }
 function converterUnique(tableFieldList, selectUnique) {
 	var datas = [];
+	if(selectUnique!=undefined&&selectUnique!=null)
 	if (tableFieldList != null)
 		for (var i = 0; i < tableFieldList.length; i++) {
 			var data = {
@@ -782,7 +941,7 @@ function onClickRowUnique(rowIndex, rowData) {
 	if ($('#tableUniqueDatagrid').datagrid('getSelected') == null) {
 		selectUnique = undefined;
 	} else {
-		selectUnique = findTableUnique(rowData.consId);
+		selectUnique = findTableUnique(rowData.rowId);
 	}
 	selectIndexUnique = rowIndex;
 	reLoadTableUniqueColumnsDatagrid(tableFieldList, selectUnique);
@@ -790,7 +949,7 @@ function onClickRowUnique(rowIndex, rowData) {
 function removeUnique() {
 	if (selectUnique != undefined) {
 		for (var i = 0; i < tableUniqueList.length; i++) {
-			if (tableUniqueList[i].consId == selectUnique.consId) {
+			if (tableUniqueList[i].rowId == selectUnique.rowId) {
 				tableUniqueList.splice(i, 1);
 				$('#tableUniqueDatagrid').datagrid('loadData', tableUniqueList);
 				selectIndexUnique = undefined;
@@ -801,6 +960,7 @@ function removeUnique() {
 }
 function onCheckUnique(rowIndex, rowData) {
 	if (selectUnique != undefined) {
+		endEditingUnique();
 		var flag = true;
 		for (var i = 0; i < selectUnique.consFieldName.length; i++) {
 			if (rowData.columns == selectUnique.consFieldName[i].fName) {
@@ -833,6 +993,7 @@ function onUncheckUnique(rowIndex, rowData) {
 }
 function onCheckAllUnique(rows) {
 	if (selectUnique != undefined) {
+		endEditingUnique();
 		for (var i = 0; i < rows.length; i++) {
 			var flag = true;
 			for (var j = 0; j < selectUnique.consFieldName.length; j++) {
@@ -868,8 +1029,9 @@ function reSelectUnique() {
 		}
 		$("#tableUniqueDatagrid").datagrid('selectRow', selectIndexUnique);
 		onClickRowUnique(selectIndexUnique, rows[selectIndexUnique]);
-	}else{
-		reLoadTableUniqueColumnsDatagrid([],selectUnique);
+	} else {
+		selectUnique=undefined;
+		reLoadTableUniqueColumnsDatagrid([], selectUnique);
 	}
 }
 function UniqueTest() {
@@ -886,8 +1048,9 @@ function UniqueTest() {
 var selectIndexIndex = undefined; // 页面选择的行
 var selectIndex = undefined; // 选择的索引
 var tableIndexList = []; // 所有的索引的集合
-var iId = 1; // 自增Id
+var indexRowId = 1; // 自增Id
 var editIndexIndex = undefined;// 上面 正在修改的索引
+var editIndexIndexCol=undefined;//下面正在修改的索引
 function endEditingIndex() {
 	if (editIndexIndex == undefined) {
 		return true;
@@ -897,7 +1060,7 @@ function endEditingIndex() {
 		var row = $('#tableIndexDatagrid').datagrid('getRows')[editIndexIndex];
 		if (row == null || row == undefined)
 			return;
-		var model = findTableIndex(row.iId);
+		var model = findTableIndex(row.indexRowId);
 		model.iName = row.iName;
 		model.iType = row.iType;
 		model.iSort = row.iSort;
@@ -923,18 +1086,37 @@ function iSortFormatter(value, row, index) {
 		return "ASC";
 	}
 }
+function indexFormatter(value,row,index){
+	var fieldNames = null;
+	var fieldNamesString = '';
+	if (row.indexColCustomList != null && row.indexColCustomList != undefined) {
+		indexColCustomList = row.indexColCustomList.concat();
+		for (var i = 0; i < indexColCustomList.length; i++) {
+			fieldNamesString += indexColCustomList[i].colName;
+			if(indexColCustomList[i].sort=='0'){
+				fieldNamesString +="(DESC)";
+			}else{
+				fieldNamesString +="(ASC)";
+			}
+			if (i != indexColCustomList.length - 1) {
+				fieldNamesString += ',';
+			}
+		}
+	}
+	return fieldNamesString;
+}
 function addtableIndex() {
 	var tableIndex = {
-		iId : iId,
-		iName : "index_" + tableName + iId,
+		indexRowId : indexRowId,
+		iName : tableName+"_INDEX" + indexRowId,
 		iCnName : null,
 		iDesc : null,
 		iType : '0',
 		iSort : '0',
-		refColumns : []
+		indexColCustomList : []
 	}
 	tableIndexList.push(tableIndex);
-	iId++;
+	indexRowId++;
 	selectIndex = tableIndexList[tableIndexList.length - 1];
 	appendIndex();
 }
@@ -946,17 +1128,24 @@ function appendIndex() {
 	selectIndexIndex = editIndexIndex;
 	reLoadTableIndexColumnsDatagrid(tableFieldList, selectIndex);
 }
+//点击页面进行保存页面修改
 document.getElementById("tableIndexDiv").onclick = function(e) {
-	if (editIndexIndex != undefined) {
+	if (editIndexIndex != undefined) {//保存上方
 		endEditingIndex();
+	}
+	if(editIndexIndexCol!=undefined){
+		endEditingIndexCol();
 	}
 }
 document.getElementById("tableIndexDatagridDiv").onclick = function(e) {
 	e.stopPropagation();
 }
+document.getElementById("tabIndexDiv").onclick = function(e) {
+	e.stopPropagation();
+}
 function findTableIndex(id) {
 	for (var i = 0; i < tableIndexList.length; i++) {
-		if (tableIndexList[i].iId == id) {
+		if (tableIndexList[i].indexRowId == id) {
 			return tableIndexList[i];
 		}
 	}
@@ -965,18 +1154,17 @@ function reLoadTableIndexColumnsDatagrid(tableFieldList, selectIndex) {
 	var dataList = converterIndex(tableFieldList, selectIndex);
 	$('#tableIndexColumnsDatagrid').datagrid('loadData', dataList);
 	if (selectIndex != null) {
-		if (selectIndex.refColumns == undefined
-				|| selectIndex.refColumns == null) {
-			selectUnique.refColumns = new Array();
+		if (selectIndex.indexColCustomList == undefined || selectIndex.indexColCustomList == null) {
+			selectIndex.indexColCustomList = new Array();
 		}
-		var tableIndexNames = selectIndex.refColumns.concat();
+		var tableIndexNames = selectIndex.indexColCustomList.concat();
 		var rows = $('#tableIndexColumnsDatagrid').datagrid('getRows');
 		for (var i = 0; i < rows.length; i++) {
 			var row = rows[i];
 			var index = $('#tableIndexColumnsDatagrid').datagrid('getRowIndex',
 					row);
 			for (var j = 0; j < tableIndexNames.length; j++) {
-				if (row.columns == tableIndexNames[j]) {
+				if (row.columns == tableIndexNames[j].colName) {
 					$('#tableIndexColumnsDatagrid').datagrid('checkRow', index);
 				}
 			}
@@ -985,11 +1173,18 @@ function reLoadTableIndexColumnsDatagrid(tableFieldList, selectIndex) {
 }
 function converterIndex(tableFieldList, selectUnique) {
 	var datas = [];
+	if(selectUnique!=null&&selectUnique!=null)
 	if (tableFieldList != null)
 		for (var i = 0; i < tableFieldList.length; i++) {
 			var data = {
-				'columns' : tableFieldList[i].fName
+				'columns' : tableFieldList[i].fName,
+				'sort':'1'
 			};
+			for(var j=0;j<selectIndex.indexColCustomList.length;j++){
+				if(selectIndex.indexColCustomList[j].colName==data.columns){
+					data.sort=selectIndex.indexColCustomList[j].sort;
+				}
+			}
 			datas.push(data);
 		}
 	return datas;
@@ -1019,7 +1214,7 @@ function onClickRowIndex(rowIndex, rowData) {
 	if ($('#tableIndexDatagrid').datagrid('getSelected') == null) {
 		selectIndex = undefined;
 	} else {
-		selectIndex = findTableIndex(rowData.iId);
+		selectIndex = findTableIndex(rowData.indexRowId);
 	}
 	selectIndexIndex = rowIndex;
 	reLoadTableIndexColumnsDatagrid(tableFieldList, selectIndex);
@@ -1027,7 +1222,7 @@ function onClickRowIndex(rowIndex, rowData) {
 function removeTableIndex() {
 	if (selectIndex != undefined) {
 		for (var i = 0; i < tableIndexList.length; i++) {
-			if (tableIndexList[i].iId == selectIndex.iId) {
+			if (tableIndexList[i].indexRowId == selectIndex.indexRowId) {
 				tableIndexList.splice(i, 1);
 				$('#tableIndexDatagrid').datagrid('loadData', tableIndexList);
 				selectIndexIndex = undefined;
@@ -1038,9 +1233,19 @@ function removeTableIndex() {
 }
 function onCheckIndex(rowIndex, rowData) {
 	if (selectIndex != undefined) {
-		if ($.inArray(rowData.columns, selectIndex.refColumns) < 0) {
-			// 选择的外键名对应的字段，数组应当只有一个，可多个
-			selectIndex.refColumns.push(rowData.columns);
+		endEditingIndex();
+		var flag = true;
+		for (var i = 0; i < selectIndex.indexColCustomList.length; i++) {
+			if (rowData.columns == selectIndex.indexColCustomList[i].colName) {
+				flag = false;
+				break;
+			}
+		}
+		if (flag) {
+			selectIndex.indexColCustomList.push({
+				colName : rowData.columns,
+				sort: rowData.sort,
+			});
 			$('#tableIndexDatagrid').datagrid('loadData', tableIndexList);
 			reSelectIndex();
 		}
@@ -1048,11 +1253,11 @@ function onCheckIndex(rowIndex, rowData) {
 }
 function onUncheckIndex(rowIndex, rowData) {
 	if (selectIndex != undefined) {
-		var refColumns = selectIndex.refColumns; // 选择的外键名对应的字段，数组应当只有一个，可多个
-		if (refColumns.length != 0) {
-			for (var i = 0; i < refColumns.length; i++) {
-				if (refColumns[i] == rowData.columns) {
-					refColumns.splice(i, 1);
+		var indexColCustomList = selectIndex.indexColCustomList; // 选择的外键名对应的字段，数组应当只有一个，可多个
+		if (indexColCustomList.length != 0) {
+			for (var i = 0; i < indexColCustomList.length; i++) {
+				if (indexColCustomList[i].colName == rowData.columns) {
+					indexColCustomList.splice(i, 1);
 				}
 			}
 		}
@@ -1062,10 +1267,19 @@ function onUncheckIndex(rowIndex, rowData) {
 }
 function onCheckAllIndex(rows) {
 	if (selectIndex != undefined) {
+		endEditingIndex();
 		for (var i = 0; i < rows.length; i++) {
-			if ($.inArray(rows[i].columns, selectIndex.refColumns) < 0) {
-				// 选择的外键名对应的字段，数组应当只有一个，可多个
-				selectIndex.refColumns.push(rows[i].columns);
+			var flag = true;
+			for (var j = 0; j < selectIndex.indexColCustomList.length; j++) {
+				if (rows[i].columns == selectIndex.indexColCustomList[j].colName) {
+					flag = false;
+				}
+			}
+			if (flag) {
+				selectIndex.indexColCustomList.push({
+					"colName" : rows[i].columns,
+					 sort:      rows[i].sort,
+				});
 			}
 		}
 		$('#tableIndexDatagrid').datagrid('loadData', tableIndexList);
@@ -1074,10 +1288,37 @@ function onCheckAllIndex(rows) {
 }
 function onUncheckAllIndex(rows) {
 	if (selectIndex != undefined) {
-		var refColumns = selectIndex.refColumns;
-		refColumns.splice(0, refColumns.length);
+		var indexColCustomList = selectIndex.indexColCustomList;
+		indexColCustomList.splice(0, indexColCustomList.length);
 		$('#tableIndexDatagrid').datagrid('loadData', tableIndexList);
 		reSelectIndex();
+	}
+}
+function onDblClickRowIndexCol(rowIndex,rowData){//双击进行修改下方
+	editIndexIndexCol=rowIndex;
+	$('#tableIndexColumnsDatagrid').datagrid('beginEdit',rowIndex);
+}
+function endEditingIndexCol(){
+	if (editIndexIndexCol == undefined) {
+		return true;
+	}
+	if ($('#tableIndexColumnsDatagrid').datagrid('validateRow', editIndexIndexCol)) {
+		$('#tableIndexColumnsDatagrid').datagrid('endEdit', editIndexIndexCol);
+		var row = $('#tableIndexColumnsDatagrid').datagrid('getRows')[editIndexIndexCol];
+		if (row == null || row == undefined)
+			return;
+		for(var i=0;i<selectIndex.indexColCustomList.length;i++){
+			var col=selectIndex.indexColCustomList[i];
+			if(col.colName==row.columns){
+				col.sort=row.sort;
+			}
+		}
+		$('#tableIndexDatagrid').datagrid('loadData', tableIndexList);
+		reSelectIndex();
+		editIndexIndexCol = undefined;
+		return true;
+	} else {
+		return false;
 	}
 }
 function reSelectIndex() {
@@ -1089,7 +1330,8 @@ function reSelectIndex() {
 		}
 		$("#tableIndexDatagrid").datagrid('selectRow', selectIndexIndex);
 		onClickRowIndex(selectIndexIndex, rows[selectIndexIndex]);
-	}else{
+	} else {
+		selectIndex=undefined;
 		reLoadTableIndexColumnsDatagrid([], selectIndex)
 	}
 }

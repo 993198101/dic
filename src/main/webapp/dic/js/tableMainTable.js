@@ -13,26 +13,20 @@ $(function () {
 		queryParams.tOfDatasource = getQueryString("datasourceId");
 	}
     $('#dataGrid').datagrid({url:getPageUrl,queryParams:queryParams});
-    var url="gotoTableMainForm?moduleId="+queryParams.tOfModule+"&projectId="+queryParams.tOfProject+"&datasourceId="+queryParams.tOfDatasource;
-    document.getElementById("tableMainFormIframe").src=url;
 });
 var getPageUrl="../table/getTablesByPage";
 var deleteUrl="../table/removeTable";
 var editUrl="../table/getTableById";
 var loadSelectUrl="../sysDatasource/loadSelect";
-var queryParams = {
-		moduleId : "0",
-		projectId:"0",
-		datasourceId:"0"
-	};
+var queryParams = {};
 function add() {
-	
+	var url="gotoTableMainForm?moduleId="+queryParams.tOfModule+"&projectId="+queryParams.tOfProject+"&datasourceId="+queryParams.tOfDatasource;
+    document.getElementById("tableMainFormIframe").src=url;
     $("#w").window('open');
 }
 function back(){
 	$("#w").window('close');
 }
-
 function loadSelect() {
      var commoboxNode=new Array();
      ajax(loadSelectUrl).done(function (res) {
@@ -57,7 +51,17 @@ function dataFilter(data){
 	return tabledata;
 }
 function button(value,row,index){
-    return "<button  class='easyui-linkbutton button-default' style='width: 50px;height: 34px;border-radius: 3px' onclick='editTable("+row.tId+")'>编辑</button> <button  class='easyui-linkbutton button-danger' style='width: 50px;height: 34px;border-radius: 3px' onclick='deleteTable("+row.tId+")'>删除</button>";
+	var value=row.tSync;
+	if(value=='0'){
+		return "<button  class='easyui-linkbutton button-default' style='width: 90px;height: 34px;border-radius: 3px' onclick='viewDifferences("+row.tId+",0)'>查看差异</button>";
+	}else if(value=='2'){
+		return "<button  class='easyui-linkbutton button-default' style='width: 90px;height: 34px;border-radius: 3px' onclick='viewDifferences("+row.tId+",2,&apos;"+row.tName+"&apos;)'>查看差异</button>";
+	}else if(value=='1'){
+		return "<button  class='easyui-linkbutton button-default' style='width: 90px;height: 34px;border-radius: 3px' onclick='viewDifferences("+row.tName+",1)'>查看差异</button>";
+	}
+	else{
+		return "<button  class='easyui-linkbutton button-default' style='width: 50px;height: 34px;border-radius: 3px' onclick='editTable("+row.tId+")'>编辑</button> <button  class='easyui-linkbutton button-danger' style='width: 50px;height: 34px;border-radius: 3px' onclick='deleteTable("+row.tId+")'>删除</button>";
+	}
 }
 function query(){
 	queryParams={};
@@ -80,21 +84,17 @@ function query(){
 	$('#dataGrid').datagrid('load',queryParams);
 	
 }
-//function submitForm(){
-//	var formJson={
-//			tableInfo:null,
-//			fields:null,
-//			constraints:null
-//	};
-//	var tableInfoFormRes=$('#tableInfoForm').form('enableValidation').form('validate');
-//	var tableFiledsForm=$('#tableFiledsForm').form('enableValidation').form('validate');
-//	var tableInfoFormRes=$('#tableInfoForm').form('enableValidation').form('validate');
-//	
-//	var tableInfoFormJson = $('#tableInfoForm').serializeObject();
-//	var tableFiledsFormJson = $('#tableFiledsForm').serializeObject();
-//	var tableConstraintsFormJson = $('#tableConstraintsForm').serializeObject();
-//	
-//}
+function viewDifferences(param,type,param2){
+	var url="";
+	if(type=="0"){
+		url="../menu/gotoDifTableMainForm?tableId="+param+"&type=0";
+	}else if(type=="1"){
+		url="../menu/gotoDifTableMainForm?tableName="+param+"&type=1";
+	}else if(type=="2"){
+		url="../menu/gotoDifTableMainForm?tableId="+param+"&type=2"+"&tableName="+param2+"&datasourceId="+queryParams.tOfDatasource;
+	}
+	parent.addMainTab("表差异_"+param,url);
+}
 function deleteTable(id){
 	ajax(deleteUrl+"?id="+id).done(function(data) {
 		if(data.status=="failure"){
@@ -107,10 +107,11 @@ function deleteTable(id){
 			}else{
 				$.messager.alert('删除表','删除表失败,该表已经不存在!','danger');
 			}
-		}	
+		}
 	});
 }
 function editTable(id){
-	parent.addMainTab("表_"+id,editUrl+"?tableId="+id);
+	var url="../menu/gotoTableMainForm?tableId="+id;
+	parent.addMainTab("表_"+id,url);
 }
 

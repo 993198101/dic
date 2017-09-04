@@ -243,6 +243,76 @@ public class TIndexColumnsExample {
             addCriterion("COLUMN_ID not between", value1, value2, "columnId");
             return (Criteria) this;
         }
+
+        public Criteria andSortIsNull() {
+            addCriterion("SORT is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortIsNotNull() {
+            addCriterion("SORT is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortEqualTo(String value) {
+            addCriterion("SORT =", value, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortNotEqualTo(String value) {
+            addCriterion("SORT <>", value, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortGreaterThan(String value) {
+            addCriterion("SORT >", value, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortGreaterThanOrEqualTo(String value) {
+            addCriterion("SORT >=", value, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortLessThan(String value) {
+            addCriterion("SORT <", value, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortLessThanOrEqualTo(String value) {
+            addCriterion("SORT <=", value, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortLike(String value) {
+            addCriterion("SORT like", value, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortNotLike(String value) {
+            addCriterion("SORT not like", value, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortIn(List<String> values) {
+            addCriterion("SORT in", values, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortNotIn(List<String> values) {
+            addCriterion("SORT not in", values, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortBetween(String value1, String value2) {
+            addCriterion("SORT between", value1, value2, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortNotBetween(String value1, String value2) {
+            addCriterion("SORT not between", value1, value2, "sort");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

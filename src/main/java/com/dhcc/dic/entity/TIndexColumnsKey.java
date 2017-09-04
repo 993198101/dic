@@ -5,19 +5,7 @@ public class TIndexColumnsKey {
 
     private String columnId;
 
-    
-    /**
-     * 
-     * @param indexId
-     * @param columnId
-     */
-	public TIndexColumnsKey(String indexId, String columnId) {
-		super();
-		this.indexId = indexId;
-		this.columnId = columnId;
-	}
-
-	public String getIndexId() {
+    public String getIndexId() {
         return indexId;
     }
 

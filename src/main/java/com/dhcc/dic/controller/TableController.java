@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dhcc.dic.entity.DifTableDTO;
 import com.dhcc.dic.entity.SysOption;
 import com.dhcc.dic.entity.TCtrlType;
 import com.dhcc.dic.entity.TFuncType;
 import com.dhcc.dic.entity.TModule;
 import com.dhcc.dic.entity.TTable;
 import com.dhcc.dic.entity.TTableField;
+import com.dhcc.dic.entity.TTablespace;
 import com.dhcc.dic.entity.TableCustom;
 import com.dhcc.dic.service.ModuleService;
 import com.dhcc.dic.service.SysParmDicService;
@@ -78,22 +80,24 @@ public class TableController {
 		map.put("result", result);  //删除记录数
 	    return map;
 	}
-	@RequestMapping("/getTableById")
+	@RequestMapping("/getTableCustom")
 	@ResponseBody
-	public Map<String,Object> getTableById(String datasourceId) throws Exception{
-		TTable datasource=null;
-		int result=1;
-		try{
-		 datasource=this.tableService.getTableById(datasourceId);
-		}catch(Exception e){
-			result=0;
-		}
-		
-		if(datasource!=null)
-			result=0;
+	public Map<String,Object> getTableCustom(String tableId) throws Exception{
+		TableCustom tableCustom=null;
+		tableCustom=this.tableService.getTableCustom(tableId);
 		Map<String,Object> map=new HashMap<String,Object>();
-		map.put("result", result);
-		map.put("datasource", datasource);
+		map.put("status", "success");
+		map.put("tableCustom", tableCustom);
+	    return map;
+	}
+	@RequestMapping("/getDifTableCustom")
+	@ResponseBody
+	public Map<String,Object> getDifTableCustom(String tableName,String datasourceId) throws Exception{
+		DifTableDTO difTableDTO=null;
+		difTableDTO=this.tableService.getDifTableDTO(tableName,datasourceId);
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("status", "success");
+		map.put("tableCustom", difTableDTO);
 	    return map;
 	}
 	@RequestMapping("/saveTable")
@@ -101,7 +105,7 @@ public class TableController {
 	public Map<String,Object> saveTable(@RequestBody TTable tTable,HttpSession session) throws Exception{
 		int result = 1;
 		try{
-			this.tableService.editTable(tTable);
+			//this.tableService.editTable(tTable);
 		}catch(Exception e){
 			result=0;
 		}
@@ -124,7 +128,12 @@ public class TableController {
 	@ResponseBody
 	public Map<String,Object> addOrEditTable(@RequestBody TableCustom tableCustom) throws Exception{
 		Map<String,Object> map=new HashMap<String,Object>();
-		this.tableService.addOrEditTable(tableCustom);
+		String tableId=tableCustom.getTableInfo().gettId();
+		if("-1".equals(tableId)){
+			this.tableService.insertTable(tableCustom);
+		}else{
+			this.tableService.updateTable(tableCustom);
+		}
 		map.put("status", "success");
 	    return map;
 	}
@@ -138,9 +147,13 @@ public class TableController {
 	@ResponseBody
 	public Map<String,Object> getAllOptionList(String projectId,String datasourceId) throws Exception{
 		Map<String,Object> map=new HashMap<String,Object>();
-		map.put("moduleList", this.moduleService.getModuleList(projectId));
+		List<TModule> moduleList=this.moduleService.getModuleList(projectId);
+		moduleList.add(this.moduleService.getModuleById("0"));
+		map.put("moduleList", moduleList);
 		map.put("yesOrNo", this.sysParmDicService.getOptionList("YES_OR_NO"));
-		map.put("tablespaceList", this.tablespaceService.getOptionList(projectId, datasourceId));
+		List<TTablespace> tablespaceList=this.tablespaceService.getOptionList(projectId, datasourceId);
+		tablespaceList.add(this.tablespaceService.getTablespaceById("0"));
+		map.put("tablespaceList", tablespaceList);
 		map.put("colTypeList", this.sysParmDicService.getOptionList("COL_TYPE"));
 		return map;
 	}

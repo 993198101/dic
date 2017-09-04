@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dhcc.dic.dao.TViewDAO" >
+  <resultMap id="BaseResultMap" type="com.dhcc.dic.entity.TView" >
+    <id column="V_ID" property="vId" jdbcType="VARCHAR" />
+    <result column="V_NAME" property="vName" jdbcType="VARCHAR" />
+    <result column="V_SQL" property="vSql" jdbcType="VARCHAR" />
+    <result column="V_CN_NAME" property="vCnName" jdbcType="VARCHAR" />
+    <result column="V_DESC" property="vDesc" jdbcType="VARCHAR" />
+    <result column="V_DATE" property="vDate" jdbcType="VARCHAR" />
+    <result column="V_SYNC_STATE" property="vSyncState" jdbcType="VARCHAR" />
+    <result column="V_OF_MODULE" property="vOfModule" jdbcType="VARCHAR" />
+    <result column="V_OF_DATASOURCE" property="vOfDatasource" jdbcType="VARCHAR" />
+    <result column="V_OF_PROJECT" property="vOfProject" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    V_ID, V_NAME, V_SQL, V_CN_NAME, V_DESC, V_DATE, V_SYNC_STATE, V_OF_MODULE, V_OF_DATASOURCE, 
+    V_OF_PROJECT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dhcc.dic.entity.TViewExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_VIEW
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_VIEW
+    where V_ID = #{vId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_VIEW
+    where V_ID = #{vId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dhcc.dic.entity.TViewExample" >
+    delete from T_VIEW
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dhcc.dic.entity.TView" >
+    <selectKey resultType="String" order="BEFORE" keyProperty="vId"> 
+		SELECT SEQ_VIEW.NEXTVAL FROM dual 
+	</selectKey>
+    insert into T_VIEW (V_ID, V_NAME, V_SQL, 
+      V_CN_NAME, V_DESC, V_DATE, 
+      V_SYNC_STATE, V_OF_MODULE, V_OF_DATASOURCE, 
+      V_OF_PROJECT)
+    values (#{vId,jdbcType=VARCHAR}, #{vName,jdbcType=VARCHAR}, #{vSql,jdbcType=VARCHAR}, 
+      #{vCnName,jdbcType=VARCHAR}, #{vDesc,jdbcType=VARCHAR}, #{vDate,jdbcType=VARCHAR}, 
+      #{vSyncState,jdbcType=VARCHAR}, #{vOfModule,jdbcType=VARCHAR}, #{vOfDatasource,jdbcType=VARCHAR}, 
+      #{vOfProject,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TView" >
+  	<selectKey resultType="String" order="BEFORE" keyProperty="vId"> 
+		SELECT SEQ_VIEW.NEXTVAL FROM dual 
+	</selectKey>
+    insert into T_VIEW
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="vId != null" >
+        V_ID,
+      </if>
+      <if test="vName != null" >
+        V_NAME,
+      </if>
+      <if test="vSql != null" >
+        V_SQL,
+      </if>
+      <if test="vCnName != null" >
+        V_CN_NAME,
+      </if>
+      <if test="vDesc != null" >
+        V_DESC,
+      </if>
+      <if test="vDate != null" >
+        V_DATE,
+      </if>
+      <if test="vSyncState != null" >
+        V_SYNC_STATE,
+      </if>
+      <if test="vOfModule != null" >
+        V_OF_MODULE,
+      </if>
+      <if test="vOfDatasource != null" >
+        V_OF_DATASOURCE,
+      </if>
+      <if test="vOfProject != null" >
+        V_OF_PROJECT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="vId != null" >
+        #{vId,jdbcType=VARCHAR},
+      </if>
+      <if test="vName != null" >
+        #{vName,jdbcType=VARCHAR},
+      </if>
+      <if test="vSql != null" >
+        #{vSql,jdbcType=VARCHAR},
+      </if>
+      <if test="vCnName != null" >
+        #{vCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="vDesc != null" >
+        #{vDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="vDate != null" >
+        #{vDate,jdbcType=VARCHAR},
+      </if>
+      <if test="vSyncState != null" >
+        #{vSyncState,jdbcType=VARCHAR},
+      </if>
+      <if test="vOfModule != null" >
+        #{vOfModule,jdbcType=VARCHAR},
+      </if>
+      <if test="vOfDatasource != null" >
+        #{vOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="vOfProject != null" >
+        #{vOfProject,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dhcc.dic.entity.TViewExample" resultType="java.lang.Integer" >
+    select count(*) from T_VIEW
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_VIEW
+    <set >
+      <if test="record.vId != null" >
+        V_ID = #{record.vId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vName != null" >
+        V_NAME = #{record.vName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vSql != null" >
+        V_SQL = #{record.vSql,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vCnName != null" >
+        V_CN_NAME = #{record.vCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vDesc != null" >
+        V_DESC = #{record.vDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vDate != null" >
+        V_DATE = #{record.vDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vSyncState != null" >
+        V_SYNC_STATE = #{record.vSyncState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vOfModule != null" >
+        V_OF_MODULE = #{record.vOfModule,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vOfDatasource != null" >
+        V_OF_DATASOURCE = #{record.vOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vOfProject != null" >
+        V_OF_PROJECT = #{record.vOfProject,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_VIEW
+    set V_ID = #{record.vId,jdbcType=VARCHAR},
+      V_NAME = #{record.vName,jdbcType=VARCHAR},
+      V_SQL = #{record.vSql,jdbcType=VARCHAR},
+      V_CN_NAME = #{record.vCnName,jdbcType=VARCHAR},
+      V_DESC = #{record.vDesc,jdbcType=VARCHAR},
+      V_DATE = #{record.vDate,jdbcType=VARCHAR},
+      V_SYNC_STATE = #{record.vSyncState,jdbcType=VARCHAR},
+      V_OF_MODULE = #{record.vOfModule,jdbcType=VARCHAR},
+      V_OF_DATASOURCE = #{record.vOfDatasource,jdbcType=VARCHAR},
+      V_OF_PROJECT = #{record.vOfProject,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dhcc.dic.entity.TView" >
+    update T_VIEW
+    <set >
+      <if test="vName != null" >
+        V_NAME = #{vName,jdbcType=VARCHAR},
+      </if>
+      <if test="vSql != null" >
+        V_SQL = #{vSql,jdbcType=VARCHAR},
+      </if>
+      <if test="vCnName != null" >
+        V_CN_NAME = #{vCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="vDesc != null" >
+        V_DESC = #{vDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="vDate != null" >
+        V_DATE = #{vDate,jdbcType=VARCHAR},
+      </if>
+      <if test="vSyncState != null" >
+        V_SYNC_STATE = #{vSyncState,jdbcType=VARCHAR},
+      </if>
+      <if test="vOfModule != null" >
+        V_OF_MODULE = #{vOfModule,jdbcType=VARCHAR},
+      </if>
+      <if test="vOfDatasource != null" >
+        V_OF_DATASOURCE = #{vOfDatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="vOfProject != null" >
+        V_OF_PROJECT = #{vOfProject,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where V_ID = #{vId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dhcc.dic.entity.TView" >
+    update T_VIEW
+    set V_NAME = #{vName,jdbcType=VARCHAR},
+      V_SQL = #{vSql,jdbcType=VARCHAR},
+      V_CN_NAME = #{vCnName,jdbcType=VARCHAR},
+      V_DESC = #{vDesc,jdbcType=VARCHAR},
+      V_DATE = #{vDate,jdbcType=VARCHAR},
+      V_SYNC_STATE = #{vSyncState,jdbcType=VARCHAR},
+      V_OF_MODULE = #{vOfModule,jdbcType=VARCHAR},
+      V_OF_DATASOURCE = #{vOfDatasource,jdbcType=VARCHAR},
+      V_OF_PROJECT = #{vOfProject,jdbcType=VARCHAR}
+    where V_ID = #{vId,jdbcType=VARCHAR}
+  </update>
+</mapper>

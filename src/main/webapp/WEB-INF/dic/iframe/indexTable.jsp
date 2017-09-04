@@ -59,14 +59,16 @@
 		<span style="display: inline-block; width: 20px;"></span> <label
 			class="dhcc-label">索引类别 :</label>
 		<div class="dhcc-input-div">
-			<select class="easyui-combobox dhcc-input-width" name="iType" id="iType"
+			<select class="easyui-combobox dhcc-input-width" name="iType"
+				id="iType"
 				data-options="valueField:'id',textField:'text',url:'../sysParmDic/getOptionList?keyName=INDEX_TYPE',editable:false,panelHeight: 'auto'">
 				<!--option 在url获取  -->
 			</select>
 		</div>
 		<br /> <label class="dhcc-label">选择关联表:</label>
 		<div class="dhcc-input-div">
-			<select class="easyui-combobox" style="width: 200px;" id="iOfTable" name="iOfTable"
+			<select class="easyui-combobox" style="width: 200px;" id="iOfTable"
+				name="iOfTable"
 				data-options="url:'../table/getTableList',
     						valueField:'tId',
     						textField:'tName',
@@ -83,7 +85,8 @@
 		<span style="display: inline-block; width: 20px;"></span> <label
 			class="dhcc-label">差异状态:</label>
 		<div class="dhcc-input-div">
-			<select class="easyui-combobox" style="width: 200px;" id="iSyncState" name="iSyncState"
+			<select class="easyui-combobox" style="width: 200px;" id="iSyncState"
+				name="iSyncState"
 				data-options="url:'../sysParmDic/getOptionList?keyName=SYNC_STATE',
     						valueField:'id',
     						textField:'text',
@@ -98,7 +101,8 @@
 		</div>
 	</div>
 	<div id="addIndex" style="text-align: right;">
-		<button class="easyui-linkbutton button-line-grey" onclick="addIndex()">新增</button>
+		<button class="easyui-linkbutton button-line-grey"
+			onclick="addIndex()">新增</button>
 	</div>
 	<div class="dhcc-table-list">
 		<table id="dataGrid" class="easyui-datagrid" style="width: 99%"
@@ -144,7 +148,7 @@
 			<span style="display: inline-block; width: 20px;"></span> <label
 				class="dhcc-label">索引描述:</label>
 			<div class="dhcc-input-div">
-				<input class="easyui-textbox" name="iDesc" style="width:200px;"
+				<input class="easyui-textbox" name="iDesc" style="width: 200px;"
 					data-options="prompt:'输入索引描述...',validType:'length[0,50]'">
 			</div>
 			<br /> <label class="dhcc-label">索引中文名:</label>
@@ -175,7 +179,8 @@
 			<span style="display: inline-block; width: 20px;"></span> <label
 				class="dhcc-label">索引关联列:</label>
 			<div class="dhcc-input-div">
-				<select id="refColumns" name="refColumns" data-options="editable:false"
+				<select id="refColumns" name="refColumns"
+					data-options="editable:false"
 					class="easyui-combogrid theme-textbox-radius" style="width: 200px;">
 				</select>
 			</div>

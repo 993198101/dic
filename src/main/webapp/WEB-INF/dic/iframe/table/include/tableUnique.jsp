@@ -23,7 +23,7 @@
 					data-options="field:'consName',width:196,editor:{type:'validatebox',options:{validType:'length[1,20]',required:true}}">
 					唯一约束名</th>
 				<th
-					data-options="field:'consFieldName',width:80,formatter: columnsFormatter">列</th>
+					data-options="field:'consFieldName',width:320,formatter: columnsFormatter">列</th>
 			</tr>
 		</thead>
 	</table>
@@ -39,10 +39,10 @@
 		data-options="rownumbers:true,singleSelect: false,onCheck:onCheckUnique,
 					onUncheck:onUncheckUnique,
 					onCheckAll:onCheckAllUnique,
-					onUncheckAll:onUncheckAllUnique,fitColumns:true	">
+					onUncheckAll:onUncheckAllUnique	">
 		<thead>
 			<tr>
-				<th data-options="field:'columns'">列</th>
+				<th data-options="field:'columns',width:180">列</th>
 				<th id="indexCheck" data-options="field:'checkbox',checkbox:true">选择</th>
 			</tr>
 		</thead>

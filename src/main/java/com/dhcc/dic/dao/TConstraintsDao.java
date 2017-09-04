@@ -1,5 +1,6 @@
 package com.dhcc.dic.dao;
 
+import com.dhcc.dic.entity.ContraintsCustom;
 import com.dhcc.dic.entity.TConstraints;
 import com.dhcc.dic.entity.TConstraintsExample;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface TConstraintsDao {
     int updateByPrimaryKeySelective(TConstraints record);
 
     int updateByPrimaryKey(TConstraints record);
+    
+    List<ContraintsCustom> listContraintsCustoms(@Param("tableId") String tableId);
 }

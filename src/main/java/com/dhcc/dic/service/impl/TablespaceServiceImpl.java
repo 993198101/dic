@@ -20,5 +20,15 @@ public class TablespaceServiceImpl implements TablespaceService{
 		example.createCriteria().andTOfProjectEqualTo(projectId).andTOfDatasourceEqualTo(datasourceId);
 		return this.tTablespaceDao.selectByExample(example);
 	}
+	@Override
+	public TTablespace getTablespaceById(String id) throws Exception {
+		TTablespaceExample example=new TTablespaceExample();
+		example.createCriteria().andTIdEqualTo(id);
+		List<TTablespace> tablespaceList=this.tTablespaceDao.selectByExample(example);
+		if(tablespaceList!=null&&tablespaceList.size()==1){
+			return tablespaceList.get(0);
+		}
+		return null;
+	}
 
 }

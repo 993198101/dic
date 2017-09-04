@@ -4,10 +4,10 @@ package com.dhcc.dic.entity;
 
 public class ContraintsCustom extends TConstraints{
 	
-	TTableField[] consFieldName;
+	private TTableField[] consFieldName;
 	
-	String[] refConsFieldId;
-
+	private String[] refConsFieldId;
+	
 	public TTableField[] getConsFieldName() {
 		return consFieldName;
 	}

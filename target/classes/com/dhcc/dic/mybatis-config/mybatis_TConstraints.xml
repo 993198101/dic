@@ -247,4 +247,26 @@
       CONS_IS_REAL = #{consIsReal,jdbcType=VARCHAR}
     where CONS_ID = #{consId,jdbcType=VARCHAR}
   </update>
+  <resultMap id="ConstraintsCustomMap" type="com.dhcc.dic.entity.ContraintsCustom" >
+    <id column="CONS_ID" property="consId" jdbcType="VARCHAR" />
+    <result column="CONS_NAME" property="consName" jdbcType="VARCHAR" />
+    <result column="CONS_TYPE" property="consType" jdbcType="VARCHAR" />
+    <result column="CONS_TABLE_ID" property="consTableId" jdbcType="VARCHAR" />
+    <result column="CONS_REF_CONS_ID" property="consRefConsId" jdbcType="VARCHAR" />
+    <result column="CONS_REF_TABLE_ID" property="consRefTableId" jdbcType="VARCHAR" />
+    <result column="CONS_IS_REAL" property="consIsReal" jdbcType="VARCHAR" />
+    <collection property="consFieldName" column="CONS_ID" select="listConsFieldName" ofType="com.dhcc.dic.entity.TTableField"></collection>
+    <collection property="refConsFieldId" ofType="String" column="CONS_REF_CONS_ID" select="listRefConsFieldId"></collection>
+  </resultMap>
+  <select id="listContraintsCustoms" parameterType="String" resultMap="ConstraintsCustomMap">
+  		SELECT A.CONS_ID,A.CONS_NAME,A.CONS_TYPE,A.CONS_TABLE_ID,
+  		A.CONS_REF_CONS_ID,A.CONS_REF_TABLE_ID,A.CONS_IS_REAL
+  		FROM T_CONSTRAINTS A WHERE A.CONS_TABLE_ID=#{tableId} 
+  </select>
+  <select id="listConsFieldName" parameterType="String" resultType="com.dhcc.dic.entity.TTableField">
+  		SELECT B.CC_TABLE_FIELD_ID AS fId,A.F_NAME AS fName FROM T_CONS_COLUMNS B LEFT JOIN T_TABLE_FIELD A ON A.F_ID=B.CC_TABLE_FIELD_ID WHERE CC_CONS_ID=#{consId}  
+  </select>
+  <select id="listRefConsFieldId" parameterType="String" resultType="String">
+  		SELECT B.CC_TABLE_FIELD_ID FROM T_CONS_COLUMNS B WHERE B.CC_CONS_ID=#{consRefConsId}
+  </select>
 </mapper>

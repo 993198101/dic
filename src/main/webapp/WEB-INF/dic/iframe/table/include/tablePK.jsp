@@ -4,6 +4,7 @@
 	<form id="tablePKForm" >
 		<label style="display: inline-block">输入主键名:</label> 
 		<input class="easyui-textbox" name="PKName" id="PKName" style="width: 200px;" />
+		<input name="consId" hidden/>
 	<br/>
 	<br/>
 	<table id="tablePKColumnsDatagrid" class="easyui-datagrid"
@@ -11,7 +12,7 @@
 		data-options="rownumbers:true,singleSelect: false,singleSelect:true,checkOnSelect:true,selectOnCheck:false,onLoadSuccess:PKOnloadSuccess ">
 		<thead>
 			<tr>
-				<th data-options="field:'columns'">列</th>
+				<th data-options="field:'columns',width:140">列</th>
 				<th data-options="field:'checkbox',checkbox:true">选择</th>
 				</tr>
 				</thead>
