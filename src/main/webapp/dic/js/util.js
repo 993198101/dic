@@ -71,8 +71,28 @@ $.extend($.fn.validatebox.defaults.rules, {
 			return tableFileScale(value);
 		},
 		message : '请输入符合要求的字段精度'
+	},
+	maxValue : {
+		validator : function(value, param) {
+			return maxValue(value);
+		},
+		message : '最大值不符合要求'
 	}
 });
+function maxValue(value){
+	if($("#max").combobox('getValue')=="1"){
+		var a=parseInt(value);
+		if(!isNaN(a)){
+			if(-100000000000000000000000000>a||a>100000000000000000000000000){
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}else{
+		$("#maxValue").combobox('disabled',true);
+	}
+}
 /* 端口号校验 */
 function isValidPort(str) {
 	var parten = /^(\d)+$/g;

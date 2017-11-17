@@ -11,25 +11,7 @@ public class TTablespace {
 
     private String tType;
 
-    private String tMinExtent;
-
-    private String tBlocksize;
-
-    private String tPartitionGroup;
-
-    private String tLoggingClause;
-
-    private String tForceLogging;
-
-    private String tDefStorageClause;
-
-    private String tAttribute;
-
-    private String tExtentManagementClause;
-
-    private String tState;
-
-    private String tSaveObjState;
+    private String tSyncState;
 
     private String tOfDatasource;
 
@@ -75,84 +57,12 @@ public class TTablespace {
         this.tType = tType == null ? null : tType.trim();
     }
 
-    public String gettMinExtent() {
-        return tMinExtent;
+    public String gettSyncState() {
+        return tSyncState;
     }
 
-    public void settMinExtent(String tMinExtent) {
-        this.tMinExtent = tMinExtent == null ? null : tMinExtent.trim();
-    }
-
-    public String gettBlocksize() {
-        return tBlocksize;
-    }
-
-    public void settBlocksize(String tBlocksize) {
-        this.tBlocksize = tBlocksize == null ? null : tBlocksize.trim();
-    }
-
-    public String gettPartitionGroup() {
-        return tPartitionGroup;
-    }
-
-    public void settPartitionGroup(String tPartitionGroup) {
-        this.tPartitionGroup = tPartitionGroup == null ? null : tPartitionGroup.trim();
-    }
-
-    public String gettLoggingClause() {
-        return tLoggingClause;
-    }
-
-    public void settLoggingClause(String tLoggingClause) {
-        this.tLoggingClause = tLoggingClause == null ? null : tLoggingClause.trim();
-    }
-
-    public String gettForceLogging() {
-        return tForceLogging;
-    }
-
-    public void settForceLogging(String tForceLogging) {
-        this.tForceLogging = tForceLogging == null ? null : tForceLogging.trim();
-    }
-
-    public String gettDefStorageClause() {
-        return tDefStorageClause;
-    }
-
-    public void settDefStorageClause(String tDefStorageClause) {
-        this.tDefStorageClause = tDefStorageClause == null ? null : tDefStorageClause.trim();
-    }
-
-    public String gettAttribute() {
-        return tAttribute;
-    }
-
-    public void settAttribute(String tAttribute) {
-        this.tAttribute = tAttribute == null ? null : tAttribute.trim();
-    }
-
-    public String gettExtentManagementClause() {
-        return tExtentManagementClause;
-    }
-
-    public void settExtentManagementClause(String tExtentManagementClause) {
-        this.tExtentManagementClause = tExtentManagementClause == null ? null : tExtentManagementClause.trim();
-    }
-
-    public String gettState() {
-        return tState;
-    }
-
-    public void settState(String tState) {
-        this.tState = tState == null ? null : tState.trim();
-    }
-
-    public String gettSaveObjState() {
-        return tSaveObjState;
-    }
-
-    public void settSaveObjState(String tSaveObjState) {
-        this.tSaveObjState = tSaveObjState == null ? null : tSaveObjState.trim();
+    public void settSyncState(String tSyncState) {
+        this.tSyncState = tSyncState == null ? null : tSyncState.trim();
     }
 
     public String gettOfDatasource() {

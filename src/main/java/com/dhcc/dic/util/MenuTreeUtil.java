@@ -109,7 +109,7 @@ public class MenuTreeUtil {
 		this.tMenuTreeDao.insert(userMenu);
 		// 增加tablespace
 		TMenuTree tablespaceMenu = new TMenuTree(null, "表空间", datasourceMenu.getmId(), "用户", mDate, "1",
-				"../menu/gotoTablespaceTabledatasourceId=" + tDatasource.getdId() + "&projectId="
+				"../menu/gotoTablespaceTable?datasourceId=" + tDatasource.getdId() + "&projectId="
 						+ tDatasource.getdOfProject(),
 				null, "closed");
 		this.tMenuTreeDao.insert(tablespaceMenu);

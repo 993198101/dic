@@ -315,6 +315,76 @@ public class TSeqExample {
             return (Criteria) this;
         }
 
+        public Criteria andSDescIsNull() {
+            addCriterion("S_DESC is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSDescIsNotNull() {
+            addCriterion("S_DESC is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSDescEqualTo(String value) {
+            addCriterion("S_DESC =", value, "sDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSDescNotEqualTo(String value) {
+            addCriterion("S_DESC <>", value, "sDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSDescGreaterThan(String value) {
+            addCriterion("S_DESC >", value, "sDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSDescGreaterThanOrEqualTo(String value) {
+            addCriterion("S_DESC >=", value, "sDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSDescLessThan(String value) {
+            addCriterion("S_DESC <", value, "sDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSDescLessThanOrEqualTo(String value) {
+            addCriterion("S_DESC <=", value, "sDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSDescLike(String value) {
+            addCriterion("S_DESC like", value, "sDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSDescNotLike(String value) {
+            addCriterion("S_DESC not like", value, "sDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSDescIn(List<String> values) {
+            addCriterion("S_DESC in", values, "sDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSDescNotIn(List<String> values) {
+            addCriterion("S_DESC not in", values, "sDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSDescBetween(String value1, String value2) {
+            addCriterion("S_DESC between", value1, value2, "sDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSDescNotBetween(String value1, String value2) {
+            addCriterion("S_DESC not between", value1, value2, "sDesc");
+            return (Criteria) this;
+        }
+
         public Criteria andSIncreaseSizeIsNull() {
             addCriterion("S_INCREASE_SIZE is null");
             return (Criteria) this;

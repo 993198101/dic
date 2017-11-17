@@ -102,6 +102,7 @@ public class ModuleServiceImpl  implements ModuleService{
 	public List<TModule> getModuleList(String projectId) throws Exception {
 		TModuleExample example=new TModuleExample();
 		example.createCriteria().andMOfProjectEqualTo(projectId);
+		example.or().andMIdEqualTo("0");
 		return this.tModuleDao.selectByExample(example);
 	}
 

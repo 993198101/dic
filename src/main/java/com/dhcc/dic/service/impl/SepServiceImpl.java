@@ -38,7 +38,30 @@ public class SepServiceImpl implements SeqService{
 		PageHelper.startPage(pageNum, pageSize);
 		TSeqExample example = new TSeqExample();
 		Criteria criteria = example.createCriteria();
-		
+		if(tSeq.getsId()!=null){
+			criteria.andSIdEqualTo(tSeq.getsId());
+		}
+		if(tSeq.getsName()!=null){
+			criteria.andSNameLike("%"+tSeq.getsName()+"%");
+		}
+		if(tSeq.getsCnName()!=null){
+			criteria.andSCnNameLike("%"+tSeq.getsCnName()+"%");
+		}
+		if(tSeq.getsDesc()!=null){
+			criteria.andSDescLike("%"+tSeq.getsDesc()+"%");
+		}
+		if(tSeq.getsSyncState()!=null){
+			criteria.andSSyncStateEqualTo(tSeq.getsSyncState());
+		}
+		if(tSeq.getsOfProject()!=null){
+			criteria.andSOfProjectEqualTo(tSeq.getsOfProject());
+		}
+		if(tSeq.getsOfDatasource()!=null){
+			criteria.andSOfDatasourceEqualTo(tSeq.getsOfDatasource());
+		}
+		if(tSeq.getsOfModule()!=null){
+			criteria.andSOfModuleEqualTo(tSeq.getsOfModule());
+		}
 		return tSeqDAO.selectByExample(example);
 	}
 

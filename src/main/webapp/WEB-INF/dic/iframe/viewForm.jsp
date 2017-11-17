@@ -9,8 +9,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<link
-	href="<%=path%>/JQuery-EasyUI-1.5.x-Of-Insdep-Theme/themes/insdep/easyui.css"
+<link href="<%=path%>/JQuery-EasyUI-1.5.x-Of-Insdep-Theme/themes/insdep/easyui.css"
 	rel="stylesheet" type="text/css">
 
 <link

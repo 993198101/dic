@@ -56,15 +56,20 @@ function dataFilter(data) {
 }
 function button(value, row, seq) {
 	return "<button  class='easyui-linkbutton button-default' style='width: 50px;height: 34px;border-radius: 3px' onclick='editSeq("
-			+ row.vId
+			+ row.sId
 			+ ")'>编辑</button> <button  class='easyui-linkbutton button-danger' style='width: 50px;height: 34px;border-radius: 3px' onclick='deleteSeq("
-			+ row.vId + ")'>删除</button>";
+			+ row.sId + ")'>删除</button>";
 }
 function addSeq() {
 	$("#w").window('open');
 }
 function back() {
 	$("#w").window('close');
+}
+function choseRefTable(value,row){
+	$("#sRefField").combobox('clear');
+	var url="../table/getTableFieldList?tableId="+value.tId;
+	$("#sRefField").combobox('reload',url);
 }
 function submitForm() {
 	var res = $('#addSeqForm').form('enableValidation').form('validate');
@@ -100,5 +105,5 @@ function deleteSeq(id) {
 	});
 }
 function editSeq(id) {
-	parent.addMainTab("序列_" + id, editUrl + "?seqId=" + id);
+	parent.addMainTab("序列_" + id, editUrl + "?seqId=" + id + "&projectId="+queryParams.sOfProject);
 }

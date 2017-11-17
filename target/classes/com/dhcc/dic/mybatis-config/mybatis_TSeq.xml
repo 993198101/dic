@@ -5,6 +5,7 @@
     <id column="S_ID" property="sId" jdbcType="VARCHAR" />
     <result column="S_NAME" property="sName" jdbcType="VARCHAR" />
     <result column="S_CN_NAME" property="sCnName" jdbcType="VARCHAR" />
+    <result column="S_DESC" property="sDesc" jdbcType="VARCHAR" />
     <result column="S_INCREASE_SIZE" property="sIncreaseSize" jdbcType="DECIMAL" />
     <result column="S_START" property="sStart" jdbcType="DECIMAL" />
     <result column="S_HAS_MAX" property="sHasMax" jdbcType="VARCHAR" />
@@ -77,8 +78,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    S_ID, S_NAME, S_CN_NAME, S_INCREASE_SIZE, S_START, S_HAS_MAX, S_MAX_VALUE, S_CACHE_NUMBER, 
-    S_SYNC_STATE, S_DATE, S_REF_TABLE, S_REF_FIELD, S_OF_MODULE, S_OF_DATASOURCE, S_OF_PROJECT
+    S_ID, S_NAME, S_CN_NAME, S_DESC, S_INCREASE_SIZE, S_START, S_HAS_MAX, S_MAX_VALUE, 
+    S_CACHE_NUMBER, S_SYNC_STATE, S_DATE, S_REF_TABLE, S_REF_FIELD, S_OF_MODULE, S_OF_DATASOURCE, 
+    S_OF_PROJECT
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dhcc.dic.entity.TSeqExample" >
     select
@@ -111,20 +113,26 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.dhcc.dic.entity.TSeq" >
+  	<selectKey resultType="String" order="BEFORE" keyProperty="sId"> 
+		SELECT SEQ_SEQ.NEXTVAL FROM dual 
+	</selectKey>
     insert into T_SEQ (S_ID, S_NAME, S_CN_NAME, 
-      S_INCREASE_SIZE, S_START, S_HAS_MAX, 
-      S_MAX_VALUE, S_CACHE_NUMBER, S_SYNC_STATE, 
-      S_DATE, S_REF_TABLE, S_REF_FIELD, 
-      S_OF_MODULE, S_OF_DATASOURCE, S_OF_PROJECT
-      )
+      S_DESC, S_INCREASE_SIZE, S_START, 
+      S_HAS_MAX, S_MAX_VALUE, S_CACHE_NUMBER, 
+      S_SYNC_STATE, S_DATE, S_REF_TABLE, 
+      S_REF_FIELD, S_OF_MODULE, S_OF_DATASOURCE, 
+      S_OF_PROJECT)
     values (#{sId,jdbcType=VARCHAR}, #{sName,jdbcType=VARCHAR}, #{sCnName,jdbcType=VARCHAR}, 
-      #{sIncreaseSize,jdbcType=DECIMAL}, #{sStart,jdbcType=DECIMAL}, #{sHasMax,jdbcType=VARCHAR}, 
-      #{sMaxValue,jdbcType=DECIMAL}, #{sCacheNumber,jdbcType=DECIMAL}, #{sSyncState,jdbcType=VARCHAR}, 
-      #{sDate,jdbcType=VARCHAR}, #{sRefTable,jdbcType=VARCHAR}, #{sRefField,jdbcType=VARCHAR}, 
-      #{sOfModule,jdbcType=VARCHAR}, #{sOfDatasource,jdbcType=VARCHAR}, #{sOfProject,jdbcType=VARCHAR}
-      )
+      #{sDesc,jdbcType=VARCHAR}, #{sIncreaseSize,jdbcType=DECIMAL}, #{sStart,jdbcType=DECIMAL}, 
+      #{sHasMax,jdbcType=VARCHAR}, #{sMaxValue,jdbcType=DECIMAL}, #{sCacheNumber,jdbcType=DECIMAL}, 
+      #{sSyncState,jdbcType=VARCHAR}, #{sDate,jdbcType=VARCHAR}, #{sRefTable,jdbcType=VARCHAR}, 
+      #{sRefField,jdbcType=VARCHAR}, #{sOfModule,jdbcType=VARCHAR}, #{sOfDatasource,jdbcType=VARCHAR}, 
+      #{sOfProject,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dhcc.dic.entity.TSeq" >
+    <selectKey resultType="String" order="BEFORE" keyProperty="sId"> 
+		SELECT SEQ_SEQ.NEXTVAL FROM dual 
+	</selectKey>
     insert into T_SEQ
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="sId != null" >
@@ -135,6 +143,9 @@
       </if>
       <if test="sCnName != null" >
         S_CN_NAME,
+      </if>
+      <if test="sDesc != null" >
+        S_DESC,
       </if>
       <if test="sIncreaseSize != null" >
         S_INCREASE_SIZE,
@@ -182,6 +193,9 @@
       </if>
       <if test="sCnName != null" >
         #{sCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="sDesc != null" >
+        #{sDesc,jdbcType=VARCHAR},
       </if>
       <if test="sIncreaseSize != null" >
         #{sIncreaseSize,jdbcType=DECIMAL},
@@ -239,6 +253,9 @@
       <if test="record.sCnName != null" >
         S_CN_NAME = #{record.sCnName,jdbcType=VARCHAR},
       </if>
+      <if test="record.sDesc != null" >
+        S_DESC = #{record.sDesc,jdbcType=VARCHAR},
+      </if>
       <if test="record.sIncreaseSize != null" >
         S_INCREASE_SIZE = #{record.sIncreaseSize,jdbcType=DECIMAL},
       </if>
@@ -285,6 +302,7 @@
     set S_ID = #{record.sId,jdbcType=VARCHAR},
       S_NAME = #{record.sName,jdbcType=VARCHAR},
       S_CN_NAME = #{record.sCnName,jdbcType=VARCHAR},
+      S_DESC = #{record.sDesc,jdbcType=VARCHAR},
       S_INCREASE_SIZE = #{record.sIncreaseSize,jdbcType=DECIMAL},
       S_START = #{record.sStart,jdbcType=DECIMAL},
       S_HAS_MAX = #{record.sHasMax,jdbcType=VARCHAR},
@@ -309,6 +327,9 @@
       </if>
       <if test="sCnName != null" >
         S_CN_NAME = #{sCnName,jdbcType=VARCHAR},
+      </if>
+      <if test="sDesc != null" >
+        S_DESC = #{sDesc,jdbcType=VARCHAR},
       </if>
       <if test="sIncreaseSize != null" >
         S_INCREASE_SIZE = #{sIncreaseSize,jdbcType=DECIMAL},
@@ -353,6 +374,7 @@
     update T_SEQ
     set S_NAME = #{sName,jdbcType=VARCHAR},
       S_CN_NAME = #{sCnName,jdbcType=VARCHAR},
+      S_DESC = #{sDesc,jdbcType=VARCHAR},
       S_INCREASE_SIZE = #{sIncreaseSize,jdbcType=DECIMAL},
       S_START = #{sStart,jdbcType=DECIMAL},
       S_HAS_MAX = #{sHasMax,jdbcType=VARCHAR},

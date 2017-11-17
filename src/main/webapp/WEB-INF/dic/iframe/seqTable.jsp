@@ -75,7 +75,7 @@
 				data-options="url:'../sysParmDic/getOptionList?keyName=SYNC_STATE',
     						valueField:'id',
     						textField:'text',
-    						panelHeight: 'auto',editable:false
+    						panelHeight: 'auto'
     			">
 			</select>
 		</div>
@@ -121,8 +121,7 @@
 					<th data-options="field:'sMaxValue',align:'center'">最大值</th>
 					<th data-options="field:'sCacheNumber',align:'center'">缓存数量</th>
 					<th data-options="field:'sOfModule',align:'center'">所属业务模块</th>
-					<th
-						data-options="field:'sSyncState',align:'center',formatter:function(value){
+					<th data-options="field:'sSyncState',align:'center',formatter:function(value){
             															if(value=='2')
             																return '存在差异属性';
             															if(value=='3')
@@ -203,7 +202,7 @@
 				class="dhcc-label">关联表:</label>
 			<div class="dhcc-input-div">
 				<select class="easyui-combobox table-list" name="sRefTable"
-					data-options="valueField:'tId',textField:'tName',panelHeight:'auto',editable:false"
+					data-options="valueField:'tId',textField:'tName',panelHeight:'auto',editable:false,onSelect:choseRefTable"
 					style="width: 200px;">
 					<!--option 在jq获取  -->
 				</select>
@@ -211,8 +210,8 @@
 			<span style="display: inline-block; width: 20px;"></span> <label
 				class="dhcc-label">关联列:</label>
 			<div class="dhcc-input-div">
-				<select class="easyui-combobox table-list" name="sRefField"
-					data-options="valueField:'id',textField:'text',panelHeight:'auto',editable:false"
+				<select id="sRefField" class="easyui-combobox table-list" name="sRefField"
+					data-options="valueField:'fId',textField:'fName',panelHeight:'auto',editable:false"
 					style="width: 200px;">
 					<!--option 在jq获取  -->
 				</select>
@@ -221,7 +220,7 @@
 				class="dhcc-label">模块:</label>
 			<div class="dhcc-input-div">
 				<select class="easyui-combobox module-list" name="sOfModule"
-					data-options="valueField:'id',textField:'text',panelHeight:'auto',editable:false"
+					data-options="valueField:'mId',textField:'mName',panelHeight:'auto',editable:false"
 					style="width: 200px;">
 					<!--option 在jq获取  -->
 				</select>
@@ -234,7 +233,8 @@
 				<button type="button" onclick="back()" type="button"
 					class="easyui-linkbutton button-line-green">返回</button>
 			</div>
-			<br /> <br />
+			<br />
+			<br />
 		</form>
 		<iframe name='formTargetIframe' style='display: none;'></iframe>
 	</div>

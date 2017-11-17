@@ -1,9 +1,11 @@
 package com.dhcc.dic.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.dhcc.dic.entity.TTablespace;
 import com.dhcc.dic.entity.TTablespaceExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface TTablespaceDao {
     int countByExample(TTablespaceExample example);
@@ -27,5 +29,4 @@ public interface TTablespaceDao {
     int updateByPrimaryKeySelective(TTablespace record);
 
     int updateByPrimaryKey(TTablespace record);
-    
 }

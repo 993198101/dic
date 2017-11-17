@@ -454,703 +454,73 @@ public class TTablespaceExample {
             return (Criteria) this;
         }
 
-        public Criteria andTMinExtentIsNull() {
-            addCriterion("T_MIN_EXTENT is null");
+        public Criteria andTSyncStateIsNull() {
+            addCriterion("T_SYNC_STATE is null");
             return (Criteria) this;
         }
 
-        public Criteria andTMinExtentIsNotNull() {
-            addCriterion("T_MIN_EXTENT is not null");
+        public Criteria andTSyncStateIsNotNull() {
+            addCriterion("T_SYNC_STATE is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTMinExtentEqualTo(String value) {
-            addCriterion("T_MIN_EXTENT =", value, "tMinExtent");
+        public Criteria andTSyncStateEqualTo(String value) {
+            addCriterion("T_SYNC_STATE =", value, "tSyncState");
             return (Criteria) this;
         }
 
-        public Criteria andTMinExtentNotEqualTo(String value) {
-            addCriterion("T_MIN_EXTENT <>", value, "tMinExtent");
+        public Criteria andTSyncStateNotEqualTo(String value) {
+            addCriterion("T_SYNC_STATE <>", value, "tSyncState");
             return (Criteria) this;
         }
 
-        public Criteria andTMinExtentGreaterThan(String value) {
-            addCriterion("T_MIN_EXTENT >", value, "tMinExtent");
+        public Criteria andTSyncStateGreaterThan(String value) {
+            addCriterion("T_SYNC_STATE >", value, "tSyncState");
             return (Criteria) this;
         }
 
-        public Criteria andTMinExtentGreaterThanOrEqualTo(String value) {
-            addCriterion("T_MIN_EXTENT >=", value, "tMinExtent");
+        public Criteria andTSyncStateGreaterThanOrEqualTo(String value) {
+            addCriterion("T_SYNC_STATE >=", value, "tSyncState");
             return (Criteria) this;
         }
 
-        public Criteria andTMinExtentLessThan(String value) {
-            addCriterion("T_MIN_EXTENT <", value, "tMinExtent");
+        public Criteria andTSyncStateLessThan(String value) {
+            addCriterion("T_SYNC_STATE <", value, "tSyncState");
             return (Criteria) this;
         }
 
-        public Criteria andTMinExtentLessThanOrEqualTo(String value) {
-            addCriterion("T_MIN_EXTENT <=", value, "tMinExtent");
+        public Criteria andTSyncStateLessThanOrEqualTo(String value) {
+            addCriterion("T_SYNC_STATE <=", value, "tSyncState");
             return (Criteria) this;
         }
 
-        public Criteria andTMinExtentLike(String value) {
-            addCriterion("T_MIN_EXTENT like", value, "tMinExtent");
+        public Criteria andTSyncStateLike(String value) {
+            addCriterion("T_SYNC_STATE like", value, "tSyncState");
             return (Criteria) this;
         }
 
-        public Criteria andTMinExtentNotLike(String value) {
-            addCriterion("T_MIN_EXTENT not like", value, "tMinExtent");
+        public Criteria andTSyncStateNotLike(String value) {
+            addCriterion("T_SYNC_STATE not like", value, "tSyncState");
             return (Criteria) this;
         }
 
-        public Criteria andTMinExtentIn(List<String> values) {
-            addCriterion("T_MIN_EXTENT in", values, "tMinExtent");
+        public Criteria andTSyncStateIn(List<String> values) {
+            addCriterion("T_SYNC_STATE in", values, "tSyncState");
             return (Criteria) this;
         }
 
-        public Criteria andTMinExtentNotIn(List<String> values) {
-            addCriterion("T_MIN_EXTENT not in", values, "tMinExtent");
+        public Criteria andTSyncStateNotIn(List<String> values) {
+            addCriterion("T_SYNC_STATE not in", values, "tSyncState");
             return (Criteria) this;
         }
 
-        public Criteria andTMinExtentBetween(String value1, String value2) {
-            addCriterion("T_MIN_EXTENT between", value1, value2, "tMinExtent");
+        public Criteria andTSyncStateBetween(String value1, String value2) {
+            addCriterion("T_SYNC_STATE between", value1, value2, "tSyncState");
             return (Criteria) this;
         }
 
-        public Criteria andTMinExtentNotBetween(String value1, String value2) {
-            addCriterion("T_MIN_EXTENT not between", value1, value2, "tMinExtent");
-            return (Criteria) this;
-        }
-
-        public Criteria andTBlocksizeIsNull() {
-            addCriterion("T_BLOCKSIZE is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTBlocksizeIsNotNull() {
-            addCriterion("T_BLOCKSIZE is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTBlocksizeEqualTo(String value) {
-            addCriterion("T_BLOCKSIZE =", value, "tBlocksize");
-            return (Criteria) this;
-        }
-
-        public Criteria andTBlocksizeNotEqualTo(String value) {
-            addCriterion("T_BLOCKSIZE <>", value, "tBlocksize");
-            return (Criteria) this;
-        }
-
-        public Criteria andTBlocksizeGreaterThan(String value) {
-            addCriterion("T_BLOCKSIZE >", value, "tBlocksize");
-            return (Criteria) this;
-        }
-
-        public Criteria andTBlocksizeGreaterThanOrEqualTo(String value) {
-            addCriterion("T_BLOCKSIZE >=", value, "tBlocksize");
-            return (Criteria) this;
-        }
-
-        public Criteria andTBlocksizeLessThan(String value) {
-            addCriterion("T_BLOCKSIZE <", value, "tBlocksize");
-            return (Criteria) this;
-        }
-
-        public Criteria andTBlocksizeLessThanOrEqualTo(String value) {
-            addCriterion("T_BLOCKSIZE <=", value, "tBlocksize");
-            return (Criteria) this;
-        }
-
-        public Criteria andTBlocksizeLike(String value) {
-            addCriterion("T_BLOCKSIZE like", value, "tBlocksize");
-            return (Criteria) this;
-        }
-
-        public Criteria andTBlocksizeNotLike(String value) {
-            addCriterion("T_BLOCKSIZE not like", value, "tBlocksize");
-            return (Criteria) this;
-        }
-
-        public Criteria andTBlocksizeIn(List<String> values) {
-            addCriterion("T_BLOCKSIZE in", values, "tBlocksize");
-            return (Criteria) this;
-        }
-
-        public Criteria andTBlocksizeNotIn(List<String> values) {
-            addCriterion("T_BLOCKSIZE not in", values, "tBlocksize");
-            return (Criteria) this;
-        }
-
-        public Criteria andTBlocksizeBetween(String value1, String value2) {
-            addCriterion("T_BLOCKSIZE between", value1, value2, "tBlocksize");
-            return (Criteria) this;
-        }
-
-        public Criteria andTBlocksizeNotBetween(String value1, String value2) {
-            addCriterion("T_BLOCKSIZE not between", value1, value2, "tBlocksize");
-            return (Criteria) this;
-        }
-
-        public Criteria andTPartitionGroupIsNull() {
-            addCriterion("T_PARTITION_GROUP is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTPartitionGroupIsNotNull() {
-            addCriterion("T_PARTITION_GROUP is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTPartitionGroupEqualTo(String value) {
-            addCriterion("T_PARTITION_GROUP =", value, "tPartitionGroup");
-            return (Criteria) this;
-        }
-
-        public Criteria andTPartitionGroupNotEqualTo(String value) {
-            addCriterion("T_PARTITION_GROUP <>", value, "tPartitionGroup");
-            return (Criteria) this;
-        }
-
-        public Criteria andTPartitionGroupGreaterThan(String value) {
-            addCriterion("T_PARTITION_GROUP >", value, "tPartitionGroup");
-            return (Criteria) this;
-        }
-
-        public Criteria andTPartitionGroupGreaterThanOrEqualTo(String value) {
-            addCriterion("T_PARTITION_GROUP >=", value, "tPartitionGroup");
-            return (Criteria) this;
-        }
-
-        public Criteria andTPartitionGroupLessThan(String value) {
-            addCriterion("T_PARTITION_GROUP <", value, "tPartitionGroup");
-            return (Criteria) this;
-        }
-
-        public Criteria andTPartitionGroupLessThanOrEqualTo(String value) {
-            addCriterion("T_PARTITION_GROUP <=", value, "tPartitionGroup");
-            return (Criteria) this;
-        }
-
-        public Criteria andTPartitionGroupLike(String value) {
-            addCriterion("T_PARTITION_GROUP like", value, "tPartitionGroup");
-            return (Criteria) this;
-        }
-
-        public Criteria andTPartitionGroupNotLike(String value) {
-            addCriterion("T_PARTITION_GROUP not like", value, "tPartitionGroup");
-            return (Criteria) this;
-        }
-
-        public Criteria andTPartitionGroupIn(List<String> values) {
-            addCriterion("T_PARTITION_GROUP in", values, "tPartitionGroup");
-            return (Criteria) this;
-        }
-
-        public Criteria andTPartitionGroupNotIn(List<String> values) {
-            addCriterion("T_PARTITION_GROUP not in", values, "tPartitionGroup");
-            return (Criteria) this;
-        }
-
-        public Criteria andTPartitionGroupBetween(String value1, String value2) {
-            addCriterion("T_PARTITION_GROUP between", value1, value2, "tPartitionGroup");
-            return (Criteria) this;
-        }
-
-        public Criteria andTPartitionGroupNotBetween(String value1, String value2) {
-            addCriterion("T_PARTITION_GROUP not between", value1, value2, "tPartitionGroup");
-            return (Criteria) this;
-        }
-
-        public Criteria andTLoggingClauseIsNull() {
-            addCriterion("T_LOGGING_CLAUSE is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTLoggingClauseIsNotNull() {
-            addCriterion("T_LOGGING_CLAUSE is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTLoggingClauseEqualTo(String value) {
-            addCriterion("T_LOGGING_CLAUSE =", value, "tLoggingClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTLoggingClauseNotEqualTo(String value) {
-            addCriterion("T_LOGGING_CLAUSE <>", value, "tLoggingClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTLoggingClauseGreaterThan(String value) {
-            addCriterion("T_LOGGING_CLAUSE >", value, "tLoggingClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTLoggingClauseGreaterThanOrEqualTo(String value) {
-            addCriterion("T_LOGGING_CLAUSE >=", value, "tLoggingClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTLoggingClauseLessThan(String value) {
-            addCriterion("T_LOGGING_CLAUSE <", value, "tLoggingClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTLoggingClauseLessThanOrEqualTo(String value) {
-            addCriterion("T_LOGGING_CLAUSE <=", value, "tLoggingClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTLoggingClauseLike(String value) {
-            addCriterion("T_LOGGING_CLAUSE like", value, "tLoggingClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTLoggingClauseNotLike(String value) {
-            addCriterion("T_LOGGING_CLAUSE not like", value, "tLoggingClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTLoggingClauseIn(List<String> values) {
-            addCriterion("T_LOGGING_CLAUSE in", values, "tLoggingClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTLoggingClauseNotIn(List<String> values) {
-            addCriterion("T_LOGGING_CLAUSE not in", values, "tLoggingClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTLoggingClauseBetween(String value1, String value2) {
-            addCriterion("T_LOGGING_CLAUSE between", value1, value2, "tLoggingClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTLoggingClauseNotBetween(String value1, String value2) {
-            addCriterion("T_LOGGING_CLAUSE not between", value1, value2, "tLoggingClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTForceLoggingIsNull() {
-            addCriterion("T_FORCE_LOGGING is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTForceLoggingIsNotNull() {
-            addCriterion("T_FORCE_LOGGING is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTForceLoggingEqualTo(String value) {
-            addCriterion("T_FORCE_LOGGING =", value, "tForceLogging");
-            return (Criteria) this;
-        }
-
-        public Criteria andTForceLoggingNotEqualTo(String value) {
-            addCriterion("T_FORCE_LOGGING <>", value, "tForceLogging");
-            return (Criteria) this;
-        }
-
-        public Criteria andTForceLoggingGreaterThan(String value) {
-            addCriterion("T_FORCE_LOGGING >", value, "tForceLogging");
-            return (Criteria) this;
-        }
-
-        public Criteria andTForceLoggingGreaterThanOrEqualTo(String value) {
-            addCriterion("T_FORCE_LOGGING >=", value, "tForceLogging");
-            return (Criteria) this;
-        }
-
-        public Criteria andTForceLoggingLessThan(String value) {
-            addCriterion("T_FORCE_LOGGING <", value, "tForceLogging");
-            return (Criteria) this;
-        }
-
-        public Criteria andTForceLoggingLessThanOrEqualTo(String value) {
-            addCriterion("T_FORCE_LOGGING <=", value, "tForceLogging");
-            return (Criteria) this;
-        }
-
-        public Criteria andTForceLoggingLike(String value) {
-            addCriterion("T_FORCE_LOGGING like", value, "tForceLogging");
-            return (Criteria) this;
-        }
-
-        public Criteria andTForceLoggingNotLike(String value) {
-            addCriterion("T_FORCE_LOGGING not like", value, "tForceLogging");
-            return (Criteria) this;
-        }
-
-        public Criteria andTForceLoggingIn(List<String> values) {
-            addCriterion("T_FORCE_LOGGING in", values, "tForceLogging");
-            return (Criteria) this;
-        }
-
-        public Criteria andTForceLoggingNotIn(List<String> values) {
-            addCriterion("T_FORCE_LOGGING not in", values, "tForceLogging");
-            return (Criteria) this;
-        }
-
-        public Criteria andTForceLoggingBetween(String value1, String value2) {
-            addCriterion("T_FORCE_LOGGING between", value1, value2, "tForceLogging");
-            return (Criteria) this;
-        }
-
-        public Criteria andTForceLoggingNotBetween(String value1, String value2) {
-            addCriterion("T_FORCE_LOGGING not between", value1, value2, "tForceLogging");
-            return (Criteria) this;
-        }
-
-        public Criteria andTDefStorageClauseIsNull() {
-            addCriterion("T_DEF_STORAGE_CLAUSE is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTDefStorageClauseIsNotNull() {
-            addCriterion("T_DEF_STORAGE_CLAUSE is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTDefStorageClauseEqualTo(String value) {
-            addCriterion("T_DEF_STORAGE_CLAUSE =", value, "tDefStorageClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTDefStorageClauseNotEqualTo(String value) {
-            addCriterion("T_DEF_STORAGE_CLAUSE <>", value, "tDefStorageClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTDefStorageClauseGreaterThan(String value) {
-            addCriterion("T_DEF_STORAGE_CLAUSE >", value, "tDefStorageClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTDefStorageClauseGreaterThanOrEqualTo(String value) {
-            addCriterion("T_DEF_STORAGE_CLAUSE >=", value, "tDefStorageClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTDefStorageClauseLessThan(String value) {
-            addCriterion("T_DEF_STORAGE_CLAUSE <", value, "tDefStorageClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTDefStorageClauseLessThanOrEqualTo(String value) {
-            addCriterion("T_DEF_STORAGE_CLAUSE <=", value, "tDefStorageClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTDefStorageClauseLike(String value) {
-            addCriterion("T_DEF_STORAGE_CLAUSE like", value, "tDefStorageClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTDefStorageClauseNotLike(String value) {
-            addCriterion("T_DEF_STORAGE_CLAUSE not like", value, "tDefStorageClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTDefStorageClauseIn(List<String> values) {
-            addCriterion("T_DEF_STORAGE_CLAUSE in", values, "tDefStorageClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTDefStorageClauseNotIn(List<String> values) {
-            addCriterion("T_DEF_STORAGE_CLAUSE not in", values, "tDefStorageClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTDefStorageClauseBetween(String value1, String value2) {
-            addCriterion("T_DEF_STORAGE_CLAUSE between", value1, value2, "tDefStorageClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTDefStorageClauseNotBetween(String value1, String value2) {
-            addCriterion("T_DEF_STORAGE_CLAUSE not between", value1, value2, "tDefStorageClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTAttributeIsNull() {
-            addCriterion("T_ATTRIBUTE is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTAttributeIsNotNull() {
-            addCriterion("T_ATTRIBUTE is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTAttributeEqualTo(String value) {
-            addCriterion("T_ATTRIBUTE =", value, "tAttribute");
-            return (Criteria) this;
-        }
-
-        public Criteria andTAttributeNotEqualTo(String value) {
-            addCriterion("T_ATTRIBUTE <>", value, "tAttribute");
-            return (Criteria) this;
-        }
-
-        public Criteria andTAttributeGreaterThan(String value) {
-            addCriterion("T_ATTRIBUTE >", value, "tAttribute");
-            return (Criteria) this;
-        }
-
-        public Criteria andTAttributeGreaterThanOrEqualTo(String value) {
-            addCriterion("T_ATTRIBUTE >=", value, "tAttribute");
-            return (Criteria) this;
-        }
-
-        public Criteria andTAttributeLessThan(String value) {
-            addCriterion("T_ATTRIBUTE <", value, "tAttribute");
-            return (Criteria) this;
-        }
-
-        public Criteria andTAttributeLessThanOrEqualTo(String value) {
-            addCriterion("T_ATTRIBUTE <=", value, "tAttribute");
-            return (Criteria) this;
-        }
-
-        public Criteria andTAttributeLike(String value) {
-            addCriterion("T_ATTRIBUTE like", value, "tAttribute");
-            return (Criteria) this;
-        }
-
-        public Criteria andTAttributeNotLike(String value) {
-            addCriterion("T_ATTRIBUTE not like", value, "tAttribute");
-            return (Criteria) this;
-        }
-
-        public Criteria andTAttributeIn(List<String> values) {
-            addCriterion("T_ATTRIBUTE in", values, "tAttribute");
-            return (Criteria) this;
-        }
-
-        public Criteria andTAttributeNotIn(List<String> values) {
-            addCriterion("T_ATTRIBUTE not in", values, "tAttribute");
-            return (Criteria) this;
-        }
-
-        public Criteria andTAttributeBetween(String value1, String value2) {
-            addCriterion("T_ATTRIBUTE between", value1, value2, "tAttribute");
-            return (Criteria) this;
-        }
-
-        public Criteria andTAttributeNotBetween(String value1, String value2) {
-            addCriterion("T_ATTRIBUTE not between", value1, value2, "tAttribute");
-            return (Criteria) this;
-        }
-
-        public Criteria andTExtentManagementClauseIsNull() {
-            addCriterion("T_EXTENT_MANAGEMENT_CLAUSE is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTExtentManagementClauseIsNotNull() {
-            addCriterion("T_EXTENT_MANAGEMENT_CLAUSE is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTExtentManagementClauseEqualTo(String value) {
-            addCriterion("T_EXTENT_MANAGEMENT_CLAUSE =", value, "tExtentManagementClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTExtentManagementClauseNotEqualTo(String value) {
-            addCriterion("T_EXTENT_MANAGEMENT_CLAUSE <>", value, "tExtentManagementClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTExtentManagementClauseGreaterThan(String value) {
-            addCriterion("T_EXTENT_MANAGEMENT_CLAUSE >", value, "tExtentManagementClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTExtentManagementClauseGreaterThanOrEqualTo(String value) {
-            addCriterion("T_EXTENT_MANAGEMENT_CLAUSE >=", value, "tExtentManagementClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTExtentManagementClauseLessThan(String value) {
-            addCriterion("T_EXTENT_MANAGEMENT_CLAUSE <", value, "tExtentManagementClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTExtentManagementClauseLessThanOrEqualTo(String value) {
-            addCriterion("T_EXTENT_MANAGEMENT_CLAUSE <=", value, "tExtentManagementClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTExtentManagementClauseLike(String value) {
-            addCriterion("T_EXTENT_MANAGEMENT_CLAUSE like", value, "tExtentManagementClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTExtentManagementClauseNotLike(String value) {
-            addCriterion("T_EXTENT_MANAGEMENT_CLAUSE not like", value, "tExtentManagementClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTExtentManagementClauseIn(List<String> values) {
-            addCriterion("T_EXTENT_MANAGEMENT_CLAUSE in", values, "tExtentManagementClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTExtentManagementClauseNotIn(List<String> values) {
-            addCriterion("T_EXTENT_MANAGEMENT_CLAUSE not in", values, "tExtentManagementClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTExtentManagementClauseBetween(String value1, String value2) {
-            addCriterion("T_EXTENT_MANAGEMENT_CLAUSE between", value1, value2, "tExtentManagementClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTExtentManagementClauseNotBetween(String value1, String value2) {
-            addCriterion("T_EXTENT_MANAGEMENT_CLAUSE not between", value1, value2, "tExtentManagementClause");
-            return (Criteria) this;
-        }
-
-        public Criteria andTStateIsNull() {
-            addCriterion("T_STATE is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTStateIsNotNull() {
-            addCriterion("T_STATE is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTStateEqualTo(String value) {
-            addCriterion("T_STATE =", value, "tState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTStateNotEqualTo(String value) {
-            addCriterion("T_STATE <>", value, "tState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTStateGreaterThan(String value) {
-            addCriterion("T_STATE >", value, "tState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTStateGreaterThanOrEqualTo(String value) {
-            addCriterion("T_STATE >=", value, "tState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTStateLessThan(String value) {
-            addCriterion("T_STATE <", value, "tState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTStateLessThanOrEqualTo(String value) {
-            addCriterion("T_STATE <=", value, "tState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTStateLike(String value) {
-            addCriterion("T_STATE like", value, "tState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTStateNotLike(String value) {
-            addCriterion("T_STATE not like", value, "tState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTStateIn(List<String> values) {
-            addCriterion("T_STATE in", values, "tState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTStateNotIn(List<String> values) {
-            addCriterion("T_STATE not in", values, "tState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTStateBetween(String value1, String value2) {
-            addCriterion("T_STATE between", value1, value2, "tState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTStateNotBetween(String value1, String value2) {
-            addCriterion("T_STATE not between", value1, value2, "tState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTSaveObjStateIsNull() {
-            addCriterion("T_SAVE_OBJ_STATE is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTSaveObjStateIsNotNull() {
-            addCriterion("T_SAVE_OBJ_STATE is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTSaveObjStateEqualTo(String value) {
-            addCriterion("T_SAVE_OBJ_STATE =", value, "tSaveObjState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTSaveObjStateNotEqualTo(String value) {
-            addCriterion("T_SAVE_OBJ_STATE <>", value, "tSaveObjState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTSaveObjStateGreaterThan(String value) {
-            addCriterion("T_SAVE_OBJ_STATE >", value, "tSaveObjState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTSaveObjStateGreaterThanOrEqualTo(String value) {
-            addCriterion("T_SAVE_OBJ_STATE >=", value, "tSaveObjState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTSaveObjStateLessThan(String value) {
-            addCriterion("T_SAVE_OBJ_STATE <", value, "tSaveObjState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTSaveObjStateLessThanOrEqualTo(String value) {
-            addCriterion("T_SAVE_OBJ_STATE <=", value, "tSaveObjState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTSaveObjStateLike(String value) {
-            addCriterion("T_SAVE_OBJ_STATE like", value, "tSaveObjState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTSaveObjStateNotLike(String value) {
-            addCriterion("T_SAVE_OBJ_STATE not like", value, "tSaveObjState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTSaveObjStateIn(List<String> values) {
-            addCriterion("T_SAVE_OBJ_STATE in", values, "tSaveObjState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTSaveObjStateNotIn(List<String> values) {
-            addCriterion("T_SAVE_OBJ_STATE not in", values, "tSaveObjState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTSaveObjStateBetween(String value1, String value2) {
-            addCriterion("T_SAVE_OBJ_STATE between", value1, value2, "tSaveObjState");
-            return (Criteria) this;
-        }
-
-        public Criteria andTSaveObjStateNotBetween(String value1, String value2) {
-            addCriterion("T_SAVE_OBJ_STATE not between", value1, value2, "tSaveObjState");
+        public Criteria andTSyncStateNotBetween(String value1, String value2) {
+            addCriterion("T_SYNC_STATE not between", value1, value2, "tSyncState");
             return (Criteria) this;
         }
 

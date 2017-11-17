@@ -9,6 +9,8 @@ public class TSeq {
 
     private String sCnName;
 
+    private String sDesc;
+
     private BigDecimal sIncreaseSize;
 
     private BigDecimal sStart;
@@ -55,6 +57,14 @@ public class TSeq {
 
     public void setsCnName(String sCnName) {
         this.sCnName = sCnName == null ? null : sCnName.trim();
+    }
+
+    public String getsDesc() {
+        return sDesc;
+    }
+
+    public void setsDesc(String sDesc) {
+        this.sDesc = sDesc == null ? null : sDesc.trim();
     }
 
     public BigDecimal getsIncreaseSize() {

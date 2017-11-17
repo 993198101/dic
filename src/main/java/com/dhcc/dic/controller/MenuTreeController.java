@@ -99,31 +99,40 @@ public class MenuTreeController {
     }
     @RequestMapping("/gotoIndexTable")
     public String gotoIndex(){
-    	return "/dic/iframe/indexTable";
+    	return "dic/iframe/indexTable";
     }
     @RequestMapping("/gotoIndexForm")
     public String gotoIndexForm(){
-    	return "/dic/iframe/indexForm";
+    	return "dic/iframe/indexForm";
     }
     @RequestMapping("/gotoDifTableMainForm")
     public String gotoDifTableMainForm(){
-    	return "/dic/iframe/table/difTableMainForm";
+    	return "dic/iframe/table/difTableMainForm";
     }
     @RequestMapping("/gotoViewTable")
     public String gotoViewTable(){
-    	return "/dic/iframe/viewTable";
+    	return "dic/iframe/viewTable";
     }
     @RequestMapping("/gotoViewForm")
     public String gotoViewForm(){
-    	return "/dic/iframe/viewForm";
+    	return "dic/iframe/viewForm";
     }
     @RequestMapping("/gotoSeqTable")
     public String gotoSeqTable(){
-    	return "/dic/iframe/seqTable";
+    	return "dic/iframe/seqTable";
     }
     @RequestMapping("/gotoSeqForm")
     public String gotoSeqForm(){
-    	return "/dic/iframe/seqForm";
+    	return "dic/iframe/seqForm";
     }
+    @RequestMapping("/gotoTablespaceTable")
+    public String gotoTablespaceTable(){
+    	return "dic/iframe/tablespaceTable";
+    }
+    @RequestMapping("/gotoTablespaceForm")
+    public String gotoTablespaceForm(){
+    	return "dic/iframe/tablespaceForm";
+    }
+    
     
 }
